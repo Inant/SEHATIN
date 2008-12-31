@@ -71,6 +71,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       $usia = $today->diff($tgl_lahir)->y;
       date_default_timezone_set("Asia/Jakarta");
       $date = date("d-m-Y");
+			if(isset($_POST['submit'])){
+				mysqli_query($con, "INSERT INTO resep (id_pemeriksaan) VALUE ('$_GET[id_pemeriksaan]')");
+				$var = mysqli_query($con, "SELECT id_resep FROM resep ORDER BY id_resep DESC LIMIT 1");
+				$varr = mysqli_fetch_assoc($var);
+				for($i=0;$i<count($_POST['obat']);$i++){
+					mysqli_query($con, "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$_POST[obat][$i]'), '$_POST[dosis1][$i]', '$_POST[dosis2][$i]', '$_POST[jumlah][$i]' ) ");
+					echo "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$_POST[obat][$i]'), '$_POST[dosis1][$i]', '$_POST[dosis2][$i]', '$_POST[jumlah][$i]' )";
+				}
+				for ($j=0; $j < count($_POST['obat']) ; $j++) {
+					echo $_POST['obat'][$j];
+				}
+			}
 		?>
 		 <div class="main">
 		 	<div class="main-content">
@@ -146,7 +158,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                   <br>
                   <br>
                   <div class="col-md-12">
-                    <form name="add_name" id="add_name">
+                    <form action="" method="POST" name="add_name" id="add_name">
                       <div class="table-responsive">
                         <table class="table" id="dynamic_field">
 													<tr>
@@ -155,7 +167,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 														<th>Jumlah</th>
 													</tr>
                           <tr>
-                            <td><input type="text" id="obat" name="obat[]" placeholder="Nama Obat" class="form-control" required="" /></td>
+                            <td><input type="text" id="obat1" name="obat[]" placeholder="Nama Obat" class="form-control obat" required="" /></td>
 														<td> <input type="number" id="dosis1" name="dosis1[]" value="" class="form-control" required=""> </td>
 														<td> <b>X</b> </td>
 														<td> <input type="number" id="dosis2" name="dosis2[]" value="" class="form-control" required=""> </td>
@@ -164,7 +176,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           </tr>
                         </table>
                       </div>
-                      <input type="button" name="submit" id="submit" class="btn btn-primary" value="Simpan" />
+                      <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Simpan" />
                     </form>
                   </div>
 		 						</div>
@@ -190,6 +202,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 
 
       $('#add').click(function(){
+				/*
         $( "#obat" ).autocomplete({
          serviceUrl: "source.php",
          dataType: "JSON",
@@ -197,9 +210,27 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
            $( "#obat" ).val("" + suggestion.obat);
          }
        });
+			 */
            i++;
-           $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" id="obat" name="obat[]" placeholder="Nama Obat" class="form-control" required="" /></td><td><input type="number" id="dosis1" name="dosis1[]" value="" class="form-control" required=""></td><td><b>X</b></td><td><input type="number" id="dosis2" name="dosis2[]" value="" class="form-control" required=""></td><td><input type="number" id="jumlah" name="jumlah[]" value="" class="form-control" placeholder="Jumlah" required=""></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><i class="fa fa-times-circle"></i> </button></td></tr>');
+           $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" name="obat[]" placeholder="Nama Obat" class="form-control obat" id="obat'+i+'" required="" /></td><td><input type="number" id="dosis1" name="dosis1[]" value="" class="form-control" required=""></td><td><b>X</b></td><td><input type="number" id="dosis2" name="dosis2[]" value="" class="form-control" required=""></td><td><input type="number" id="jumlah" name="jumlah[]" value="" class="form-control" placeholder="Jumlah" required=""></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><i class="fa fa-times-circle"></i> </button></td></tr>');
+					 $( "#obat"+i ).autocomplete({
+		 				serviceUrl: "source.php",
+		 				dataType: "JSON",
+		 				onSelect: function (suggestion) {
+							var getId = $(this).attr("id")
+		 					$( "#"+getId ).val("" + suggestion.obat);
+		 				}
+		 			});
 
+					 /*
+					 $( "#obat"+i ).autocomplete({
+	 					serviceUrl: "source.php",
+	 					dataType: "JSON",
+	 					onSelect: function (suggestion) {
+	 						$( "#obat"+i ).val("" + suggestion.obat);
+	 					}
+	 				});
+					*/
       });
 
 
@@ -224,20 +255,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                 }
            });
       });
-
-
-    });
-</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$( "#obat" ).autocomplete({
+			$( "#obat"+i ).autocomplete({
 				serviceUrl: "source.php",
 				dataType: "JSON",
 				onSelect: function (suggestion) {
-					$( "#obat" ).val("" + suggestion.obat);
+					var getId = $(this).attr("id")
+					$( "#"+getId ).val("" + suggestion.obat);
 				}
 			});
-		})
+
+
+    });
 	</script>
 </body>
 
