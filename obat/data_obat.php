@@ -99,9 +99,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 																	$no++;
 
 													}
-												//tambahan
-												//tambahan2
-												//tambahan3
 												 ?>
 											</tbody>
                     </table>
