@@ -23,11 +23,11 @@
 </head>
 
 <body>
-	<?php 
+	<?php
 		$user = "";
 		session_start();
 		$gagal = "";
-		
+
 		$pass = "";
 
 		include 'koneksi.php';
@@ -46,7 +46,7 @@
 			}
 			else{
 				$gagal = "* Username atau password salah";
-				
+
 			}
 		}
 
@@ -84,7 +84,7 @@
 						<div class="overlay"></div>
 						<div class="content text">
 							<h1 class="heading">SEHATIN</h1>
-							<p>by Popeye Team</p>
+							<p>by Popeye Team comel</p>
 						</div>
 					</div>
 					<div class="clearfix"></div>
