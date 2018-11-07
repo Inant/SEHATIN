@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
 <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Kategori Obat | Sehatin</title>
 	<meta charset="utf-8">
@@ -39,7 +39,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 		 ?>
@@ -68,7 +68,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 									</tr>
 		 								</thead>
 		 								<tbody>
-		 									<?php 
+		 									<?php
 		 										$query = "SELECT * FROM kategori_obat ORDER BY kategori ASC";
 		 										$jml = "SELECT COUNT(*) as jml_kategori FROM kategori_obat";
 		 										$result = mysqli_query($con, $query);
@@ -85,6 +85,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 													</td>
 		 												  </tr>";
 		 												 $no++;
+														 //tes
 		 										}
 		 									 ?>
 		 								</tbody>
