@@ -69,7 +69,7 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
                       <table class="table table-striped table-hover table-bordered">
                         <thead>
                           <tr>
-
+                            <th>no</th><!--elsa-->
                           </tr>
                         </thead>
                       </table>
