@@ -35,6 +35,7 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
       <?php
       include '../dashboard/navbar.php';
       include '../dashboard/left_sidebar.php';
+			//inant
       ?>
       <div class="main">
         <div class="main-content">
