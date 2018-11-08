@@ -70,9 +70,29 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
                             <th>No</th>
                             <th>Nim</th>
                             <th>Nama</th>
-                            <th></th>
+                            <th>Jenis Kelamin</th>
+														<th>Program Studi</th>
+														<th>Jurusan</th>
+														<th>Alamat</th>
+														<th>No Telepon</th>
                           </tr>
                         </thead>
+												<thead>
+													<tbody>
+														<script type="text/javascript">
+															function konfirm(){
+																tanya = confirm("Anda yakin ingin menghapus ?");
+																if (tanya == true) return true;
+																else return false;
+															}
+														</script>
+														<?php
+														if (isset($_POST['btn_cari'])){
+															$query = "SELECT * FROM 	"
+														}
+														?>
+													</tbody>
+												</thead>
                       </table>
                     </div>
                   </div>
