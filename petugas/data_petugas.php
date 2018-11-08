@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
 <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Data Petugas | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,7 +32,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 		 ?>
@@ -47,11 +47,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 
 								<div class="panel-heading">
 									<h4 class="panel-title">Data Petugas</h4>
-									
+
 								</div>
 								<div class="row">
 									<div class="col-md-2">
-										<a href="tambah_petugas.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>	
+										<a href="tambah_petugas.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
 									</div>
 									 <div class="col-md-6"></div>
 									<div class="col-md-4">
@@ -63,7 +63,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										</form>
 									</div>
 								</div>
-								
+
 								<div class="panel-body">
 									<table class="table table-striped table-hover table-bordered">
 										<thead>
@@ -94,7 +94,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 												}
 												$jml = "SELECT COUNT(*) as jml_petugas FROM petugas";
 												$r = mysqli_query($con, $jml);
-												$jml_petugas = mysqli_fetch_assoc($r); 
+												$jml_petugas = mysqli_fetch_assoc($r);
 												$result = mysqli_query($con, $query);
 												$no = 1;
 												foreach ($result as $val) {
@@ -117,12 +117,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									<span class="text-default">Jumlah data : <?php echo($jml_petugas['jml_petugas']) ?></span>
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="clearfix"></div>
 		<?php include '../dashboard/footer.php'; ?>
@@ -133,7 +133,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="../assets/scripts/klorofil-common.js"></script>
-	
+
 </body>
 
 </html>
