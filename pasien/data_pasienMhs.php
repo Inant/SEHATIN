@@ -68,6 +68,8 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
                         <thead>
                           <tr>
                             <th>No</th>
+                            <th>Nim</th>
+                            <th>Nama</th>
                             <th></th>
                           </tr>
                         </thead>
