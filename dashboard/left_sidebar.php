@@ -14,10 +14,9 @@
 
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == 'dashboard' ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						<li><a href="../poli/data_poli.php" class="<?php echo ($nav == "poli" ? 'active' : '') ?>"><i class="fa fa-hospital-o"></i> <span>Data Poli</span></a></li>
-						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Data Dokter</span></a></li>
 						<li>
-							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i><span>Pasien</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPages" class="collapse">
+							<a href="#subPages1" data-toggle="collapse" class="collapsed <?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i><span>Pasien</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages1" class="collapse">
 								<ul class="nav">
 									<li><a href="../pasien/pasien_mahasiswa.php" class="">Mahasiswa</a></li>
 									<li><a href="../pasien/pasien_karyawan.php" class="">Karyawan</a></li>
@@ -25,6 +24,7 @@
 								</ul>
 							</div>
 						</li>
+						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Data Dokter</span></a></li>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "obat" ? 'active' : '') ?>"><i class="fa fa-medkit"></i><span>Obat</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse">
