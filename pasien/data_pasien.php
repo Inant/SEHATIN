@@ -9,7 +9,7 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Data Pasien | Sehatin Meta</title>
+	<title>Data Pasien | Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, uer-scalable=0">
@@ -35,7 +35,6 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
       <?php
       include '../dashboard/navbar.php';
       include '../dashboard/left_sidebar.php';
-			//inant
       ?>
       <div class="main">
         <div class="main-content">
@@ -69,7 +68,7 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
                       <table class="table table-striped table-hover table-bordered">
                         <thead>
                           <tr>
-                            <th>no</th><!--elsa-->
+                            <th>no</th>
                           </tr>
                         </thead>
                       </table>
