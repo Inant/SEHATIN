@@ -9,7 +9,7 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Data Pasien | Sehatin</title>
+	<title>Pasien Mahasiwa| Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, uer-scalable=0">
@@ -63,12 +63,12 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
                                 </form>
                           </div>
                       </div>
-
                     <div class="panel-body">
                       <table class="table table-striped table-hover table-bordered">
                         <thead>
                           <tr>
-                            <th>no</th>
+                            <th>No</th>
+                            <th></th>
                           </tr>
                         </thead>
                       </table>
