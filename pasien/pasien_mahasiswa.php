@@ -88,7 +88,7 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
 														</script>
 														<?php
 														if (isset($_POST['btn_cari'])){
-															$query = "SELECT * FROM 	"
+															$query = "SELECT * FROM 
 														}
 														?>
 													</tbody>
