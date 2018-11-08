@@ -48,7 +48,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
          <div class="container-fluid">
           <h3 class="page-title">Obat</h3>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="panel">
                 <div class="panel-heading">
                   <h4 class="panel-title">Data Obat</h4>
@@ -76,7 +76,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                       </thead>
 											<tbody>
 												<?php
-													$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan s ON obat.id_satuan = s.id_satuan ORDER BY nm_obat ASC";
+													$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan ORDER BY obat.nm_obat ASC";
 													$jml = "SELECT COUNT(*) AS jml_obat FROM obat";
 													$result = mysqli_query($con, $q);
 													$r = mysqli_query($con, $jml);
@@ -93,7 +93,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 																		<td>$val[stok]</td>
 																		<td>$val[tgl_kadaluarsa]</td>
 																		<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a> &nbsp;
-
+																		<a onclick='return konfirm()' href='hapus_obat.php?id_obat=$val[id_obat]' class='btn btn-danger btn-xs'><i class='fa fa-trash' title='Hapus'></i>
+				 														</a>
 																		</td>
 																	</tr>";
 																	$no++;
@@ -109,3 +110,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
          </div>
        </div>
      </div>
+		 <div class="clearfix"></div>
+		 <?php include '../dashboard/footer.php'; ?>
+	 </div>
+		 <script src="../assets/vendor/jquery/jquery.min.js"></script>
+	 	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	 	<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	 	<script src="../assets/scripts/klorofil-common.js"></script>
+	 </body>
+	 </html>
