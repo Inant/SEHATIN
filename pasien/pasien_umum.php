@@ -46,7 +46,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 <div class="main">
 		 	<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Pasien</h3>
+					<h3 class="page-title">Pasien Umum</h3>
 				</div>
 		 	</div>
 		 </div>
