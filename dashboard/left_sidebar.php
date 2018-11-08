@@ -19,9 +19,9 @@
 							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i><span>Pasien</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse">
 								<ul class="nav">
-									<li><a href="../obat/pasien_mahasiswa.php" class="">Mahasiswa</a></li>
-									<li><a href="../obat/pasien_karyawan.php" class="">Karyawan</a></li>
-									<li><a href="../obat/pasien_umum.php" class="">Umum</a></li>
+									<li><a href="../pasien/pasien_mahasiswa.php" class="">Mahasiswa</a></li>
+									<li><a href="../pasien/pasien_karyawan.php" class="">Karyawan</a></li>
+									<li><a href="../pasien/pasien_umum.php" class="">Umum</a></li>
 								</ul>
 							</div>
 						</li>
@@ -45,9 +45,9 @@
 							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i><span>Pasien</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse">
 								<ul class="nav">
-									<li><a href="../obat/pasien_mahasiswa.php" class="">Mahasiswa</a></li>
-									<li><a href="../obat/pasien_karyawan.php" class="">Karyawan</a></li>
-									<li><a href="../obat/pasien_umum.php" class="">Umum</a></li>
+									<li><a href="../pasien/pasien_mahasiswa.php" class="">Mahasiswa</a></li>
+									<li><a href="../pasien/pasien_karyawan.php" class="">Karyawan</a></li>
+									<li><a href="../pasien/pasien_umum.php" class="">Umum</a></li>
 								</ul>
 							</div>
 						</li>
