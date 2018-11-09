@@ -68,7 +68,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<tr>
 		 											<th>No</th>
 		 											<th>Nama Dokter</th>
-		 											<th>Nama Dokter</th>
+		 											<th>Jenis Kelamin</th>
 		 											<th>Gender</th>
 		 											<th>Alamat</th>
 		 											<th>No Hp</th>
