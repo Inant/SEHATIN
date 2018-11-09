@@ -92,9 +92,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 																		<td>$val[harga_jual]</td>
 																		<td>$val[stok]</td>
 																		<td>$val[tgl_kadaluarsa]</td>
-																		<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a> &nbsp;
-																		<a onclick='return konfirm()' href='hapus_obat.php?id_obat=$val[id_obat]' class='btn btn-danger btn-xs'><i class='fa fa-trash' title='Hapus'></i>
-				 														</a>
+																		<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a>
 																		</td>
 																	</tr>";
 																	$no++;
