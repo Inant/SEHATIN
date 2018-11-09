@@ -29,7 +29,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
 	<script type="text/javascript">
 		function konfirm(){
-		 	tanya = confirm("Anda yakin ingin menghapus ?");
+		 	tanya = confirm("Anda yakin ?");
 		 	if (tanya == true) return true;
 		 	else return false;
 		}
@@ -64,6 +64,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 									<tr>
 		 										<th>#</th>
 		 										<th>Nama Kategori</th>
+		 										<th>Status</th>
 		 										<th>Aksi</th>
 		 									</tr>
 		 								</thead>
@@ -76,12 +77,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										$jml_kategori = mysqli_fetch_assoc($r);
 		 										$no = 1;
 		 										foreach ($result as $val) {
+													$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
+													$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
+													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 		 											echo "<tr>
 		 													<td>$no</td>
 		 													<td>$val[kategori]</td>
+															<td><span class='$label'>$val[status]</span></td>
 		 													<td><a href='edit_kategori.php?id_kategori=$val[id_kategori]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>&nbsp;
-		 														<a onclick='return konfirm()' href='hapus_kategori.php?id_kategori=$val[id_kategori]' class='btn btn-danger btn-xs'><i class='fa fa-trash' title='Hapus'></i>
-		 														</a>
+		 														<a onclick = 'return konfirm()' href='status_kategori.php?id_kategori=$val[id_kategori]&status=$val[status]' class= 'btn btn-xs $btnclass' title='$title'><i class='fa fa-power-off'></i></a>
 		 													</td>
 		 												  </tr>";
 		 												 $no++;

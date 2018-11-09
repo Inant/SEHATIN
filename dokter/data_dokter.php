@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
 <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Data Dokter | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,7 +32,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 		 ?>
@@ -45,7 +45,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 					<div class="panel">
 		 						<div class="panel-heading">
 		 							<div class="row"><h4 class="panel-title">Data Dokter</h4></div>
-		 							
+
 		 						</div>
 		 						<div class="row">
 		 							<div class="row">
@@ -73,18 +73,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											<th>Alamat</th>
 		 											<th>No Hp</th>
 		 											<th>No Ijin Prakter</th>
+													<th>Status</th>
 		 											<th>Aksi</th>
 		 										</tr>
 		 									</thead>
 		 									<tbody>
 		 										<script type="text/javascript">
 												function konfirm() {
-													tanya = confirm("Anda yakin ingin menghapus ?");
+													tanya = confirm("Anda yakin ?");
 													if (tanya == true) return true;
 													else return false;
 												}
 											</script>
-											<?php 
+											<?php
 												if (isset($_POST['btn_cari'])) {
 													$query = "SELECT * FROM dokter WHERE nm_dokter LIKE '%$_POST[cari]%' ORDER BY nm_dokter ASC";
 												}
@@ -97,6 +98,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 												$result = mysqli_query($con, $query);
 												$no = 1;
 												foreach ($result as $val) {
+													$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
+													$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
+													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 													echo "<tr>
 															<td>$no</td>
 															<td>$val[nm_dokter]</td>
@@ -105,9 +109,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															<td>$val[alamat]</td>
 															<td>$val[no_hp]</td>
 															<td>$val[no_ijin_praktek]</td>
+															<td><span class='$label'>$val[status]</span></td>
 															<td><a href = 'edit_dokter.php?id_dokter=$val[id_dokter]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>
-																<a onclick = 'return konfirm()' href='hapus_dokter.php?id_dokter=$val[id_dokter]' class='btn btn-danger btn-xs' title='Hapus'><i class='fa fa-trash-o'></i></a></td>
-															</t>
+
+																<a onclick = 'return konfirm()' href='status_dokter.php?id_dokter=$val[id_dokter]&status=$val[status]' class= 'btn btn-xs $btnclass' title='$title'><i class='fa fa-power-off'></i></a></td>
 														  </tr>";
 														  $no++;
 												}

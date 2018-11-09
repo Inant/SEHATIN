@@ -74,23 +74,24 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 												<th>Alamat</th>
 												<th>No HP</th>
 												<th>Level</th>
+												<th>Status</th>
 												<th>Aksi</th>
 											</tr>
 										</thead>
 										<tbody>
 											<script type="text/javascript">
 												function konfirm() {
-													tanya = confirm("Anda yakin ingin menghapus ?");
+													tanya = confirm("Anda yakin ?");
 													if (tanya == true) return true;
 													else return false;
 												}
 											</script>
 											<?php
 												if (isset($_POST['btn_cari'])) {
-													$query = "SELECT * FROM petugas WHERE nama_petugas LIKE '%$_POST[cari]%' ORDER BY nama_petugas ASC";
+													$query = "SELECT * FROM petugas WHERE nama_petugas LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama_petugas ASC";
 												}
 												else{
-													$query = "SELECT * FROM petugas ORDER BY id_petugas ASC";
+													$query = "SELECT * FROM petugas WHERE username != '$_SESSION[username]' ORDER BY id_petugas ASC";
 												}
 												$jml = "SELECT COUNT(*) as jml_petugas FROM petugas";
 												$r = mysqli_query($con, $jml);
@@ -98,6 +99,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 												$result = mysqli_query($con, $query);
 												$no = 1;
 												foreach ($result as $val) {
+													$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
+													$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
+													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 													echo "<tr>
 															<td>$no</td>
 															<td>$val[nama_petugas]</td>
@@ -105,7 +109,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															<td>$val[alamat]</td>
 															<td>$val[no_hp]</td>
 															<td>$val[level]</td>
-															<td><a onclick = 'return konfirm()' href='hapus_petugas.php?id_petugas=$val[id_petugas]' class='btn btn-danger btn-xs' title='Hapus'><i class='fa fa-trash-o'></i></a></td>
+															<td><span class='$label'>$val[status]</span></td>
+															<td><a onclick = 'return konfirm()' href='status_petugas.php?id_petugas=$val[id_petugas]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
 														  </tr>
 													";
 													$no++;
