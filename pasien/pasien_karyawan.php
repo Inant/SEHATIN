@@ -29,7 +29,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
 	<script type="text/javascript">
 		function konfirm(){
-		 	tanya = confirm("Anda yakin ingin menghapus ?");
+		 	tanya = confirm("Anda yakin ?");
 		 	if (tanya == true) return true;
 		 	else return false;
 		}

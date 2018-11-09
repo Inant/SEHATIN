@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
 <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Satuan Obat | Sehatin</title>
 	<meta charset="utf-8">
@@ -29,7 +29,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
 	<script type="text/javascript">
 		function konfirm(){
-			tanya = confirm("Anda yakin ingin menghapus ?");
+			tanya = confirm("Anda yakin ?");
 			if (tanya == true) return true;
 			else return false;
 		}
@@ -39,7 +39,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 		?>
@@ -64,11 +64,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													<tr>
 														<th>#</th>
 														<th>Satuan</th>
+														<th>Status</th>
 														<th>Aksi</th>
 													</tr>
 												</thead>
 											<tbody>
-												<?php 
+												<?php
 													$query = "SELECT * FROM satuan_obat ORDER BY satuan ASC";
 													$jml = "SELECT COUNT(*) as jml_satuan FROM satuan_obat";
 													$result = mysqli_query($con, $query);
@@ -76,13 +77,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$jml_satuan = mysqli_fetch_assoc($r);
 													$no = 1;
 													foreach ($result as $val) {
+														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
+														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
+														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 													 	echo "<tr>
 													 			<td>$no</td>
 													 			<td>$val[satuan]</td>
+																<td><span class='$label'>$val[status]</span></td>
 													 			<td><a href='edit_satuan.php?id_satuan=$val[id_satuan]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>&nbsp;
-													 				<a onclick= 'return konfirm()'
-													 					href='hapus_satuan.php?id_satuan=$val[id_satuan]' class='btn btn-danger btn-xs'><i class='fa fa-trash' title='Hapus'></i>
-													 				</a>
+													 				<a onclick = 'return konfirm()' href='status_satuan.php?id_satuan=$val[id_satuan]&status=$val[status]' class= 'btn btn-xs $btnclass' title='$title'><i class='fa fa-power-off'></i></a>
 													 			</td>
 													 		</tr>";
 													 	$no++;
@@ -97,7 +100,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="clearfix"></div>
 		<?php include '../dashboard/footer.php'; ?>
