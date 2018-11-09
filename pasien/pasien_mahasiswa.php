@@ -88,7 +88,28 @@ if (empthy($_SESSION['username'])&& empty($_SESSION['level'])){
 														</script>
 														<?php
 														if (isset($_POST['btn_cari'])){
-															$query = "SELECT * FROM 
+															$query = "SELECT * FROM  WHERE LIKE '%$_POST[cari]%' ORDER BY 	ASC";
+														}
+														else {
+															$query = "SELECT * FROM ORDER BY ASC";
+														}
+														$jml = "SELECT COUNT(*) as FROM ";
+														$r = mysqli_query($con, $jml);
+														$jml_pasien = mysqli_fetch_assoc($r);
+														$result = mysqli_query($con, $query);
+														$no = 1;
+														foreach ($result as $val) {
+															echo " <tr>
+															<td>$no</td>
+															<td>$val[nim]</td>
+															<td>$val[nama_mahasiswa]</td>
+															<td>$val[jk]</td>
+															<td>$val[ps]</td>
+															<td>$val[jurusan]</td>
+															<td>$val[alamat]</td>
+															<td>$val[no_telp]</td>
+															<td><a onclick = 'return konfirm()' href='hapus_petugas.php?id_petugas=$val[id_petugas]' class='btn btn-danger btn-xs' title='Hapus'><i class='fa fa-trash-o'></i></a></td>
+														  </tr> ";
 														}
 														?>
 													</tbody>
