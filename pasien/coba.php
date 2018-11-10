@@ -125,7 +125,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										<br>
 										<div class="row">
 											<div class="col-md-6">
-												<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
+												<textarea name="alamat" class="form-control" rows="2" placeholder="Masukan alamat anda "><?php echo ($alamat_err) ?></textarea>
 		 										<span class="text-danger"> <?php echo($alamat_err); ?></span>
 											</div>
 										</div>
