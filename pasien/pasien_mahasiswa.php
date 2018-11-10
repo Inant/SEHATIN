@@ -74,11 +74,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													<tr>
 														<th>No</th>
 														<th>Nim</th>
-														<th>Nama</th>
+														<th>Nama Pasien</th>
 														<th>Jenis Kelamin</th>
 														<th>Tanggal Lahir</th>
 														<th>No Telepon</th>
 														<th>Alamat</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -119,6 +121,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 																<td>$val[tgl_lahir]</td>
 																<td>$val[no_hp]</td>
 																<td>$val[alamat]</td>
+                                
 																<td><span class='$label'>$val[status]</span></td>
 																<td><a onclick = 'return konfirm()' href='status_petugas.php?id_petugas=$val[id_petugas]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
 															  </tr>
