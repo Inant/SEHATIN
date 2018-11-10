@@ -56,11 +56,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									<div class="row">
 										<div class="row">
 											<div class="col-md-2">
-												<a href="tambah_karyawan.php"> <button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;"></button></a>
+												<a href="tambah_karyawan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
 											</div>
 											<div class="col-md-6"></div>
 											<div class="col-md-4">
-												<form action="" method="post">
+												<form action="" method="POST">
 													<div class="input-group" style="margin-right: 25px;">
 														<input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama ...">
 														<span class="input-group-btn"><button type="submit" name="btn_cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
