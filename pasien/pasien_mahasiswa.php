@@ -56,7 +56,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 							</div>
 								<div class="row">
 									<div class="col-md-2">
-										<a href="tambah_pasien.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
+										<a href="tambah_mahasiswa.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
 									</div>
 										<div class="col-md-6"></div>
 											<div class="col-md-4">
