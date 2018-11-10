@@ -121,10 +121,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										</div>
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
 											</div>
-											<div class="col-md-6">
-												<input type="text" name="nip" class="form-control" placeholder="Nomor Izin Praktek" value="<?php echo(isset($_POST['nip']) ? $_POST['nip'] : $nip ) ?>">
-		 										<span class="text-danger"> <?php echo($nip_err); ?></span>
-											</div>
 										</div>
 										<br>
 										<div class="row">
