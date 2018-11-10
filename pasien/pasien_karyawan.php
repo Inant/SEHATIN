@@ -29,7 +29,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
 	<script type="text/javascript">
 		function konfirm(){
-		 	tanya = confirm("Anda yakin ?");
+		 	tanya = confirm("Anda yakin ingin menghapus ?");
 		 	if (tanya == true) return true;
 		 	else return false;
 		}
@@ -46,24 +46,24 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
     <div class="main">
       <div class="main-content">
         <div class="container-fluid">
-          <h3 class="page-title">Pasien Karyawan</h3>
+          <h3 class="page-title">Pasien</h3>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel">
-								<div class="panel-heading">
-									<div class="row"><h4 class="panel-title">Data Pasien Karyawan</h4>
+							<div class="panel-heading">
+									<h4 class="panel-title">Pasien Karyawan</h4>
+
+							</div>
+								<div class="row">
+									<div class="col-md-2">
+										<a href="tambah_karyawan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
 									</div>
-									<div class="row">
-										<div class="row">
-											<div class="col-md-2">
-												<a href="tambah_karyawan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
-											</div>
-											<div class="col-md-6"></div>
+										<div class="col-md-6"></div>
 											<div class="col-md-4">
 												<form action="" method="POST">
 													<div class="input-group" style="margin-right: 25px;">
-														<input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama ...">
-														<span class="input-group-btn"><button type="submit" name="btn_cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
+														<input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama...">
+														<span class="input-group-btn"><button type="submit" name="btn-cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
 													</div>
 												</form>
 											</div>
@@ -75,53 +75,59 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 														<th>No</th>
 														<th>Nama Pasien</th>
 														<th>Jenis Kelamin</th>
+														<th>No Telepon</th>
 														<th>Alamat</th>
-														<th>No. Hp</th>
 														<th>Status</th>
 														<th>Aksi</th>
 													</tr>
 												</thead>
 												<tbody>
 													<script type="text/javascript">
-														function konfirm(){
-															tanya = confirm("Anda yakin?");
+														function konfirm() {
+															tanya = confirm("Anda yakin ?");
+															if (tanya == true) return true;
+															else return false;
+														}
+													</script>
+													<script type="text/javascript">
+														function konfirm() {
+															tanya = confirm("Anda yakin ?");
 															if (tanya == true) return true;
 															else return false;
 														}
 													</script>
 													<?php
 													if (isset($_POST['btn_cari'])) {
-														$query = "SELECT * FROM pasien_karyawan WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
+														$query = "SELECT * FROM pasien_karyawan WHERE nama LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama ASC";
 													}
-													else {
-														$query = "SELECT * FROM pasien_karyawan ORDER BY nama ASC";
+													else{
+													$query = "SELECT * FROM pasien_karyawan WHERE username != '$_SESSION[username]' ORDER BY id_karyawan ASC";
 													}
-													$jml = "SELECT COUNT(*) AS jml_karyawan FROM pasien_karyawan";
+													$jml = "SELECT COUNT(*) as jml_petugas FROM pasien_karyawan";
 													$r = mysqli_query($con, $jml);
 													$jml_karyawan = mysqli_fetch_assoc($r);
+													$result = mysqli_query($con, $query);
 													$no = 1;
-													foreach ($result as $val){
+													foreach ($rsult as $val) {
 														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
 														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
 														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 														echo "<tr>
-																<td>$no<td>
+																<td>$no</td>
 																<td>$val[nama]</td>
 																<td>$val[gender]</td>
-																<td>$val[alamat]</td>
 																<td>$val[no_hp]</td>
+																<td>$val[alamat]</td>
 																<td><span class='$label'>$val[status]</span></td>
-																<td><a href = 'edit_karyawan.php?id_karyawan=$val[id_karyawan]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>
-
-																	<a onclick = 'return konfirm()' href='status_karyawan.php?id_karyawan=$val[id_karyawan]&status=$val[status]' class= 'btn btn-xs $btnclass' title='$title'><i class='fa fa-power-off'></i></a></td>
-																</tr>";
-																$no++;
-															}
-																?>
+																<td><a onclick = 'return konfirm()' href='status_karyawan.php?id_karyawan=$val[id_karyawan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
+															  </tr>
+																";
+														$no++;
+														}
+													?>
 												</tbody>
 											</table>
-										</div>
-									</div>
+											<span class="text-default">Jumlah data : <?php echo($jml_karyawan['$jml_karyawan']) ?></span>
 								</div>
 							</div>
 						</div>
@@ -129,5 +135,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
         </div>
       </div>
     </div>
+		<div class="clearfix"></div>
+		<?php include '../dashboard/footer.php'; ?>
+	 	</div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="../assets/vendor/jquery/jquery.min.js"></script>
+	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../assets/scripts/klorofil-common.js"></script>
+
 	</body>
-  </html>
+</html>
