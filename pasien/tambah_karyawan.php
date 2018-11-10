@@ -121,8 +121,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											</label>
 		 										</div>
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
-
-										<br>
+                        <br>
 										<div class="row">
 											<div class="col-md-6">
 												<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
