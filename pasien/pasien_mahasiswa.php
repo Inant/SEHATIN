@@ -47,6 +47,33 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       <div class="main-content">
         <div class="container-fluid">
           <h3 class="page-title">Pasien Mahasiwa</h3>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel">
+							<div class="panel-heading">
+									<h4 class="panel-title">Data Petugas</h4>
+
+							</div>
+								<div class="row">
+									<div class="col-md-2">
+										<a href="tambah_pasien.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
+									</div>
+										<div class="col-md-6"></div>
+											<div class="col-md-4">
+												<form action="" method="POST">
+													<div class="input-group" style="margin-right: 25px;">
+														<input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama...">
+														<span class="input-group-btn"><button type="submit" name="btn-cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
+													</div>
+												</form>
+											</div>
+										</div>
+								<div class="">
+
+								</div>
+							</div>
+						</div>
+					</div>
         </div>
       </div>
     </div>
