@@ -36,8 +36,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
-			$nama_err = $gender_err = $alamat_err = $nohp_err = $nip_err = "";
-			$nama = $gender = $nohp = $nip = "";
+			$nim_err = $nama_err = $gender_err = $tgllahir_err = $nohp_err = $alamat_err =  "";
+			$nim = $nama = $gender = $tgllahir = $nohp = "";
 			$alamat = "Alamat";
 
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -75,15 +75,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nohp = $_POST['nohp'];
 				}
 
-				if (empty($_POST['nip'])) {
-					$nip_err = "* Nomor izin praktek harus diisi !";
-				}
-				else{
-					$nip = $_POST['nip'];
-				}
-
-				if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "" && $nip_err == "") {
-					mysqli_query($con, "INSERT INTO dokter (nm_dokter, gender, alamat, no_hp, no_ijin_praktek) VALUE ('$nama', '$gender', '$alamat', '$nohp', '$nip')");
+				if ($nim_err == "" && $nama_err == "" && $gender_err == "" &&  $tgllahir_err == "" && $nohp_err == "" && $alamat_err == "") {
+					mysqli_query($con, "INSERT INTO pasien_mahasiswa (nim, nama, gender, tgl_lahir, no_hp, alamat,) VALUE (''$nim, '$nama', '$gender', '$tgllahir', '$nohp', '$alamat')");
 					echo "<script>
 						alert('Data berhasil ditambah');
 						window.location.href='data_dokter.php';
@@ -94,18 +87,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Dokter</h3>
+					<h3 class="page-title">Pasien</h3>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Tambah Dokter</h3>
+									<h3 class="panel-title">Tambah Pasien Mahasiwa</h3>
 								</div>
 								<div class="panel-body">
 									<form method="POST" action="">
 										<div class="row">
 											<div class="col-md-6">
-												<input type="text" name="nama" class="form-control" placeholder="Nama Dokter" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+												<input type="text" name="nama" class="form-control" placeholder="Nama Mahasiswa" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
@@ -127,10 +120,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											</label>
 		 										</div>
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
-											</div>
-											<div class="col-md-6">
-												<input type="text" name="nip" class="form-control" placeholder="Nomor Izin Praktek" value="<?php echo(isset($_POST['nip']) ? $_POST['nip'] : $nip ) ?>">
-		 										<span class="text-danger"> <?php echo($nip_err); ?></span>
 											</div>
 										</div>
 										<br>

@@ -39,17 +39,109 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php
-			include '../dashboard/navbar.php';
-			include '../dashboard/left_sidebar.php';
-		 ?>
-		 <div class="main">
-		 	<div class="main-content">
-				<div class="container-fluid">
-					<h3 class="page-title">Pasien Umum</h3>
-				</div>
-		 	</div>
-		 </div>
-	</div>
-</body>
+    <?php
+    include '../dashboard/navbar.php';
+    include '../dashboard/left_sidebar.php';
+    ?>
+    <div class="main">
+      <div class="main-content">
+        <div class="container-fluid">
+          <h3 class="page-title">Pasien</h3>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel">
+							<div class="panel-heading">
+									<h4 class="panel-title">Pasien Umum</h4>
+
+							</div>
+								<div class="row">
+									<div class="col-md-2">
+										<a href="tambah_mahasiswa.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
+									</div>
+										<div class="col-md-6"></div>
+											<div class="col-md-4">
+												<form action="" method="POST">
+													<div class="input-group" style="margin-right: 25px;">
+														<input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama...">
+														<span class="input-group-btn"><button type="submit" name="btn-cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
+													</div>
+												</form>
+											</div>
+										</div>
+										<div class="panel-body">
+											<table class="table table-striped table-hover table-bordered">
+												<thead>
+													<tr>
+														<th>No</th>
+														<th>Nama Pasien</th>
+														<th>Jenis Kelamin</th>
+														<th>No Telepon</th>
+														<th>Alamat</th>
+													</tr>
+												</thead>
+												<tbody>
+													<script type="text/javascript">
+														function konfirm() {
+															tanya = confirm("Anda yakin ?");
+															if (tanya == true) return true;
+															else return false;
+														}
+													</script>
+													<script type="text/javascript">
+														function konfirm() {
+															tanya = confirm("Anda yakin ?");
+															if (tanya == true) return true;
+															else return false;
+														}
+													</script>
+													<?php
+													if (isset($_POST['btn_cari'])) {
+														$query = "SELECT * FROM pasien_umum WHERE nama LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama ASC";
+													}
+													else{
+													$query = "SELECT * FROM pasien_umum WHERE username != '$_SESSION[username]' ORDER BY id_umum ASC";
+													}
+													$jml = "SELECT COUNT(*) as jml_petugas FROM pasien_umum";
+													$r = mysqli_query($con, $jml);
+													$jml_petugas = mysqli_fetch_assoc($r);
+													$result = mysqli_query($con, $query);
+													$no = 1;
+													foreach ($rsult as $val) {
+														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
+														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
+														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
+														echo "<tr>
+																<td>$no</td>
+																<td>$val[nama]</td>
+																<td>$val[gender]</td>
+																<td>$val[no_hp]</td>
+																<td>$val[alamat]</td>
+																<td><span class='$label'>$val[status]</span></td>
+																<td><a onclick = 'return konfirm()' href='status_petugas.php?id_petugas=$val[id_petugas]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
+															  </tr>
+																";
+														$no++;
+														}
+													?>
+												</tbody>
+											</table>
+											<span class="text-default">Jumlah data : <?php echo($jml_pasien['$jml_pasien']) ?></span>
+								</div>
+							</div>
+						</div>
+					</div>
+        </div>
+      </div>
+    </div>
+		<div class="clearfix"></div>
+		<?php include '../dashboard/footer.php'; ?>
+	 	</div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="../assets/vendor/jquery/jquery.min.js"></script>
+	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../assets/scripts/klorofil-common.js"></script>
+
+	</body>
 </html>
