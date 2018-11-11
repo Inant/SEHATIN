@@ -34,7 +34,7 @@
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$user = $_POST['user'];
 			$pass = md5($_POST['pass']);
-			$query = "SELECT * FROM petugas WHERE username = '$_POST[user]' AND password = '$pass' ";
+			$query = "SELECT * FROM petugas WHERE username = '$_POST[user]' AND password = '$pass' AND status = 'Aktif'";
 			$result = mysqli_query($con, $query);
 			$val = mysqli_fetch_assoc($result);
 			if (mysqli_num_rows($result) > 0) {
@@ -45,8 +45,7 @@
 				</script>";
 			}
 			else{
-				$gagal = "* Username atau password salah";
-
+				$gagal = "* Username atau password salah atau user Non Aktif";
 			}
 		}
 

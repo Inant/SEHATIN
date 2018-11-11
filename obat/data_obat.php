@@ -76,12 +76,16 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                       </thead>
 											<tbody>
 												<?php
-													$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan ORDER BY obat.nm_obat ASC";
+													$halaman = 5;
+													$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+													$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
+													$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan ORDER BY obat.nm_obat ASC LIMIT $mulai, $halaman";
 													$jml = "SELECT COUNT(*) AS jml_obat FROM obat";
-													$result = mysqli_query($con, $q);
 													$r = mysqli_query($con, $jml);
+													$result = mysqli_query($con, $q);
 													$jml_obat = mysqli_fetch_assoc($r);
-													$no = 1;
+													$pages = ceil($jml_obat['jml_obat']/$halaman);
+													$no = $mulai + 1;
 													foreach ($result as $val) {
 														echo "<tr>
 																		<td>$no</td>
@@ -101,6 +105,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</tbody>
                     </table>
                   </div>
+									<ul class="pagination">
+										<?php for ($i=1; $i <= $pages; $i++) { ?>
+														<li><a href="?halaman=<?php echo $i; ?> " class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i; ?></a></li>
+									  <?php
+									  			} ?>
+									</ul>
+									</div>
                 </div>
               </div>
             </div>
