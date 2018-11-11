@@ -83,7 +83,7 @@
 						<div class="overlay"></div>
 						<div class="content text">
 							<h1 class="heading">SEHATIN</h1>
-							<p>by Popeye Team comel</p>
+							<p>by Popeye Team</p>
 						</div>
 					</div>
 					<div class="clearfix"></div>
