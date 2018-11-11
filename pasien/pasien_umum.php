@@ -72,10 +72,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											<table class="table table-striped table-hover table-bordered">
 												<thead>
 													<tr>
-														<th>No</th>
-														<th>Nama Pasien</th>
-														<th>Jenis Kelamin</th>
-														<th>No Telepon</th>
+														<th>#</th>
+														<th>Nama</th>
+														<th>Gender</th>
+														<th>No HP</th>
 														<th>Alamat</th>
 													</tr>
 												</thead>
@@ -87,26 +87,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															else return false;
 														}
 													</script>
-													<script type="text/javascript">
-														function konfirm() {
-															tanya = confirm("Anda yakin ?");
-															if (tanya == true) return true;
-															else return false;
-														}
-													</script>
 													<?php
 													if (isset($_POST['btn_cari'])) {
-														$query = "SELECT * FROM pasien_umum WHERE nama LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama ASC";
+														$query = "SELECT * FROM pasien_umum WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
 													}
 													else{
-													$query = "SELECT * FROM pasien_umum WHERE username != '$_SESSION[username]' ORDER BY id_umum ASC";
+													$query = "SELECT * FROM pasien_umum ORDER BY id_umum ASC";
 													}
-													$jml = "SELECT COUNT(*) as jml_petugas FROM pasien_umum";
+													$jml = "SELECT COUNT(*) as jml_umum FROM pasien_umum";
 													$r = mysqli_query($con, $jml);
-													$jml_petugas = mysqli_fetch_assoc($r);
+													$jml_umum = mysqli_fetch_assoc($r);
 													$result = mysqli_query($con, $query);
 													$no = 1;
-													foreach ($rsult as $val) {
+													foreach ($result as $val) {
 														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
 														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
 														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
@@ -125,7 +118,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													?>
 												</tbody>
 											</table>
-											<span class="text-default">Jumlah data : <?php echo($jml_pasien['$jml_pasien']) ?></span>
+											<span class="text-default">Jumlah data : <?php echo($jml_umum['jml_umum']) ?></span>
 								</div>
 							</div>
 						</div>

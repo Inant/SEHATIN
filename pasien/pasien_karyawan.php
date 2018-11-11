@@ -48,7 +48,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
         <div class="container-fluid">
           <h3 class="page-title">Pasien</h3>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-10">
 							<div class="panel">
 							<div class="panel-heading">
 									<h4 class="panel-title">Pasien Karyawan</h4>
@@ -72,12 +72,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											<table class="table table-striped table-hover table-bordered">
 												<thead>
 													<tr>
-														<th>No</th>
-														<th>Nama Pasien</th>
-														<th>Jenis Kelamin</th>
-														<th>No Telepon</th>
+														<th>#</th>
+														<th>Nama</th>
+														<th>Gemder</th>
+														<th>No HP</th>
 														<th>Alamat</th>
-														<th>Status</th>
 														<th>Aksi</th>
 													</tr>
 												</thead>
@@ -89,26 +88,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															else return false;
 														}
 													</script>
-													<script type="text/javascript">
-														function konfirm() {
-															tanya = confirm("Anda yakin ?");
-															if (tanya == true) return true;
-															else return false;
-														}
-													</script>
 													<?php
 													if (isset($_POST['btn_cari'])) {
-														$query = "SELECT * FROM pasien_karyawan WHERE nama LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama ASC";
+														$query = "SELECT * FROM pasien_karyawan WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
 													}
 													else{
-													$query = "SELECT * FROM pasien_karyawan WHERE username != '$_SESSION[username]' ORDER BY id_karyawan ASC";
+													$query = "SELECT * FROM pasien_karyawan ORDER BY id_karyawan ASC";
 													}
-													$jml = "SELECT COUNT(*) as jml_petugas FROM pasien_karyawan";
+													$jml = "SELECT COUNT(*) as jml_pasien_karyawan FROM pasien_karyawan";
 													$r = mysqli_query($con, $jml);
-													$jml_karyawan = mysqli_fetch_assoc($r);
+													$jml_pasien_karyawan = mysqli_fetch_assoc($r);
 													$result = mysqli_query($con, $query);
 													$no = 1;
-													foreach ($rsult as $val) {
+													foreach ($result as $val) {
 														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
 														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
 														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
@@ -127,7 +119,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													?>
 												</tbody>
 											</table>
-											<span class="text-default">Jumlah data : <?php echo($jml_karyawan['$jml_karyawan']) ?></span>
+											<span class="text-default">Jumlah data : <?php echo($jml_pasien_karyawan['jml_pasien_karyawan']) ?></span>
 								</div>
 							</div>
 						</div>
