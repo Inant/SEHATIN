@@ -69,7 +69,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											<th>No</th>
 		 											<th>Nama Dokter</th>
 		 											<th>Jenis Kelamin</th>
-		 											<th>Gender</th>
 		 											<th>Alamat</th>
 		 											<th>No Hp</th>
 		 											<th>No Ijin Prakter</th>
@@ -104,7 +103,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													echo "<tr>
 															<td>$no</td>
 															<td>$val[nm_dokter]</td>
-															<td>$val[gender]</td>
 															<td>$val[gender]</td>
 															<td>$val[alamat]</td>
 															<td>$val[no_hp]</td>

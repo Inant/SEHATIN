@@ -115,19 +115,16 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													";
 													$no++;
 												}
-
-											 ?>
+													?>
 										</tbody>
 									</table>
 									<span class="text-default">Jumlah data : <?php echo($jml_petugas['jml_petugas']) ?></span>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 		<div class="clearfix"></div>
 		<?php include '../dashboard/footer.php'; ?>
