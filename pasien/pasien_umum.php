@@ -72,7 +72,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											<table class="table table-striped table-hover table-bordered">
 												<thead>
 													<tr>
-														<th>#</th>
+														<th>No</th>
 														<th>Nama</th>
 														<th>Gender</th>
 														<th>No HP</th>
