@@ -48,26 +48,22 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
         <div class="container-fluid">
           <h3 class="page-title">Pasien</h3>
 					<div class="row">
-						<div class="col-md-10"> 
+						<div class="col-md-10">
 							<div class="panel">
 							<div class="panel-heading">
 									<h4 class="panel-title">Pasien Karyawan</h4>
 
 							</div>
-								<div class="row">
-									<div class="col-md-2">
-										<a href="tambah_karyawan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
-									</div>
-<<<<<<< HEAD
+
 									<div class="row">
 										<div class="row">
 											<div class="col-md-2">
 											<a href="tambah_mahasiswa.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
 											</div>
 											<div class="col-md-6"></div>
-=======
+
 										<div class="col-md-6"></div>
->>>>>>> 51532e4b36a4188abba638a9c4d3d239e692c3fd
+
 											<div class="col-md-4">
 												<form action="" method="POST">
 													<div class="input-group" style="margin-right: 25px;">
