@@ -72,14 +72,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											<table class="table table-striped table-hover table-bordered">
 												<thead>
 													<tr>
-														<th>No</th>
-														<th>Nim</th>
-														<th>Nama Pasien</th>
-														<th>Jenis Kelamin</th>
-														<th>Tanggal Lahir</th>
-														<th>No Telepon</th>
+														<th>#</th>
+														<th>NIM</th>
+														<th>Nama</th>
+														<th>Gender</th>
+														<th>Tgl Lahir</th>
+														<th>No HP</th>
 														<th>Alamat</th>
-                            <th>Status</th>
                             <th>Aksi</th>
 													</tr>
 												</thead>
@@ -91,31 +90,25 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															else return false;
 														}
 													</script>
-													<script type="text/javascript">
-														function konfirm() {
-															tanya = confirm("Anda yakin ?");
-															if (tanya == true) return true;
-															else return false;
-														}
-													</script>
 													<?php
 													if (isset($_POST['btn_cari'])) {
-														$query = "SELECT * FROM pasien_mahasiswa WHERE nama LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama ASC";
+														$query = "SELECT * FROM pasien_mahasiswa WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
 													}
 													else{
-														$query = "SELECT * FROM pasien_mahasiswa WHERE username != '$_SESSION[username]' ORDER BY id_mahasiswa ASC";
+														$query = "SELECT * FROM pasien_mahasiswa ORDER BY id_mahasiswa ASC";
 													}
-													$jml = "SELECT COUNT(*) as jml_petugas FROM pasien_mahasiswa";
+													$jml = "SELECT COUNT(*) as jml_mhs FROM pasien_mahasiswa";
 													$r = mysqli_query($con, $jml);
-													$jml_petugas = mysqli_fetch_assoc($r);
+													$jml_mhs = mysqli_fetch_assoc($r);
 													$result = mysqli_query($con, $query);
 													$no = 1;
-													foreach ($rsult as $val) {
+													foreach ($result as $val) {
 														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
 														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
 														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 														echo "<tr>
 																<td>$no</td>
+                                <td>$val[nim]</td>
 																<td>$val[nama]</td>
 																<td>$val[gender]</td>
 																<td>$val[tgl_lahir]</td>
@@ -130,7 +123,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													?>
 												</tbody>
 											</table>
-											<span class="text-default">Jumlah data : <?php echo($jml_pasien['$jml_pasien']) ?></span>
+											<span class="text-default">Jumlah data : <?php echo($jml_mhs['jml_mhs']) ?></span>
 								</div>
 							</div>
 						</div>

@@ -34,7 +34,7 @@
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$user = $_POST['user'];
 			$pass = md5($_POST['pass']);
-			$query = "SELECT * FROM petugas WHERE username = '$_POST[user]' AND password = '$pass' ";
+			$query = "SELECT * FROM petugas WHERE username = '$_POST[user]' AND password = '$pass' AND status = 'Aktif'";
 			$result = mysqli_query($con, $query);
 			$val = mysqli_fetch_assoc($result);
 			if (mysqli_num_rows($result) > 0) {
@@ -45,8 +45,7 @@
 				</script>";
 			}
 			else{
-				$gagal = "* Username atau password salah";
-
+				$gagal = "* Username atau password salah atau user Non Aktif";
 			}
 		}
 
@@ -84,7 +83,7 @@
 						<div class="overlay"></div>
 						<div class="content text">
 							<h1 class="heading">SEHATIN</h1>
-							<p>by Popeye Team comel</p>
+							<p>by Popeye Team</p>
 						</div>
 					</div>
 					<div class="clearfix"></div>
