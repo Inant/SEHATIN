@@ -36,7 +36,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
-			$nama_err = $gender_err = $alamat_err = $nohp_err = $nip_err = "";
+			$nama_err = $gender_err = $nohp_err = $alamat_err = $nip_err = "";
 			$nama = $gender = $nohp = $nip = "";
 			$alamat = "Alamat";
 
