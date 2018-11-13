@@ -39,7 +39,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			$nama_err = $gender_err = $alamat_err = $nohp_err = $nip_err = "";
 			$nama = $gender = $nohp = $nip = "";
 			$alamat = "Alamat";
-			//untuk validasi
+			
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				if (empty($_POST['nama'])) {
 					$nama_err = "* Nama harus diisi !";
