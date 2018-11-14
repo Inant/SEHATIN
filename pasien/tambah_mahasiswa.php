@@ -53,12 +53,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nama = trim($_POST['nama']);
 				}
 
-				if (is_numeric($_POST['nim'])) {
-					$nim_err = "* Pilih nim !";
+				/*if (empty($_POST['nim'])) {
+					$nim_err = "* NIM harus diisi !";
 				}
-				else{
-					$nim = $_POST['nim'];
-				}
+				else{*/
+					$nim = trim($_POST['nim']);
+				//}
 
 				if (empty($_POST['gender'])) {
 					$gender_err = "* Pilih gender !";
@@ -97,7 +97,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$tgl_lahir = trim($_POST['tgl_lahir']);
 				}
 
-				if ($nim_err = $nama_err == "" && $gender_err == "" && $tgl_lahir_err = "" && $alamat_err == "" && $nohp_err == "") {
+				if ($nama_err == "" && $gender_err == "" && $tgl_lahir_err = "" && $alamat_err == "" && $nohp_err == "") {
 					mysqli_query($con, "INSERT INTO pasien_mahasiswa (nim, nama, gender, tgl_lahir, no_hp, alamat) VALUE ('$nim', '$nama', '$gender', '$tgl_lahir','$nohp', '$alamat')");
 					echo "<script>
 						alert('Data berhasil ditambah');
@@ -124,7 +124,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
-												<input type="text" name="nim" class="form-control" placeholder="NIM Mahasiswa" value="<?php echo(isset($_POST['nim']) ? $_POST['nim'] : $nim) ?>">
+												<input type="text" name="nim" class="form-control" placeholder="NIM Mahasiswa" value="<?php echo(isset($_POST['nim']) ? $_POST['nim'] : $nim) ?>" maxlength="9" minlength="9">
 		 										<span class="text-danger"> <?php echo($nim_err); ?></span>
 											</div>
 										</div>
