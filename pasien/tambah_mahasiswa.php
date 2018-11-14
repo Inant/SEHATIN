@@ -105,7 +105,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					  </script>";
 				}
 			}
-			//hai aku fachri
 		?>
 		<div class="main">
 			<div class="main-content">
