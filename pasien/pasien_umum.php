@@ -57,7 +57,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 								<div class="row">
 									<div class="col-md-2">
 										<?php if ($_SESSION['level'] == "Resepsionis"): ?>
-											<a href="tambah_mahasiswa.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
+											<a href="tambah_umum.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
 										<?php endif; ?>
 									</div>
 										<div class="col-md-6"></div>
