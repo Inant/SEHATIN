@@ -40,7 +40,7 @@
 				<?php
 					}
 					elseif ($_SESSION['level'] == 'Resepsionis') { ?>
-						<li><a href="dashboard.php" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i><span>Pasien</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse">

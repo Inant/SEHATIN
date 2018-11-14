@@ -55,9 +55,22 @@ echo "<script>
 
 						</div>
 							<div class="row">
-								<div class="col-md-2">
-									<a href="tambah_karyawan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
-								</div>
+								<?php
+									if ($_SESSION['level'] == "Resepsionis") {
+								?>
+									<div class="col-md-2">
+										<a href="tambah_karyawan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left : 25px; margin-bottom: 10px;">Tambah</button></a>
+									</div>
+								<?php
+									}
+									else {
+								?>
+									<div class="col-md-2">
+
+									</div>
+								<?php
+									}
+								 ?>
 									<div class="col-md-6"></div>
 										<div class="col-md-4">
 											<form action="" method="POST">
