@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
  <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Edit Profil | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,7 +32,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 			$pass_lama_err = $pass_baru_err = $konfirmasi_err = "";
@@ -72,6 +72,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 
 				if ($pass_lama_err == "" && $pass_baru_err == "" && $konfirmasi_err == "") {
 					mysqli_query($con, "UPDATE petugas SET password = '$pass_baru' WHERE id_petugas = '$_GET[id_petugas]'");
+					echo "<script>
+									alert('Silahkan login kembali');
+									window.location.href='../logout.php';
+								</script>";
 				}
 			}
 		?>
