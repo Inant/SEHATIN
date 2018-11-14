@@ -12,6 +12,8 @@ else {
 	$result = mysqli_query($con, $query_petugas);
 	$val = mysqli_fetch_assoc($result);
 
+	$qnama = "SELECT nama_petugas FROM petugas WHERE username = '$_SESSION[username]'";
+
 	$query_dokter = "SELECT COUNT(*) as jml_dokter FROM dokter";
 	$res = mysqli_query($con, $query_dokter);
 	$values = mysqli_fetch_assoc($res);
