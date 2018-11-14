@@ -7,7 +7,7 @@
 					<div class="panel panel-headline">
 						<div class="panel-heading">
 
-							<h3 class="panel-title">Selamat Datang <?php echo $_SESSION['username'];?></h3>
+							<h3 class="panel-title">Selamat Datang <?php echo $valnama['nama_petugas'];?></h3>
 							<?php
 								date_default_timezone_set("Asia/Jakarta");
 							 ?>

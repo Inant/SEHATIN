@@ -13,6 +13,8 @@ else {
 	$val = mysqli_fetch_assoc($result);
 
 	$qnama = "SELECT nama_petugas FROM petugas WHERE username = '$_SESSION[username]'";
+	$rnama = mysqli_query($con, $qnama);
+	$valnama = mysqli_fetch_assoc($rnama);
 
 	$query_dokter = "SELECT COUNT(*) as jml_dokter FROM dokter";
 	$res = mysqli_query($con, $query_dokter);
