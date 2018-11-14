@@ -36,8 +36,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
-			$nama_err = $gender_err = $alamat_err = $nohp_err =  "";
-			$nama = $gender = $nohp =  "";
+			$nama_err = $gender_err = $nohp_err = $alamat_err = "";
+			$nama = $gender = $nohp = "";
 			$alamat = "Alamat";
 
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -75,7 +75,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nohp = $_POST['nohp'];
 				}
 
-
 				if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "") {
 					mysqli_query($con, "INSERT INTO pasien_karyawan (nama, gender, alamat, no_hp) VALUE ('$nama', '$gender', '$alamat', '$nohp')");
 					echo "<script>
@@ -99,7 +98,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									<form method="POST" action="">
 										<div class="row">
 											<div class="col-md-6">
-												<input type="text" name="nama" class="form-control" placeholder="Nama Pasien" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+												<input type="text" name="nama" class="form-control" placeholder="Nama Dokter" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
@@ -121,7 +120,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											</label>
 		 										</div>
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
-                        <br>
+											</div>
+										</div>
+										<br>
 										<div class="row">
 											<div class="col-md-6">
 												<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
