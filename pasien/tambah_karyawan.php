@@ -75,8 +75,21 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nohp = $_POST['nohp'];
 				}
 
-				if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "") {
-					mysqli_query($con, "INSERT INTO pasien_karyawan (nama, gender, alamat, no_hp) VALUE ('$nama', '$gender', '$alamat', '$nohp')");
+				date_default_timezone_set("Asia/Jakarta");
+				$now = date("Y-m-d");
+
+				if (empty($_POST['tgl_lahir'])) {
+					$tgl_lahir_err = "* Tanggal lahir harus diisi !";
+				}
+				elseif ($_POST['tgl_lahir'] >=$now) {
+					$tgl_lahir_err = "* Tanggal lahir tidak valid";
+				}
+				else {
+					$tgl_lahir = trim($_POST['tgl_lahir']);
+				}
+
+				if ($nama_err == "" && $gender_err == "" && $tgl_lahir_err == "" && $alamat_err == "" && $nohp_err == "") {
+					mysqli_query($con, "INSERT INTO pasien_karyawan (nama, gender, tgl_lahir, alamat, no_hp) VALUE ('$nama', '$gender', '$tgl_lahir', '$alamat', '$nohp')");
 					echo "<script>
 						alert('Data berhasil ditambah');
 						window.location.href='pasien_karyawan.php';
@@ -120,6 +133,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											</label>
 		 										</div>
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
+											</div>
+											<div class="col-md-6">
+												<input type="date" name="tgl_lahir" value="<?php echo isset($_POST['tgl_lahir']) ? $_POST['tgl_lahir'] : '' ?>" class="form-control" placeholder="Tanggal Lahir">
+												<span class="text-danger"><?php echo $tgl_lahir_err?></span>
 											</div>
 										</div>
 										<br>

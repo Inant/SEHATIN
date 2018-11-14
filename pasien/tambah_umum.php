@@ -36,8 +36,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
-			$nim_err = $nama_err = $gender_err = $tgllahir_err = $nohp_err = $alamat_err =  "";
-			$nim = $nama = $gender = $tgllahir = $nohp = "";
+			$nama_err = $gender_err = $nohp_err = $alamat_err = "";
+			$nama = $gender = $nohp = "";
 			$alamat = "Alamat";
 
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -57,14 +57,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				else{
 					$gender = $_POST['gender'];
 				}
-
-				if (empty($_POST['alamat']) || $_POST['alamat'] == "Alamat") {
-					$alamat_err = "* Alamat harus diisi !";
-				}
-				else{
-					$alamat = $_POST['alamat'];
-				}
-
 				if (empty($_POST['nohp'])) {
 					$nohp_err = "* No Hp harus diisi !";
 				}
@@ -75,11 +67,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nohp = $_POST['nohp'];
 				}
 
-				if ($nim_err == "" && $nama_err == "" && $gender_err == "" &&  $tgllahir_err == "" && $nohp_err == "" && $alamat_err == "") {
-					mysqli_query($con, "INSERT INTO pasien_mahasiswa (nim, nama, gender, tgl_lahir, no_hp, alamat,) VALUE (''$nim, '$nama', '$gender', '$tgllahir', '$nohp', '$alamat')");
+				if (empty($_POST['alamat']) || $_POST['alamat'] == "Alamat") {
+					$alamat_err = "* Alamat harus diisi !";
+				}
+				else{
+					$alamat = $_POST['alamat'];
+				}
+
+				if ($nama_err == "" && $gender_err == "" && $nohp_err = "" && $alamat_err == "") {
+					mysqli_query($con, "INSERT INTO pasien_umum (nama, gender, no_hp, alamat) VALUE ('$nama', '$gender', '$nohp' '$alamat')");
 					echo "<script>
 						alert('Data berhasil ditambah');
-						window.location.href='data_dokter.php';
+						window.location.href='data_pasien.php';
 					  </script>";
 				}
 			}
@@ -87,18 +86,22 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Pasien</h3>
+					<h3 class="page-title">Pasien Umum</h3>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Tambah Pasien Umum</h3>
+									<h3 class="panel-title"> Tambah Pasien Umum</h3>
 								</div>
-								<div class="panel-body">
+								<div cla	ss="panel-body">
 									<form method="POST" action="">
 										<div class="row">
 											<div class="col-md-6">
+<<<<<<< HEAD:pasien/coba.php
 												<input type="text" name="nama" class="form-control" placeholder="Nama Pasien" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+=======
+												<input type="text" name="nama" class="form-control" placeholder="Masukan nama pasien" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+>>>>>>> cda1750812c3c44c4291a4d2de6833b85c6b636b:pasien/tambah_umum.php
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
@@ -121,11 +124,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										</div>
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
 											</div>
-										</div>
-										<br>
+												<br>
 										<div class="row">
 											<div class="col-md-6">
-												<textarea name="alamat" class="form-control" rows="2" placeholder="Masukan alamat anda "><?php echo ($alamat_err) ?></textarea>
+												<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
 		 										<span class="text-danger"> <?php echo($alamat_err); ?></span>
 											</div>
 										</div>
