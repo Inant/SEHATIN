@@ -98,7 +98,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									<form method="POST" action="">
 										<div class="row">
 											<div class="col-md-6">
-												<input type="text" name="nama" class="form-control" placeholder="Nama Mahasiswa" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+												<input type="text" name="nama" class="form-control" placeholder="Nama Pasien" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
