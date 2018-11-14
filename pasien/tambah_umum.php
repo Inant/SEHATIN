@@ -36,8 +36,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
-			$nama_err = $gender_err = $nohp_err = $alamat_err = "";
-			$nama = $gender = $nohp = "";
+			$nim_err = $nama_err = $gender_err = $tgllahir_err = $nohp_err = $alamat_err =  "";
+			$nim = $nama = $gender = $tgllahir = $nohp = "";
 			$alamat = "Alamat";
 
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -75,11 +75,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nohp = $_POST['nohp'];
 				}
 
-				if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "") {
-					mysqli_query($con, "INSERT INTO pasien_karyawan (nama, gender, alamat, no_hp) VALUE ('$nama', '$gender', '$alamat', '$nohp')");
+				if ($nim_err == "" && $nama_err == "" && $gender_err == "" &&  $tgllahir_err == "" && $nohp_err == "" && $alamat_err == "") {
+					mysqli_query($con, "INSERT INTO pasien_mahasiswa (nim, nama, gender, tgl_lahir, no_hp, alamat,) VALUE (''$nim, '$nama', '$gender', '$tgllahir', '$nohp', '$alamat')");
 					echo "<script>
 						alert('Data berhasil ditambah');
-						window.location.href='pasien_karyawan.php';
+						window.location.href='data_dokter.php';
 					  </script>";
 				}
 			}
@@ -98,7 +98,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									<form method="POST" action="">
 										<div class="row">
 											<div class="col-md-6">
-												<input type="text" name="nama" class="form-control" placeholder="Nama Pasien Karyawan" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+												<input type="text" name="nama" class="form-control" placeholder="Nama Mahasiswa" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
@@ -125,7 +125,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										<br>
 										<div class="row">
 											<div class="col-md-6">
-												<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
+												<textarea name="alamat" class="form-control" rows="2" placeholder="Masukan alamat anda "><?php echo ($alamat_err) ?></textarea>
 		 										<span class="text-danger"> <?php echo($alamat_err); ?></span>
 											</div>
 										</div>
