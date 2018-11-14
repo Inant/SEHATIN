@@ -101,17 +101,12 @@ echo "<script>
 												$result = mysqli_query($con, $query);
 												$no = 1;
 												foreach ($result as $val) {
-													$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
-													$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
-													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 													echo "<tr>
 															<td>$no</td>
 															<td>$val[nama]</td>
 															<td>$val[gender]</td>
 															<td>$val[no_hp]</td>
 															<td>$val[alamat]</td>
-															<td><span class='$label'>$val[status]</span></td>
-															<td><a onclick = 'return konfirm()' href='status_karyawan.php?id_karyawan=$val[id_karyawan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
 															</tr>
 															";
 													$no++;
