@@ -39,7 +39,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			$nama_err = $gender_err = $alamat_err = $nohp_err = $nip_err = "";
 			$nama = $gender = $nohp = $nip = "";
 			$alamat = "Alamat";
-			
+
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				if (empty($_POST['nama'])) {
 					$nama_err = "* Nama harus diisi !";
@@ -94,7 +94,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Dokter</h3>
+					<h3 class="page-title">Tambah Pasien</h3>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel">
