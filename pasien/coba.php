@@ -9,7 +9,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Tambah Pasien Kategori Mahasiswa | Sehatin</title>
+	<title>Tambah Pasien Kategori Umum | Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -92,7 +92,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 						<div class="col-md-12">
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Tambah Pasien Mahasiwa</h3>
+									<h3 class="panel-title">Tambah Pasien Umum</h3>
 								</div>
 								<div class="panel-body">
 									<form method="POST" action="">
