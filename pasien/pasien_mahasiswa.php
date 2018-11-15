@@ -110,9 +110,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$result = mysqli_query($con, $query);
 													$no = 1;
 													foreach ($result as $val) {
-														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
-														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
-														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 														echo "<tr>
 																<td>$no</td>
                                 <td>$val[nim]</td>
@@ -121,8 +118,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 																<td>$val[tgl_lahir]</td>
 																<td>$val[no_hp]</td>
 																<td>$val[alamat]</td>
-																<td><span class='$label'>$val[status]</span></td>
-																<td><a onclick = 'return konfirm()' href='status_petugas.php?id_petugas=$val[id_petugas]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
+																<td><a onclick = 'return konfirm()' href='status_petugas.php?id_mahasiswa=$val[id_mahasiswa]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>
 															  </tr>
 																";
 														$no++;

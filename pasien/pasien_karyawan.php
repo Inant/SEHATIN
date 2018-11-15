@@ -88,6 +88,7 @@ echo "<script>
 													<th>No</th>
 													<th>Nama</th>
 													<th>Gender</th>
+													<th>Tanggal Lahir</th>
 													<th>No HP</th>
 													<th>Alamat</th>
 													<th>Aksi</th>
@@ -118,6 +119,7 @@ echo "<script>
 															<td>$no</td>
 															<td>$val[nama]</td>
 															<td>$val[gender]</td>
+															<td>$val[tgl_lahir]</td>
 															<td>$val[no_hp]</td>
 															<td>$val[alamat]</td>
 															</tr>
