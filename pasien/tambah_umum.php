@@ -102,7 +102,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 								<div class="panel-heading">
 									<h3 class="panel-title"> Tambah Pasien Umum</h3>
 								</div>
-								<div cla	ss="panel-body">
+								<div class="panel-body">
 									<form method="POST" action="">
 										<div class="row">
 											<div class="col-md-6">
