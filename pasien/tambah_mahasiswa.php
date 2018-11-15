@@ -166,6 +166,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			 		</div>
 			 	</div>
 			 </div>
+			 <div class="clearfix">
+			 	<?php
+					include '../dashboard/footer.php';
+				 ?>
+			 </div>
  		</div>
+		<script src="../assets/vendor/jquery/jquery.min.js"></script>
+		<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+		<script src="../assets/scripts/klorofil-common.js"></script>
  	</body>
  </html>
