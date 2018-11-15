@@ -57,6 +57,14 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				else{
 					$gender = $_POST['gender'];
 				}
+
+				if (empty($_POST['alamat']) || $_POST['alamat'] == "Alamat") {
+					$alamat_err = "* Alamat harus diisi !";
+				}
+				else{
+					$alamat = $_POST['alamat'];
+				}
+
 				if (empty($_POST['nohp'])) {
 					$nohp_err = "* No Hp harus diisi !";
 				}
@@ -67,12 +75,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nohp = $_POST['nohp'];
 				}
 
-				if (empty($_POST['alamat']) || $_POST['alamat'] == "Alamat") {
-					$alamat_err = "* Alamat harus diisi !";
-				}
-				else{
-					$alamat = $_POST['alamat'];
-				}
+				date_default_timezone_set("Asia/Jakarta");
+				$now = date("Y-m-d");
+
 				if (empty($_POST['tgl_lahir'])) {
 					$tgl_lahir_err = "* Tanggal lahir harus diisi !";
 				}
@@ -83,11 +88,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$tgl_lahir = trim($_POST['tgl_lahir']);
 				}
 
-				if ($nama_err == "" && $gender_err == "" && $tgl_lahir_err == "" && $nohp_err = "" && $alamat_err == "") {
-					mysqli_query($con, "INSERT INTO pasien_umum (nama, gender, tgl_lahir, no_hp, alamat) VALUE ('$nama', '$gender','$tgl_lahir','$nohp','$alamat')");
+				if ($nama_err == "" && $gender_err == "" && $tgl_lahir_err == "" && $alamat_err == "" && $nohp_err == "") {
+					mysqli_query($con, "INSERT INTO pasien_umum (nama, gender, tgl_lahir, alamat, no_hp) VALUE ('$nama', '$gender', '$tgl_lahir', '$alamat', '$nohp')");
 					echo "<script>
 						alert('Data berhasil ditambah');
-						window.location.href='data_pasien.php';
+						window.location.href='pasien_umum.php';
 					  </script>";
 				}
 			}
@@ -95,18 +100,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Pasien Umum</h3>
+					<h3 class="page-title">Pasien</h3>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title"> Tambah Pasien Umum</h3>
+									<h3 class="panel-title">Tambah Pasien Umum</h3>
 								</div>
 								<div class="panel-body">
 									<form method="POST" action="">
 										<div class="row">
 											<div class="col-md-6">
-												<input type="text" name="nama" class="form-control" placeholder="Nama Pasien" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+												<input type="text" name="nama" class="form-control" placeholder="Nama Pasien Umum" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
 												<input type="text" name="nohp" minlength="11" maxlength="13" class="form-control" placeholder="No Handphone" value="<?php echo(isset($_POST['nohp']) ? $_POST['nohp'] : $nohp ) ?>">
@@ -128,11 +134,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										</div>
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
 											</div>
-												<br>
-												<div class="col-md-6">
-													<input type="date" name="tgl_lahir" value="<?php echo isset($_POST['tgl_lahir']) ? $_POST['tgl_lahir'] : '' ?>" class="form-control" placeholder="Tanggal Lahir">
-													<span class="text-danger"><?php echo $tgl_lahir_err?></span>
-												</div>
+											<div class="col-md-6">
+												<input type="date" name="tgl_lahir" value="<?php echo isset($_POST['tgl_lahir']) ? $_POST['tgl_lahir'] : '' ?>" class="form-control" placeholder="Tanggal Lahir">
+												<span class="text-danger"><?php echo $tgl_lahir_err?></span>
+											</div>
+										</div>
+										<br>
 										<div class="row">
 											<div class="col-md-6">
 												<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
