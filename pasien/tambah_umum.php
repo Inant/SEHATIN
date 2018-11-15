@@ -36,7 +36,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
-			$nama_err = $gender_err = $nohp_err = $alamat_err = "";
+			$nama_err = $gender_err = $tgl_lahir_err = $nohp_err = $alamat_err = "";
 			$nama = $gender = $nohp = "";
 			$alamat = "Alamat";
 
@@ -73,9 +73,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				else{
 					$alamat = $_POST['alamat'];
 				}
+				if (empty($_POST['tgl_lahir'])) {
+					$tgl_lahir_err = "* Tanggal lahir harus diisi !";
+				}
+				elseif ($_POST['tgl_lahir'] >=$now) {
+					$tgl_lahir_err = "* Tanggal lahir tidak valid";
+				}
+				else {
+					$tgl_lahir = trim($_POST['tgl_lahir']);
+				}
 
-				if ($nama_err == "" && $gender_err == "" && $nohp_err = "" && $alamat_err == "") {
-					mysqli_query($con, "INSERT INTO pasien_umum (nama, gender, no_hp, alamat) VALUE ('$nama', '$gender', '$nohp' '$alamat')");
+				if ($nama_err == "" && $gender_err == "" && $tgl_lahir_err == "" && $nohp_err = "" && $alamat_err == "") {
+					mysqli_query($con, "INSERT INTO pasien_umum (nama, gender, tgl_lahir, no_hp, alamat) VALUE ('$nama', '$gender','$tgl_lahir','$nohp','$alamat')");
 					echo "<script>
 						alert('Data berhasil ditambah');
 						window.location.href='data_pasien.php';
