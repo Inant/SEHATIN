@@ -97,6 +97,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					}
 
 				}
+<<<<<<< HEAD
 			 ?>
 			 <div class="main">
 			 	<div class="main-content">
@@ -119,6 +120,61 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													<input type="text" name="nama" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : '') ?>" placeholder="Nama Mahasiwa" class="form-control">
 													<span class="text-danger"><?php echo($nama_err)?></span>
 												</div>
+=======
+				else{
+					$nohp = trim($_POST['nohp']);
+				}
+
+				date_default_timezone_set("Asia/Jakarta");
+				$now = date("Y-m-d");
+
+				if (empty($_POST['tgl_lahir'])) {
+					$tgl_lahir_err = "* Tanggal lahir harus diisi !";
+				}
+				elseif ($_POST['tgl_lahir'] >= $now) {
+					$tgl_lahir_err = "* Tanggal lahir tidak valid";
+				}
+				else{
+					$tgl_lahir = trim($_POST['tgl_lahir']);
+				}
+
+				if ($nama_err == "" && $gender_err == "" && $tgl_lahir_err = "" && $alamat_err == "" && $nohp_err == "") {
+					mysqli_query($con, "INSERT INTO pasien_mahasiswa (nim, nama, gender, tgl_lahir, no_hp, alamat) VALUE ('$nim', '$nama', '$gender', '$tgl_lahir','$nohp', '$alamat')");
+					echo "<script>
+						alert('Data berhasil ditambah');
+						window.location.href='pasien_mahasiswa.php';
+					  </script>";
+				}
+			}
+		?>
+		<div class="main">
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title">Tambah Pasien</h3>
+<<<<<<< HEAD
+
+					<h3 class="page-title">Pasien Mahasiswa</h3>
+
+=======
+					<h3 class="page-title">Pasien Mahasiswa</h3>
+>>>>>>> 52f4f5278a4139f65a0c72a9875b1fc37f517af1
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Tambah Pasien Mahasiswa</h3>
+								</div>
+								<div class="panel-body">
+									<form method="POST" action="">
+										<div class="row">
+											<div class="col-md-6">
+												<input type="text" name="nama" class="form-control" placeholder="Nama Mahasiswa" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
+		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
+											</div>
+											<div class="col-md-6">
+												<input type="text" name="nim" class="form-control" placeholder="NIM Mahasiswa" value="<?php echo(isset($_POST['nim']) ? $_POST['nim'] : $nim) ?>" maxlength="9" minlength="9">
+		 										<span class="text-danger"> <?php echo($nim_err); ?></span>
+>>>>>>> d52553b168dd0e97f3f782c913a62a4720ef4f9b
 											</div>
 										</form>
 									</div>
