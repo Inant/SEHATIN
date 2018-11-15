@@ -97,6 +97,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					}
 
 				}
+<<<<<<< HEAD
 			 ?>
 			 <div class="main">
 			 	<div class="main-content">
@@ -113,11 +114,49 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											<div class="row">
 												<div class="col-md-6">
 													<input type="text" name="nim" value="<?php echo(isset($_POST['nim']) ? $_POST['nim'] : '') ?>" placeholder="NIM Mahasiwa" class="form-control" maxlength="9" minlength="9">
-													<span class="tex-danger"><?php echo($nim_err)?></span>
+													<span class="text-danger"><?php echo($nim_err)?></span>
 												</div>
 												<div class="col-md-6">
 													<input type="text" name="nama" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : '') ?>" placeholder="Nama Mahasiwa" class="form-control">
 													<span class="text-danger"><?php echo($nama_err)?></span>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="col-md-3">
+			 											<label class="fancy-radio">
+			 											<input type="radio" name="gender" class="form-control" value="Laki-laki" <?php echo($gender == "Laki-laki" ? 'checked' : '') ?> ><span><i></i>Laki-Laki</span>
+			 											</label>
+			 										</div>
+			 										<div class="col-md-3">
+			 											<label class="fancy-radio">
+			 											<input type="radio" name="gender" class="form-control" value="Perempuan" <?php echo($gender == "Perempuan" ? 'checked' : '') ?> ><span><i></i>Perempuan</span>
+			 											</label>
+			 										</div>
+			 										<span class="text-danger"> <?php echo($gender_err); ?></span>
+												</div>
+												<div class="col-md-6">
+													<input type="date" name="tgl" value="<?php echo(isset($_POST['tgl']) ? $_POST['tgl'] : '') ?>" class="form-control">
+													<span class="text-danger"><?php echo($tgl_err) ?></span>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-6">
+													<textarea name="alamat" class="form-control"><?php echo($alamat) ?></textarea>
+													<span class="text-danger"><?php echo($alamat_err) ?></span>
+												</div>
+												<div class="col-md-6">
+												  <input type="text" name="no_hp" value="<?php echo(isset($_POST['no_hp']) ? $_POST['no_hp'] : '') ?>" placeholder="No Hp" class="form-control">
+													<span class="text-danger"><?php echo($nohp_err) ?></span>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-6">
+												  <button type="submit" name="button" class="btn btn-primary btn-sm"> <i class="fa fa-plus-square"></i> Tambah </button> &nbsp; &nbsp;
+													<button type="reset" name="reset" class="btn btn-danger btn-sm" onclick="history.go(-1)"> <i class="fa fa-times-circle"></i> &nbsp; Batal</button>
 												</div>
 											</div>
 										</form>
