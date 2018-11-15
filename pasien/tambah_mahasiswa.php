@@ -97,7 +97,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					}
 
 				}
-<<<<<<< HEAD
 			 ?>
 			 <div class="main">
 			 	<div class="main-content">
