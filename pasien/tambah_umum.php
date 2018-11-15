@@ -120,6 +120,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
 											</div>
 												<br>
+												<div class="col-md-6">
+													<input type="date" name="tgl_lahir" value="<?php echo isset($_POST['tgl_lahir']) ? $_POST['tgl_lahir'] : '' ?>" class="form-control" placeholder="Tanggal Lahir">
+													<span class="text-danger"><?php echo $tgl_lahir_err?></span>
+												</div>
 										<div class="row">
 											<div class="col-md-6">
 												<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
