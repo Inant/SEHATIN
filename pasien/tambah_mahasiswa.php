@@ -110,9 +110,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			<div class="main-content">
 				<div class="container-fluid">
 					<h3 class="page-title">Tambah Pasien</h3>
+<<<<<<< HEAD
 
 					<h3 class="page-title">Pasien Mahasiswa</h3>
 
+=======
+					<h3 class="page-title">Pasien Mahasiswa</h3>
+>>>>>>> 52f4f5278a4139f65a0c72a9875b1fc37f517af1
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel">
