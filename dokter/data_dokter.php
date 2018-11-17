@@ -73,6 +73,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											<th>No Hp</th>
 		 											<th>No Ijin Prakter</th>
 													<th>Status</th>
+													<th>Poli</th>
 		 											<th>Aksi</th>
 		 										</tr>
 		 									</thead>
@@ -89,7 +90,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$query = "SELECT * FROM dokter WHERE nm_dokter LIKE '%$_POST[cari]%' ORDER BY nm_dokter ASC";
 												}
 												else{
-													$query = "SELECT * FROM dokter ORDER BY nm_dokter ASC";
+													$query = "SELECT d.*, l.status, p.poli FROM dokter d INNER JOIN login l ON l.id_user = d.id_dokter INNER JOIN poli p ON d.id_poli = p.id_poli ORDER BY nm_dokter ASC";
 												}
 												$jml = "SELECT COUNT(*) AS jml_dokter FROM dokter";
 												$r = mysqli_query($con, $jml);
@@ -108,6 +109,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															<td>$val[no_hp]</td>
 															<td>$val[no_ijin_praktek]</td>
 															<td><span class='$label'>$val[status]</span></td>
+															<td>$val[poli]</td>
 															<td><a href = 'edit_dokter.php?id_dokter=$val[id_dokter]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>
 
 																<a onclick = 'return konfirm()' href='status_dokter.php?id_dokter=$val[id_dokter]&status=$val[status]' class= 'btn btn-xs $btnclass' title='$title'><i class='fa fa-power-off'></i></a></td>
@@ -126,8 +128,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 		</div>
 		 	</div>
 		 </div>
-		 <div class="clearfix"></div>
-		<?php include '../dashboard/footer.php'; ?>
+		 <div class="clearfix">
+			 <?php include '../dashboard/footer.php'; ?>
+		 </div>
 	</div>
 	<script src="../assets/vendor/jquery/jquery.min.js"></script>
 	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>

@@ -91,12 +91,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$query = "SELECT * FROM petugas WHERE nama_petugas LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama_petugas ASC";
 												}
 												else{
-													$query = "SELECT * FROM petugas WHERE username != '$_SESSION[username]' ORDER BY id_petugas ASC";
+													$query = "SELECT p.*, l.level, l.status FROM petugas p INNER JOIN login l ON p.id_petugas = l.id_user WHERE l.level != 'Dokter' ORDER BY p.id_petugas ASC";
 												}
-												$jml = "SELECT COUNT(*) as jml_petugas FROM petugas";
-												$r = mysqli_query($con, $jml);
-												$jml_petugas = mysqli_fetch_assoc($r);
 												$result = mysqli_query($con, $query);
+												$jml_petugas = mysqli_num_rows($result);
 												$no = 1;
 												foreach ($result as $val) {
 													$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
@@ -118,7 +116,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													?>
 										</tbody>
 									</table>
-									<span class="text-default">Jumlah data : <?php echo($jml_petugas['jml_petugas']) ?></span>
+									<span class="text-default">Jumlah data : <?php echo($jml_petugas) ?></span>
 								</div>
 							</div>
 						</div>

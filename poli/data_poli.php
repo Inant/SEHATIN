@@ -48,15 +48,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 		<div class="container-fluid">
 		 			<h3 class="page-title">Poli</h3>
 		 			<div class="row">
-		 				<div class="col-md-6">
+		 				<div class="col-md-4">
 		 					<div class="panel">
 		 						<div class="panel-heading">
 		 							<h4 class="panel-title">Data Poli</h4>
-		 						</div>
-		 						<div class="row">
-		 							<div class="col-md-2">
-		 								<a href="tambah_poli.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
-		 							</div>
 		 						</div>
 		 						<div class="panel-body">
 		 							<table class="table table-striped table-hover table-bordered">
@@ -64,7 +59,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 									<tr>
 		 										<th>No</th>
 		 										<th>Nama Poli</th>
-												<th>Status</th>
 		 										<th>Aksi</th>
 		 									</tr>
 		 								</thead>
@@ -83,9 +77,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											echo "<tr>
 		 													<td>$no</td>
 		 													<td>$val[poli]</td>
-															<td><span class='$label'>$val[status]</span></td>
 		 													<td><a href = 'edit_poli.php?id_poli=$val[id_poli]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>&nbsp;
-		 														<a onclick = 'return konfirm()' href='status_poli.php?id_poli=$val[id_poli]&status=$val[status]' class= 'btn btn-xs $btnclass' title='$title'><i class='fa fa-power-off'></i></a></td>
+
 		 												  </tr>";
 		 											$no++;
 		 										}

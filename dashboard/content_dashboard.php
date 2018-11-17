@@ -7,7 +7,7 @@
 					<div class="panel panel-headline">
 						<div class="panel-heading">
 
-							<h3 class="panel-title">Selamat Datang <?php echo $valnama['nama_petugas'];?></h3>
+							<h3 class="panel-title">Selamat Datang <?php echo $valnama['nama'];?></h3>
 							<?php
 								date_default_timezone_set("Asia/Jakarta");
 							 ?>
@@ -19,7 +19,7 @@
 									<div class="metric">
 										<span class="icon"><i class="glyphicon glyphicon-user"></i></span>
 										<p>
-											<span class="number"> <?php echo $val['jml_petugas']; ?> </span>
+											<span class="number"> <?php echo(hitungJml("petugas","")) ?> </span>
 											<span class="title">Petugas</span>
 										</p>
 									</div>
@@ -28,7 +28,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-wheelchair"></i></span>
 										<p>
-											<span class="number">203</span>
+											<span class="number"><?php echo(hitungJml("pasien","")) ?></span>
 											<span class="title">Pasien</span>
 										</p>
 									</div>
@@ -37,7 +37,7 @@
 									<div class="metric">
 										<span class="icon"><i class="fa fa-user-md"></i></span>
 										<p>
-											<span class="number"><?php echo $values['jml_dokter'] ?></span>
+											<span class="number"><?php echo(hitungJml("dokter","")) ?></span>
 											<span class="title">Dokter</span>
 										</p>
 									</div>
@@ -46,7 +46,7 @@
 									<div class="metric">
 										<span class="icon"><i class="lnr lnr-users"></i></span>
 										<p>
-											<span class="number">12</span>
+											<span class="number"><?php echo ($jphi) ?></span>
 											<span class="title">Pasien Hari Ini</span>
 										</p>
 									</div>

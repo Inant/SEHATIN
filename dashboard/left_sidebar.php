@@ -14,16 +14,7 @@
 
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == 'dashboard' ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						<li><a href="../poli/data_poli.php" class="<?php echo ($nav == "poli" ? 'active' : '') ?>"><i class="fa fa-hospital-o"></i> <span>Data Poli</span></a></li>
-						<li>
-							<a href="#subPages1" data-toggle="collapse" class="collapsed <?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i><span>Pasien</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPages1" class="collapse">
-								<ul class="nav">
-									<li><a href="../pasien/pasien_mahasiswa.php" class="">Mahasiswa</a></li>
-									<li><a href="../pasien/pasien_karyawan.php" class="">Karyawan</a></li>
-									<li><a href="../pasien/pasien_umum.php" class="">Umum</a></li>
-								</ul>
-							</div>
-						</li>
+						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Data Dokter</span></a></li>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "obat" ? 'active' : '') ?>"><i class="fa fa-medkit"></i><span>Obat</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -41,19 +32,39 @@
 					}
 					elseif ($_SESSION['level'] == 'Resepsionis') { ?>
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 						<li>
-							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i><span>Pasien</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPages" class="collapse">
+							<a href="#subPages1" data-toggle="collapse" class="<?php echo ($nav == "antrian" ? 'active' : '') ?>"><i class="lnr lnr-list"></i><span>Antrian</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages1" class="collapse">
 								<ul class="nav">
-									<li><a href="../pasien/pasien_mahasiswa.php" class="">Mahasiswa</a></li>
-									<li><a href="../pasien/pasien_karyawan.php" class="">Karyawan</a></li>
-									<li><a href="../pasien/pasien_umum.php" class="">Umum</a></li>
+									<li><a href="../antrian/tambah_antrian.php">Tambah Antrian</a> </li>
+									<li><a href="../antrian/antrian_umum.php" class="">Antrian Poli Umum</a></li>
+									<li><a href="../antrian/antrian_gigi.php" class="">Antrian Poli Gigi</a></li>
+									<li><a href="../antrian/antrian_kia.php" class="">Antrian Poli KIA</a></li>
 								</ul>
 							</div>
 						</li>
-						<li><a href="#" class=""><i class="lnr lnr-list"></i> <span>Antrian</span></a></li>
+
 				<?php
 					}
+					elseif ($_SESSION['level'] == 'Dokter') {
+						$qpage = mysqli_query($con, "SELECT id_poli FROM dokter WHERE id_dokter = '$_SESSION[id_user]'");
+						$rpage = mysqli_fetch_assoc($qpage);
+						if ($rpage['id_poli'] == 1) {
+							$page = 'antrian_umum.php';
+						}
+						elseif ($rpage['id_poli'] == 2) {
+							$page = 'antrian_gigi.php';
+						}
+						else {
+							$page = 'antrian_kia.php';
+						}
+				?>
+						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="../antrian/<?php echo $page ?>" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="lnr lnr-list"></i> <span>Antrian</span></a></li>
+				<?php
+					}
+
 					elseif ($_SESSION['level'] == 'Kasir') { ?>
 
 				<?php

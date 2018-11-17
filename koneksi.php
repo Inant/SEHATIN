@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$server = "localhost";
 	$username = "root";
 	$password = "";
@@ -13,5 +13,4 @@
 
 	}
 	mysqli_select_db($con, $db);
-
  ?>
