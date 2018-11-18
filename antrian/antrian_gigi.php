@@ -84,7 +84,7 @@ echo "<script>
                             //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
                           }
                           else{
-                            $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu,a.keluhan, k.kategori_pasien FROM pasien p INNER JOIN kategori_pasien k ON k.id_kategori_pasien = p.id_kategori_pasien INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 2 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC";
+                            $query = "SELECT DISTINCT p.*, a.id_antrian, a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 2 AND a.waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC";
                           }
                           $result = mysqli_query($con, $query);
                           $jml = mysqli_num_rows($result);
@@ -102,7 +102,7 @@ echo "<script>
                             <td>$val[gender]</td>
                             <td>$val[no_hp]</td>
                             <td>$val[alamat]</td>
-                            <td>$val[kategori_pasien]</td>
+                            <td>$val[kategori]</td>
                             <td>$time</td>
                             <td><span class='label label-success'>$val[status]</span></td>
                             <td>$val[keluhan]</td>
