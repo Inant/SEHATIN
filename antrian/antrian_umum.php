@@ -83,7 +83,7 @@ echo "<script>
                             //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
                           }
                           else{
-                            $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 1 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC";
+                            $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 1 AND a.status = 'Mengantri' AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC";
                           }
                           $result = mysqli_query($con, $query);
                           $jml = mysqli_num_rows($result);
@@ -98,7 +98,7 @@ echo "<script>
                               $aksi = "<td><a href='#' class='btn btn-success btn-xs' title='Periksa'><i class='lnr lnr-plus-circle'></i></a></td>";
                             }
                             elseif ($_SESSION['level'] == 'Resepsionis') {
-                              $aksi = "<td><a href='edit_antrian_umum.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>";
+                              $aksi = "<td><a href='edit_antrian.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>";
                             }
                             echo "<tr>
                             <td>$no</td>
