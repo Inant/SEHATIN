@@ -121,7 +121,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					}
 
 					if ($nid_err == "" && $nama_err == "" && $tmpt_err == "" && $tgl_err == "" && $gender_err == "" && $alamat_err == "" &&  $no_hp_err == "" && $pendidikan_err == "" && $status_err == "" && $kategori_err == "") {
-						mysqli_query($con, "UPDATE pasien SET no_identitas = '$nid', nama = '$nama', tmpt_lahir = '$tmpt', tgl_lahir = '$tgl', gender = '$gender', alamat = '$alamat', no_hp = '$no_hp', pendidikan = '$pendidikan', status_perkawinan = '$status', id_kategori_pasien = '$kategori' WHERE id_pasien = '$_POST[id_pasien]'");
+						mysqli_query($con, "UPDATE pasien SET no_identitas = '$nid', nama = '$nama', tmpt_lahir = '$tmpt', tgl_lahir = '$tgl', gender = '$gender', alamat = '$alamat', no_hp = '$no_hp', pendidikan = '$pendidikan', status_perkawinan = '$status', kategori = '$kategori' WHERE id_pasien = '$_POST[id_pasien]'");
 						echo "<script>
 										alert('Data berhasil diperbarui');
 										window.location.href='data_pasien.php';
@@ -129,7 +129,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					}
 
 				}
-        $query = "SELECT * FROM pasien p INNER JOIN kategori_pasien k ON k.id_kategori_pasien = p.id_kategori_pasien WHERE id_pasien = '$_GET[id_pasien]'";
+        $query = "SELECT * FROM pasien WHERE id_pasien = '$_GET[id_pasien]'";
         $result = mysqli_query($con, $query);
         $val = mysqli_fetch_assoc($result);
         $tgl_lahir = strtotime($val['tgl_lahir']);
@@ -217,15 +217,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           <label for="">Kategori Pasien</label>
                           <select class="form-control" name="kategori">
                             <option value="">-- Pilih Kategori --</option>
-                            <?php
-                              $q = "SELECT * FROM kategori_pasien";
-                              $r = mysqli_query($con, $q);
-                              while ($vall = mysqli_fetch_assoc($r)) {
-                            ?>
-                              <option value="<?php echo $vall['id_kategori_pasien'] ?>" <?php echo($vall['id_kategori_pasien'] == $val['id_kategori_pasien'] ? 'selected' : '')?> > <?php echo $vall['kategori_pasien'] ?></option>
-                            <?php
-                              }
-                            ?>
+                              <option value="Umum" <?php echo ($val['kategori'] == 'Umum' ? 'selected' : '') ?> > Umum </option>
+                              <option value="Karyawan" <?php echo ($val['kategori'] == 'Karyawan' ? 'selected' : '') ?> > Karyawan </option>
+                              <option value="Keluarga Karyawan" <?php echo ($val['kategori'] == 'Keluarga Karyawan' ? 'selected' : '') ?> > Keluarga Karyawan </option>
+                              <option value="Mahasiswa" <?php echo ($val['kategori'] == 'Mahasiswa' ? 'selected' : '') ?> > Mahasiswa </option>
+
                           </select>
 													<span class="text-danger"><?php echo($kategori_err)?></span>
 												</div>

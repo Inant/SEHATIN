@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2018 at 03:37 PM
+-- Generation Time: Nov 18, 2018 at 05:01 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -41,19 +41,6 @@ CREATE TABLE IF NOT EXISTS `antrian` (
 
 INSERT INTO `antrian` (`id_antrian`, `id_pasien`, `waktu`, `status`, `id_poli`, `keluhan`) VALUES
 (22, 5, '2018-11-17 21:30:31', 'Mengantri', 1, 'Deg degan');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `biaya_pelayanan`
---
-
-CREATE TABLE IF NOT EXISTS `biaya_pelayanan` (
-`id_biaya` tinyint(3) NOT NULL,
-  `id_pelayanan` tinyint(3) NOT NULL,
-  `id_kategori_pasien` tinyint(1) NOT NULL,
-  `biaya` int(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -99,27 +86,6 @@ INSERT INTO `kategori_obat` (`id_kategori`, `kategori`, `status`) VALUES
 (2, 'Tablet', 'Aktif'),
 (3, 'Obat Luar', 'Aktif'),
 (4, 'Alat Kesehatan', 'Aktif');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kategori_pasien`
---
-
-CREATE TABLE IF NOT EXISTS `kategori_pasien` (
-`id_kategori_pasien` tinyint(1) NOT NULL,
-  `kategori_pasien` enum('Umum','Karyawan','Keluarga Karyawan','Mahasiswa') NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `kategori_pasien`
---
-
-INSERT INTO `kategori_pasien` (`id_kategori_pasien`, `kategori_pasien`) VALUES
-(1, 'Umum'),
-(2, 'Karyawan'),
-(3, 'Keluarga Karyawan'),
-(4, 'Mahasiswa');
 
 -- --------------------------------------------------------
 
@@ -192,18 +158,18 @@ CREATE TABLE IF NOT EXISTS `pasien` (
   `no_hp` varchar(13) NOT NULL,
   `pendidikan` varchar(5) NOT NULL,
   `status_perkawinan` enum('Belum Kawin','Kawin') NOT NULL,
-  `id_kategori_pasien` tinyint(1) NOT NULL
+  `kategori` enum('Umum','Karyawan','Keluarga Karyawan','Mahasiswa') NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `pasien`
 --
 
-INSERT INTO `pasien` (`id_pasien`, `no_identitas`, `nama`, `tmpt_lahir`, `tgl_lahir`, `gender`, `alamat`, `no_hp`, `pendidikan`, `status_perkawinan`, `id_kategori_pasien`) VALUES
-(3, 'E41170241', 'Inant Kharisma', 'Banyuwangi', '1999-04-05', 'Laki-laki', 'Jl Mastrip 7, Kos Putra', '082359382266', 'SMA', 'Belum Kawin', 4),
-(4, 'E41170241', 'Aan Hermawan', 'Banyuwangi', '1998-01-28', 'Laki-laki', 'Jl Kalimantan 10', '082359385041', 'SMA', 'Belum Kawin', 4),
-(5, 'E41171254', 'Anwar', 'Kediri', '1999-02-04', 'Laki-laki', 'Jl Kaliurang', '085254123365', 'SMA', 'Belum Kawin', 4),
-(6, '4561233699874561', 'Wati', 'Situbondo', '1979-08-09', 'Perempuan', 'California, US', '085256365214', 'S1', 'Kawin', 3);
+INSERT INTO `pasien` (`id_pasien`, `no_identitas`, `nama`, `tmpt_lahir`, `tgl_lahir`, `gender`, `alamat`, `no_hp`, `pendidikan`, `status_perkawinan`, `kategori`) VALUES
+(3, 'E41170241', 'Inant Kharisma', 'Banyuwangi', '1999-04-05', 'Laki-laki', 'Jl Mastrip 7, Kos Putra', '082359382266', 'SMA', 'Belum Kawin', 'Mahasiswa'),
+(4, 'E41170241', 'Aan Hermawan', 'Banyuwangi', '1998-01-28', 'Laki-laki', 'Jl Kalimantan 10', '082359385041', 'SMA', 'Belum Kawin', 'Mahasiswa'),
+(5, 'E41171254', 'Anwar', 'Kediri', '1999-02-04', 'Laki-laki', 'Jl Kaliurang', '085254123365', 'SMA', 'Belum Kawin', 'Mahasiswa'),
+(6, '4561233699874561', 'Wati', 'Situbondo', '1979-08-09', 'Perempuan', 'California, US', '085256365214', 'S1', 'Kawin', 'Keluarga Karyawan');
 
 -- --------------------------------------------------------
 
@@ -214,6 +180,10 @@ INSERT INTO `pasien` (`id_pasien`, `no_identitas`, `nama`, `tmpt_lahir`, `tgl_la
 CREATE TABLE IF NOT EXISTS `pelayanan` (
 `id_pelayanan` tinyint(3) NOT NULL,
   `pelayanan` varchar(50) NOT NULL,
+  `harga_umum` int(7) NOT NULL,
+  `harga_karyawan` int(7) NOT NULL,
+  `harga_kel_karyawan` int(7) NOT NULL,
+  `harga_mahasiswa` int(7) NOT NULL,
   `status` enum('Aktif','Non Aktif') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -291,12 +261,6 @@ ALTER TABLE `antrian`
  ADD PRIMARY KEY (`id_antrian`), ADD KEY `id_pasien` (`id_pasien`,`id_poli`), ADD KEY `id_poli` (`id_poli`);
 
 --
--- Indexes for table `biaya_pelayanan`
---
-ALTER TABLE `biaya_pelayanan`
- ADD PRIMARY KEY (`id_biaya`), ADD KEY `id_pelayanan` (`id_pelayanan`,`id_kategori_pasien`), ADD KEY `id_kategori_pasien` (`id_kategori_pasien`);
-
---
 -- Indexes for table `dokter`
 --
 ALTER TABLE `dokter`
@@ -307,12 +271,6 @@ ALTER TABLE `dokter`
 --
 ALTER TABLE `kategori_obat`
  ADD PRIMARY KEY (`id_kategori`);
-
---
--- Indexes for table `kategori_pasien`
---
-ALTER TABLE `kategori_pasien`
- ADD PRIMARY KEY (`id_kategori_pasien`);
 
 --
 -- Indexes for table `login`
@@ -330,7 +288,7 @@ ALTER TABLE `obat`
 -- Indexes for table `pasien`
 --
 ALTER TABLE `pasien`
- ADD PRIMARY KEY (`id_pasien`), ADD KEY `id_kategori_pasien` (`id_kategori_pasien`);
+ ADD PRIMARY KEY (`id_pasien`), ADD KEY `id_kategori_pasien` (`kategori`);
 
 --
 -- Indexes for table `pelayanan`
@@ -366,11 +324,6 @@ ALTER TABLE `satuan_obat`
 ALTER TABLE `antrian`
 MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
--- AUTO_INCREMENT for table `biaya_pelayanan`
---
-ALTER TABLE `biaya_pelayanan`
-MODIFY `id_biaya` tinyint(3) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
@@ -380,11 +333,6 @@ MODIFY `id_dokter` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 ALTER TABLE `kategori_obat`
 MODIFY `id_kategori` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `kategori_pasien`
---
-ALTER TABLE `kategori_pasien`
-MODIFY `id_kategori_pasien` tinyint(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `login`
 --
@@ -432,13 +380,6 @@ ADD CONSTRAINT `antrian_ibfk_1` FOREIGN KEY (`id_poli`) REFERENCES `poli` (`id_p
 ADD CONSTRAINT `antrian_ibfk_2` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `biaya_pelayanan`
---
-ALTER TABLE `biaya_pelayanan`
-ADD CONSTRAINT `biaya_pelayanan_ibfk_1` FOREIGN KEY (`id_pelayanan`) REFERENCES `pelayanan` (`id_pelayanan`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `biaya_pelayanan_ibfk_2` FOREIGN KEY (`id_kategori_pasien`) REFERENCES `kategori_pasien` (`id_kategori_pasien`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `dokter`
 --
 ALTER TABLE `dokter`
@@ -450,12 +391,6 @@ ADD CONSTRAINT `dokter_ibfk_1` FOREIGN KEY (`id_poli`) REFERENCES `poli` (`id_po
 ALTER TABLE `obat`
 ADD CONSTRAINT `obat_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_obat` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `obat_ibfk_2` FOREIGN KEY (`id_satuan`) REFERENCES `satuan_obat` (`id_satuan`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `pasien`
---
-ALTER TABLE `pasien`
-ADD CONSTRAINT `pasien_ibfk_1` FOREIGN KEY (`id_kategori_pasien`) REFERENCES `kategori_pasien` (`id_kategori_pasien`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

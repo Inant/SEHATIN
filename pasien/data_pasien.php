@@ -101,7 +101,7 @@ echo "<script>
                           $query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
                         }
                         else{
-                          $query = "SELECT * FROM pasien p INNER JOIN kategori_pasien k ON k.id_kategori_pasien = p.id_kategori_pasien ORDER BY id_pasien ASC";
+                          $query = "SELECT * FROM pasien ORDER BY nama ASC";
                         }
                         $result = mysqli_query($con, $query);
                         $jml = mysqli_num_rows($result);
@@ -117,7 +117,7 @@ echo "<script>
                               <td>$val[gender]</td>
                               <td>$val[no_hp]</td>
                               <td>$val[alamat]</td>
-                              <td>$val[kategori_pasien]</td>
+                              <td>$val[kategori]</td>
                               <td><a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>
                               </tr>
                               ";

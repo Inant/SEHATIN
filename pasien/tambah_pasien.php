@@ -121,7 +121,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					}
 
 					if ($nid_err == "" && $nama_err == "" && $tmpt_err == "" && $tgl_err == "" && $gender_err == "" && $alamat_err == "" &&  $no_hp_err == "" && $pendidikan_err == "" && $status_err == "" && $kategori_err == "") {
-						mysqli_query($con, "INSERT INTO pasien (no_identitas, nama, tmpt_lahir, tgl_lahir, gender, alamat, no_hp, pendidikan, status_perkawinan, id_kategori_pasien) VALUE ('$nid', '$nama', '$tmpt', '$tgl', '$gender', '$alamat', '$no_hp', '$pendidikan', '$status', '$kategori')");
+						mysqli_query($con, "INSERT INTO pasien (no_identitas, nama, tmpt_lahir, tgl_lahir, gender, alamat, no_hp, pendidikan, status_perkawinan, kategori) VALUE ('$nid', '$nama', '$tmpt', '$tgl', '$gender', '$alamat', '$no_hp', '$pendidikan', '$status', '$kategori')");
 						echo "<script>
 										alert('Data berhasil ditambahkan');
 										window.location.href='data_pasien.php';
@@ -201,15 +201,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           <label for="">Pendidikan Terakhir</label>
                           <select class="form-control" name="pendidikan">
                             <option value="">-- Pilih pendidikan terakhir --</option>
-                            <option value="SD" <?php echo($_POST['pendidikan'] == 'SD' ? 'selected' : '') ?>>SD</option>
-                            <option value="SMP" <?php echo($_POST['pendidikan'] == 'SMP' ? 'selected' : '') ?>>SMP</option>
-                            <option value="SMA" <?php echo($_POST['pendidikan'] == 'SMA' ? 'selected' : '') ?>>SMA</option>
-                            <option value="D1" <?php echo($_POST['pendidikan'] == 'D1' ? 'selected' : '') ?>>D1</option>
-                            <option value="D2" <?php echo($_POST['pendidikan'] == 'D2' ? 'selected' : '') ?>>D2</option>
-                            <option value="D3" <?php echo($_POST['pendidikan'] == 'D3' ? 'selected' : '') ?>>D3</option>
-                            <option value="S1" <?php echo($_POST['pendidikan'] == 'S1' ? 'selected' : '') ?>>S1</option>
-                            <option value="S2" <?php echo($_POST['pendidikan'] == 'S2' ? 'selected' : '') ?>>S2</option>
-                            <option value="S3" <?php echo($_POST['pendidikan'] == 'S3' ? 'selected' : '') ?>>S3</option>
+                            <option value="SD" <?php echo($pendidikan == 'SD' ? 'selected' : '') ?>>SD</option>
+                            <option value="SMP" <?php echo($pendidikan == 'SMP' ? 'selected' : '') ?>>SMP</option>
+                            <option value="SMA" <?php echo($pendidikan == 'SMA' ? 'selected' : '') ?>>SMA</option>
+                            <option value="D1" <?php echo($pendidikan == 'D1' ? 'selected' : '') ?>>D1</option>
+                            <option value="D2" <?php echo($pendidikan == 'D2' ? 'selected' : '') ?>>D2</option>
+                            <option value="D3" <?php echo($pendidikan == 'D3' ? 'selected' : '') ?>>D3</option>
+                            <option value="S1" <?php echo($pendidikan == 'S1' ? 'selected' : '') ?>>S1</option>
+                            <option value="S2" <?php echo($pendidikan == 'S2' ? 'selected' : '') ?>>S2</option>
+                            <option value="S3" <?php echo($pendidikan == 'S3' ? 'selected' : '') ?>>S3</option>
                           </select>
                           <span class="text-danger"><?php echo($pendidikan_err) ?></span>
 												</div>
@@ -235,15 +235,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           <label for="">Kategori Pasien</label>
                           <select class="form-control" name="kategori">
                             <option value="">-- Pilih Kategori --</option>
-                            <?php
-                              $q = "SELECT * FROM kategori_pasien";
-                              $r = mysqli_query($con, $q);
-                              while ($val = mysqli_fetch_assoc($r)) {
-                            ?>
-                              <option value="<?php echo $val['id_kategori_pasien'] ?>" <?php echo($_POST['kategori'] == $val['id_kategori_pasien'] ? 'selected' : '')?> > <?php echo $val['kategori_pasien'] ?></option>
-                            <?php
-                              }
-                            ?>
+                            <option value="Umum" <?php echo ($kategori == 'Umum' ? 'selected' : '') ?>>Umum</option>
+                            <option value="Karyawan" <?php echo ($kategori == 'Karyawan' ? 'selected' : '') ?>>Karyawan</option>
+                            <option value="Keluarga Karyawan" <?php echo ($kategori == 'Keluarga Karyawan' ? 'selected' : '') ?>>Keluarga Karyawan</option>
+                            <option value="Mahasiswa" <?php echo ($kategori == 'Mahasiswa' ? 'selected' : '') ?>>Mahasiswa</option>
                           </select>
 													<span class="text-danger"><?php echo($kategori_err)?></span>
 												</div>
