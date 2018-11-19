@@ -16,6 +16,7 @@
 						<li><a href="../poli/data_poli.php" class="<?php echo ($nav == "poli" ? 'active' : '') ?>"><i class="fa fa-hospital-o"></i> <span>Data Poli</span></a></li>
 						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Data Dokter</span></a></li>
+						<li><a href="../pelayanan/data_pelayanan.php" class="<?php echo ($nav == "pelayanan" ? 'active' : '') ?>"><i class="fa fa-stethoscope"></i> <span>Pelayanan</span></a></li>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "obat" ? 'active' : '') ?>"><i class="fa fa-medkit"></i><span>Obat</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse">
