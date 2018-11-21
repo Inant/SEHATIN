@@ -8,17 +8,28 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
 else {
 	include '../koneksi.php';
-	$query_petugas = "SELECT COUNT(*) as jml_petugas FROM petugas";
-	$result = mysqli_query($con, $query_petugas);
-	$val = mysqli_fetch_assoc($result);
 
-	$qnama = "SELECT nama_petugas FROM petugas WHERE username = '$_SESSION[username]'";
+	function hitungJml($tb, $where)
+	{
+		include '../koneksi.php';
+		$query = mysqli_query($con, "SELECT COUNT(*) as jml FROM $tb $where");
+		$val = mysqli_fetch_array($query);
+		return $val['jml'];
+	}
+	date_default_timezone_set("Asia/Jakarta");
+	$now = date('Y-m-d');
+
+	$qphi = mysqli_query($con, "SELECT id_antrian FROM antrian WHERE waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59'");
+	$jphi = mysqli_num_rows($qphi);
+
+	if ($_SESSION['level'] == "Dokter") {
+		$qnama = "SELECT nm_dokter as nama FROM dokter WHERE dokter.id_dokter = '$_SESSION[id_user]'";
+	}
+	else {
+		$qnama = "SELECT nama_petugas as nama FROM petugas WHERE id_petugas = '$_SESSION[id_user]'";
+	}
 	$rnama = mysqli_query($con, $qnama);
 	$valnama = mysqli_fetch_assoc($rnama);
-
-	$query_dokter = "SELECT COUNT(*) as jml_dokter FROM dokter";
-	$res = mysqli_query($con, $query_dokter);
-	$values = mysqli_fetch_assoc($res);
 }
  ?>
 

@@ -39,19 +39,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Petugas</h3>
+					<h3 class="page-title">Pelayanan</h3>
 					<div class="row">
 						<div class="col-md-12">
 
 							<div class="panel">
 
 								<div class="panel-heading">
-									<h4 class="panel-title">Data Petugas</h4>
+									<h4 class="panel-title">Data Pelayanan</h4>
 
 								</div>
 								<div class="row">
 									<div class="col-md-2">
-										<a href="tambah_petugas.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
+										<a href="tambah_pelayanan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
 									</div>
 									 <div class="col-md-6"></div>
 									<div class="col-md-4">
@@ -68,14 +68,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									<table class="table table-striped table-hover table-bordered">
 										<thead>
 											<tr>
-												<th>No</th>
-												<th>Nama</th>
-												<th>Gender</th>
-												<th>Alamat</th>
-												<th>No HP</th>
-												<th>Level</th>
-												<th>Status</th>
-												<th>Aksi</th>
+												<th rowspan="2" >No</th>
+												<th rowspan="2" style="text-align:center;">Pelayanan</th>
+												<th colspan="4" style="text-align:center;">Harga</th>
+                        <th rowspan="2">Status</th>
+                        <th rowspan="2">Aksi</th>
+                          <tr>
+                          <th>Umum</th>
+                          <th>Karyawan</th>
+                          <th>Keluarga Karyawan</th>
+                          <th>Mahasiswa</th>
+                        </tr>
 											</tr>
 										</thead>
 										<tbody>
@@ -88,12 +91,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</script>
 											<?php
 												if (isset($_POST['btn_cari'])) {
-													$and = "AND nama_petugas LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]'";
+													//$query = "SELECT * FROM petugas WHERE nama_petugas LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama_petugas ASC";
 												}
 												else{
-													$and = "";
+													$query = "SELECT * FROM pelayanan ORDER BY pelayanan ASC";
 												}
-												$query = "SELECT p.*, l.level, l.status FROM petugas p INNER JOIN login l ON p.id_petugas = l.id_user WHERE l.level != 'Dokter' $and ORDER BY p.id_petugas ASC";
 												$result = mysqli_query($con, $query);
 												$jml_petugas = mysqli_num_rows($result);
 												$no = 1;
@@ -103,13 +105,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 													echo "<tr>
 															<td>$no</td>
-															<td>$val[nama_petugas]</td>
-															<td>$val[gender]</td>
-															<td>$val[alamat]</td>
-															<td>$val[no_hp]</td>
-															<td>$val[level]</td>
+															<td>$val[pelayanan]</td>
+															<td>$val[harga_umum]</td>
+															<td>$val[harga_karyawan]</td>
+															<td>$val[harga_kel_karyawan]</td>
+															<td>$val[harga_mahasiswa]</td>
 															<td><span class='$label'>$val[status]</span></td>
-															<td><a onclick = 'return konfirm()' href='status_petugas.php?id_petugas=$val[id_petugas]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
+															<td><a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
 														  </tr>
 													";
 													$no++;

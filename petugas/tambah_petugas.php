@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
 <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Tambah Petugas | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,15 +32,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
-			 
+
 		$nama_err = $gender_err = $alamat_err = $nohp_err = $username_err = $password_err = $konfirmasi_err = $level_err = "";
 		$nama = $gender = $nohp = $user = $pass = $konfirmasi = $level = "";
 		$alamat = "Alamat";
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			//print_r($_POST);
+			$quser = mysqli_query($con, "SELECT username FROM login WHERE username = '$_POST[username]'");
+			$cekuser = mysqli_num_rows($quser);
 			if (empty($_POST['nama'])) {
 				$nama_err = "* Nama harus diisi !";
 			}
@@ -78,8 +80,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			if (empty($_POST['user'])) {
 				$username_err = "* Username harus diisi !";
 			}
+			elseif ($cekuser > 0) {
+				$username_err = "* Username telah digunakan !";
+			}
 			else{
-				$user = $_POST['user'];
+				$username = $_POST['user'];
 			}
 
 			if (empty($_POST['pass'])) {
@@ -107,19 +112,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			}
 
 			if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "" && $username_err == "" && $password_err == "" && $konfirmasi_err == "" && $level_err == "") {
-				include 'koneksi.php';
 				$enkripsi = md5($pass);
-				mysqli_query($con, "INSERT INTO petugas (nama_petugas, gender, alamat, no_hp, username, password, level) VALUE ('$nama', '$gender', '$alamat', '$nohp', '$user', '$enkripsi', '$level')");
-
+				mysqli_query($con, "INSERT INTO petugas (nama_petugas, gender, alamat, no_hp) VALUE ('$nama', '$gender', '$alamat', '$nohp')");
+				mysqli_query($con, "INSERT INTO login (id_user, username, password, level, status) VALUE ((SELECT id_petugas FROM petugas WHERE nama_petugas = '$nama'), '$username','$enkripsi', '$level', 'Aktif') ");
 				echo "<script>
 						alert('Data berhasil ditambah');
 						window.location.href='data_petugas.php';
 					  </script>";
-					
+
 			}
 
 		}
-	 
+
 		 ?>
 		 <div class="main">
 		 	<div class="main-content">
@@ -135,10 +139,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 							<form method="POST" action="">
 		 								<div class="row">
 		 									<div class="col-md-6">
+												<label for="">Nama Petugas</label>
 		 										<input type="text" name="nama" class="form-control" placeholder="Nama" value="<?php echo(isset($_POST['nama']) ? $_POST['nama'] : $nama ) ?>">
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 		 									</div>
 		 									<div class="col-md-6">
+												<label for="">Username</label>
 		 										<input type="text" class="form-control" placeholder="Username" name="user" value="<?php echo($user) ?>">
 		 										<span class="text-danger"> <?php echo($username_err); ?></span>
 		 									</div>
@@ -146,6 +152,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<br>
 		 								<div class="row">
 		 									<div class="col-md-6">
+												<label for="">Gender</label>
+												<br>
 		 										<div class="col-md-3">
 		 											<label class="fancy-radio">
 		 											<input type="radio" name="gender" class="form-control" value="Laki-laki" <?php echo($gender == "Laki-laki" ? 'checked' : '') ?> ><span><i></i>Laki-Laki</span>
@@ -159,32 +167,38 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
 		 									</div>
 		 									<div class="col-md-6">
+												<label for="">Password</label>
 		 										<input type="Password" name="pass" placeholder="Password" class="form-control" value="<?php echo($pass) ?>">
 		 										<span class="text-danger"> <?php echo($password_err); ?></span>
 		 									</div>
 		 								</div>
 		 								<br>
 		 								<div class="row">
+			 									<div class="col-md-6">
+													<label for="">No Handphone</label>
+			 										<input type="text" name="nohp" class="form-control" maxlength="13" placeholder="No Hp" value="<?php echo(isset($_POST['nohp']) ? $_POST['nohp'] : $nohp ) ?>">
+			 										<span class="text-danger"> <?php echo($nohp_err); ?></span>
+			 									</div>
 		 									<div class="col-md-6">
+												<label for="">Konfirmasi Password</label>
+		 										<input type="password" name="konfirmasi" class="form-control" placeholder="Konfirmasi Password" value="<?php echo(isset($_POST['konfirmasi']) ? $_POST['konfirmasi'] : $konfirmasi ) ?>">
+		 										<span class="text-danger"> <?php echo($konfirmasi_err); ?></span>
+		 									</div>
+		 								</div>
+		 								<br>
+		 								<div class="row">
+											<div class="col-md-6">
+												<label for="">Alamat</label>
 		 										<textarea name="alamat" class="form-control" rows="2"><?php echo $alamat ?></textarea>
 		 										<span class="text-danger"> <?php echo($alamat_err); ?></span>
 		 									</div>
 		 									<div class="col-md-6">
-		 										<input type="password" name="konfirmasi" class="form-control" placeholder="Konfirmasi Password" value="<?php echo(isset($_POST['konfirmasi']) ? $_POST['konfirmasi'] : $konfirmasi ) ?>">
-		 										<span class="text-danger"> <?php echo($konfirmasi_err); ?></span>
-		 									</div>
-		 								</div>	
-		 								<br>
-		 								<div class="row">
-		 									<div class="col-md-6">
-		 										<input type="text" name="nohp" class="form-control" maxlength="13" placeholder="No Hp" value="<?php echo(isset($_POST['nohp']) ? $_POST['nohp'] : $nohp ) ?>">
-		 										<span class="text-danger"> <?php echo($nohp_err); ?></span>
-		 									</div>
-		 									<div class="col-md-6">
+												<label for="">Level</label>
 		 										<select class="form-control" name="level">
 		 										<option value="">Pilih Level</option>
+												<option value="Admin" <?php echo $level == "Admin" ? 'selected' : '' ?> >Admin</option>
+												<option value="Apoteker" <?php echo $level == "Apoteker" ? 'selected' : '' ?> >Apoteker</option>
 		 										<option value="Kasir" <?php echo $level == "Kasir" ? 'selected' : '' ?> >Kasir</option>
-		 										<option value="Admin" <?php echo $level == "Admin" ? 'selected' : '' ?> >Admin</option>
 		 										<option value="Resepsionis" <?php echo $level == "Resepsionis" ? 'selected' : '' ?> >Resepsionis</option>
 		 									</select>
 		 									<span class="text-danger"> <?php echo($level_err); ?></span>
@@ -196,7 +210,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Tambah</button> &nbsp; &nbsp;
 		 										<button type="reset" name="reset" class="btn btn-danger" onclick="history.go(-1);"><i class="fa fa-times-circle"></i> &nbsp;  Batal</button>
 		 									</div>
-		 								</div>	
+		 								</div>
 		 							</form>
 		 						</div>
 		 					</div>
@@ -212,7 +226,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="../assets/scripts/klorofil-common.js"></script>
-	
+
 </body>
 
 </html>
