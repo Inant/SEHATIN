@@ -120,6 +120,8 @@ echo "<script>
 															<td>$val[gender]</td>
 															<td>$val[no_hp]</td>
 															<td>$val[alamat]</td>
+															<td><a href = 'edit_umum.php?id_umum=$val[id_umum]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>
+
 															</tr>
 															";
 													$no++;
