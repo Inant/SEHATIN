@@ -87,11 +87,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</script>
 											<?php
 												if (isset($_POST['btn_cari'])) {
-													$query = "SELECT * FROM dokter WHERE nm_dokter LIKE '%$_POST[cari]%' ORDER BY nm_dokter ASC";
+													$where = "WHERE nm_dokter LIKE '%$_POST[cari]%'";
 												}
 												else{
-													$query = "SELECT d.*, l.status, p.poli FROM dokter d INNER JOIN login l ON l.id_user = d.id_dokter INNER JOIN poli p ON d.id_poli = p.id_poli ORDER BY nm_dokter ASC";
+													$where = "";
 												}
+												$query = "SELECT d.*, l.status, p.poli FROM dokter d INNER JOIN login l ON l.id_user = d.id_dokter INNER JOIN poli p ON d.id_poli = p.id_poli $where ORDER BY nm_dokter ASC";
 												$jml = "SELECT COUNT(*) AS jml_dokter FROM dokter";
 												$r = mysqli_query($con, $jml);
 												$jml_dokter = mysqli_fetch_assoc($r);

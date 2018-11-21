@@ -88,11 +88,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</script>
 											<?php
 												if (isset($_POST['btn_cari'])) {
-													$query = "SELECT * FROM petugas WHERE nama_petugas LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama_petugas ASC";
+													$and = "AND nama_petugas LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]'";
 												}
 												else{
-													$query = "SELECT p.*, l.level, l.status FROM petugas p INNER JOIN login l ON p.id_petugas = l.id_user WHERE l.level != 'Dokter' ORDER BY p.id_petugas ASC";
+													$and = "";
 												}
+												$query = "SELECT p.*, l.level, l.status FROM petugas p INNER JOIN login l ON p.id_petugas = l.id_user WHERE l.level != 'Dokter' $and ORDER BY p.id_petugas ASC";
 												$result = mysqli_query($con, $query);
 												$jml_petugas = mysqli_num_rows($result);
 												$no = 1;
