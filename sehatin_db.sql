@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2018 at 05:01 AM
+-- Generation Time: Nov 26, 2018 at 09:50 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -33,14 +33,32 @@ CREATE TABLE IF NOT EXISTS `antrian` (
   `status` varchar(30) NOT NULL,
   `id_poli` tinyint(3) NOT NULL,
   `keluhan` text NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `antrian`
 --
 
 INSERT INTO `antrian` (`id_antrian`, `id_pasien`, `waktu`, `status`, `id_poli`, `keluhan`) VALUES
-(22, 5, '2018-11-17 21:30:31', 'Mengantri', 1, 'Deg degan');
+(22, 5, '2018-11-17 21:30:31', 'Mengantri', 1, 'Deg degan'),
+(23, 5, '2018-11-18 12:01:51', 'Mengantri', 2, 'Gusi Bengkak'),
+(24, 4, '2018-11-22 07:21:06', 'Diperiksa', 1, 'Gak ada apa apa'),
+(25, 5, '2018-11-22 16:03:46', 'Mengantri', 1, 'Banyak mengeluh');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_resep`
+--
+
+CREATE TABLE IF NOT EXISTS `detail_resep` (
+`id_detail` int(11) NOT NULL,
+  `id_resep` int(7) NOT NULL,
+  `id_obat` int(7) NOT NULL,
+  `dosis_a` tinyint(1) NOT NULL,
+  `dosis_b` tinyint(1) NOT NULL,
+  `jml` tinyint(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -56,14 +74,15 @@ CREATE TABLE IF NOT EXISTS `dokter` (
   `no_hp` varchar(13) NOT NULL,
   `no_ijin_praktek` varchar(50) NOT NULL,
   `id_poli` tinyint(3) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `dokter`
 --
 
 INSERT INTO `dokter` (`id_dokter`, `nm_dokter`, `gender`, `alamat`, `no_hp`, `no_ijin_praktek`, `id_poli`) VALUES
-(11, 'dr. Strange', 'Laki-laki', 'Cataluna', '0852587411478', 'SIP.KP.01.01.I.1.01.0872', 1);
+(11, 'dr. Strange', 'Laki-laki', 'Cataluna', '0852587411478', 'SIP.KP.01.01.I.1.01.0872', 1),
+(12, 'dr. Rose', 'Perempuan', 'London, UK', '089987799987', 'SIP.KP.01.01.I.1.01.0875', 2);
 
 -- --------------------------------------------------------
 
@@ -100,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `password` varchar(32) NOT NULL,
   `level` enum('Admin','Apoteker','Resepsionis','Kasir','Dokter') NOT NULL,
   `status` enum('Aktif','Non Aktif') NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `login`
@@ -109,7 +128,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 INSERT INTO `login` (`id_login`, `id_user`, `username`, `password`, `level`, `status`) VALUES
 (1, 15, 'jakfar', '16a4c4e9b7c54d1d4f726f58ad30c53b', 'Admin', 'Aktif'),
 (2, 11, 'strange', '73a6fcb016535503154cecf09b787015', 'Dokter', 'Aktif'),
-(4, 19, 'elsa', '783833680e6da5cf6cd7481a44d8fa4c', 'Resepsionis', 'Aktif');
+(4, 19, 'elsa', '783833680e6da5cf6cd7481a44d8fa4c', 'Resepsionis', 'Aktif'),
+(5, 12, 'rose', 'fcdc7b4207660a1372d0cd5491ad856e', 'Dokter', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -185,7 +205,18 @@ CREATE TABLE IF NOT EXISTS `pelayanan` (
   `harga_kel_karyawan` int(7) NOT NULL,
   `harga_mahasiswa` int(7) NOT NULL,
   `status` enum('Aktif','Non Aktif') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `pelayanan`
+--
+
+INSERT INTO `pelayanan` (`id_pelayanan`, `pelayanan`, `harga_umum`, `harga_karyawan`, `harga_kel_karyawan`, `harga_mahasiswa`, `status`) VALUES
+(1, 'Loket Rawat Jalan', 7000, 0, 0, 0, 'Aktif'),
+(2, 'Pemeriksaan', 20000, 0, 0, 0, 'Aktif'),
+(3, 'Jahitan', 20000, 10000, 15000, 0, 'Aktif'),
+(4, 'Pasang Oksigen', 25000, 15000, 15000, 0, 'Aktif'),
+(5, 'Cek Tensi Darah', 5000, 0, 0, 0, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -233,6 +264,32 @@ INSERT INTO `poli` (`id_poli`, `poli`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rekam_medis`
+--
+
+CREATE TABLE IF NOT EXISTS `rekam_medis` (
+`id_rm` int(7) NOT NULL,
+  `id_antrian` int(11) NOT NULL,
+  `pemeriksaan_fisik` text NOT NULL,
+  `tensi` varchar(8) NOT NULL,
+  `suhu` tinyint(2) NOT NULL,
+  `diagnosa` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resep`
+--
+
+CREATE TABLE IF NOT EXISTS `resep` (
+`id_resep` int(11) NOT NULL,
+  `id_rm` int(7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `satuan_obat`
 --
 
@@ -250,6 +307,18 @@ INSERT INTO `satuan_obat` (`id_satuan`, `satuan`, `status`) VALUES
 (1, 'Tablet', 'Aktif'),
 (2, 'Botol', 'Non Aktif');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tindakan`
+--
+
+CREATE TABLE IF NOT EXISTS `tindakan` (
+`id_tindakan` int(7) NOT NULL,
+  `id_rm` int(7) NOT NULL,
+  `id_pelayanan` tinyint(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 --
 -- Indexes for dumped tables
 --
@@ -259,6 +328,12 @@ INSERT INTO `satuan_obat` (`id_satuan`, `satuan`, `status`) VALUES
 --
 ALTER TABLE `antrian`
  ADD PRIMARY KEY (`id_antrian`), ADD KEY `id_pasien` (`id_pasien`,`id_poli`), ADD KEY `id_poli` (`id_poli`);
+
+--
+-- Indexes for table `detail_resep`
+--
+ALTER TABLE `detail_resep`
+ ADD PRIMARY KEY (`id_detail`), ADD KEY `id_resep` (`id_resep`,`id_obat`);
 
 --
 -- Indexes for table `dokter`
@@ -309,10 +384,28 @@ ALTER TABLE `poli`
  ADD PRIMARY KEY (`id_poli`);
 
 --
+-- Indexes for table `rekam_medis`
+--
+ALTER TABLE `rekam_medis`
+ ADD PRIMARY KEY (`id_rm`), ADD KEY `id_antrian` (`id_antrian`);
+
+--
+-- Indexes for table `resep`
+--
+ALTER TABLE `resep`
+ ADD PRIMARY KEY (`id_resep`), ADD KEY `no_rm` (`id_rm`);
+
+--
 -- Indexes for table `satuan_obat`
 --
 ALTER TABLE `satuan_obat`
  ADD PRIMARY KEY (`id_satuan`);
+
+--
+-- Indexes for table `tindakan`
+--
+ALTER TABLE `tindakan`
+ ADD PRIMARY KEY (`id_tindakan`), ADD KEY `no_rm` (`id_rm`,`id_pelayanan`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -322,12 +415,17 @@ ALTER TABLE `satuan_obat`
 -- AUTO_INCREMENT for table `antrian`
 --
 ALTER TABLE `antrian`
-MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT for table `detail_resep`
+--
+ALTER TABLE `detail_resep`
+MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
-MODIFY `id_dokter` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+MODIFY `id_dokter` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `kategori_obat`
 --
@@ -337,7 +435,7 @@ MODIFY `id_kategori` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-MODIFY `id_login` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id_login` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `obat`
 --
@@ -352,7 +450,7 @@ MODIFY `id_pasien` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT for table `pelayanan`
 --
 ALTER TABLE `pelayanan`
-MODIFY `id_pelayanan` tinyint(3) NOT NULL AUTO_INCREMENT;
+MODIFY `id_pelayanan` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `petugas`
 --
@@ -364,10 +462,25 @@ MODIFY `id_petugas` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 ALTER TABLE `poli`
 MODIFY `id_poli` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `rekam_medis`
+--
+ALTER TABLE `rekam_medis`
+MODIFY `id_rm` int(7) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `resep`
+--
+ALTER TABLE `resep`
+MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `satuan_obat`
 --
 ALTER TABLE `satuan_obat`
 MODIFY `id_satuan` tinyint(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tindakan`
+--
+ALTER TABLE `tindakan`
+MODIFY `id_tindakan` int(7) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
