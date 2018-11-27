@@ -39,14 +39,16 @@ echo "<script>
   <div class="main">
     <div class="main-content">
       <div class="container-fluid">
+        <div class="panel">
+          <div class="panel-heading">
+            <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian Poli Umum</h1>
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-12">
             <div class="panel">
-            <div class="panel-heading">
-                <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian Poli Umum</h1>
-
-            </div>
               <div class="row">
+                <br>
                     <div class="col-md-4 col-md-offset-8">
                       <form action="" method="POST">
                         <div class="input-group" style="margin-right: 25px;">
@@ -55,7 +57,7 @@ echo "<script>
                         </div>
                       </form>
                     </div>
-                  </div>
+              </div>
                   <div class="panel-body">
                     <div class="table-responsive">
                       <table class="table table-striped table-hover table-bordered">
