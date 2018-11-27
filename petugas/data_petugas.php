@@ -39,16 +39,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Petugas</h3>
+					<div class="panel">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="lnr lnr-user"></i>&ensp;Data Petugas</h3>
+							<div class="col-md-2 col-md-offset-10">
+
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-12">
 
 							<div class="panel">
-
-								<div class="panel-heading">
-									<h4 class="panel-title">Data Petugas</h4>
-
-								</div>
+								<br>
 								<div class="row">
 									<div class="col-md-2">
 										<a href="tambah_petugas.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
