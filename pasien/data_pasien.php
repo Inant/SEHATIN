@@ -46,13 +46,18 @@ echo "<script>
   <div class="main">
     <div class="main-content">
       <div class="container-fluid">
-        <h3 class="page-title">Pasien</h3>
+        <div class="panel">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="lnr lnr-wheelchair"></i>&ensp;Data Pasien</h3>
+            <div class="col-md-2 col-md-offset-10">
+
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-12">
             <div class="panel">
-            <div class="panel-heading">
-                <h4 class="panel-title">Data Pasien</h4>
-            </div>
+            <br>
               <div class="row">
                 <div class="col-md-2">
                   <?php
