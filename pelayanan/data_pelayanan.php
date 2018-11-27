@@ -51,7 +51,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 								</div>
 								<div class="row">
 									<div class="col-md-2">
-										<a href="tambah_pelayanan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
+										<?php if ($_SESSION['level'] == "Admin"): ?>
+											<a href="tambah_pelayanan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
+										<?php endif; ?>
 									</div>
 									 <div class="col-md-6"></div>
 									<div class="col-md-4">
@@ -103,6 +105,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
 													$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
 													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
+													$edit = "";
+													if ($_SESSION['level'] == "Admin") {
+														$edit = "<a href='edit_pelayanan.php?id_pelayanan=$val[id_pelayanan]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a>";
+													}
+
 													echo "<tr>
 															<td>$no</td>
 															<td>$val[pelayanan]</td>
@@ -111,7 +118,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															<td>$val[harga_kel_karyawan]</td>
 															<td>$val[harga_mahasiswa]</td>
 															<td><span class='$label'>$val[status]</span></td>
-															<td><a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
+															<td>$edit
+															<a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
 														  </tr>
 													";
 													$no++;
