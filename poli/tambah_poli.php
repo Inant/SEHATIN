@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
  <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Tambah Poli | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,7 +32,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 			$poli_err = "";
@@ -57,19 +57,28 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Poli</h4>
+					<div class="row">
+
+						<div class="col-md-6">
+
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title"><i class="fa fa-hospital-o"></i>&ensp;Tambah Poli</h3>
+								</div>
+							</div>
+						</div>
+					</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="panel">
 									<div class="panel-heading">
-										<h4 class="panel-title">Tambah Poli</h4>
-									</div>
+<br>
 									<div class="panel-body">
 										<form method="POST" action="">
-											
+
 											<input type="text" name="poli" class="form-control" placeholder="Masukan nama poli" value="<?php echo isset($_POST['poli']) ? $_POST['poli'] : $poli ?>">
 											<span class="text-danger"><?php echo $poli_err ?></span>
-											
+
 											<br>
 											<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus-square"></i>  Tambah</button> &nbsp; &nbsp;
 		 										<button type="reset" name="reset" class="btn btn-danger btn-sm" onclick="history.go(-1);"><i class="fa fa-times-circle"></i> &nbsp;  Batal</button>

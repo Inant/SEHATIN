@@ -75,9 +75,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					<div class="row">
 						<div class="col-md-6">
 							<div class="panel">
-								<div class="panel-heading">
-									<h4 class="panel-title">Edit Poli</h4>
-								</div>
+							<br>
 								<div class="panel-body">
 									<form method="POST" action="">
 										<input type="hidden" name="id_poli" value="<?php echo $val['id_poli']?>">
