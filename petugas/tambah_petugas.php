@@ -130,7 +130,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 		<div class="container-fluid">
 					<div class="panel">
 						<div class="panel-heading">
-							<h1 class="panel-title"><i class="fa fa-stethoscope"></i>&ensp;Tambah Petugas</h1>
+							<h1 class="panel-title"><i class="lnr lnr-user"></i>&ensp;Tambah Petugas</h1>
 						</div>
 					</div>
 		 			<div class="row">
