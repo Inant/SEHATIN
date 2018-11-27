@@ -133,7 +133,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			 <div class="main">
 			 	<div class="main-content">
 			 		<div class="container-fluid">
-			 			<h3 class="page-title">Pasien</h3>
+						<div class="panel">
+							<div class="panel-heading">
+								<h1 class="panel-title"><i class="lnr lnr-wheelchair"></i>&ensp;Tambah Pasien</h1>
+							</div>
+						</div>
 						<div class="row">
 						  <div class="col-md-12">
 						    <div class="panel">
