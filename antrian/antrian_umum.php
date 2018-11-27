@@ -95,7 +95,7 @@ echo "<script>
                             $time = $t[1];
                             if ($_SESSION['level'] == 'Dokter') {
                               $aksi = "<td><a href='../pemeriksaan/tambah_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-success btn-xs' title='Periksa'><i class='lnr lnr-file-add'></i></a>
-                              <a href='../pemeriksaan/detail_pasien.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-info btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>";
+                              <a href='../pemeriksaan/history_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-info btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>";
                             }
                             elseif ($_SESSION['level'] == 'Resepsionis') {
                               $aksi = "<td><a href='edit_antrian.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>";

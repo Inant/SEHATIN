@@ -64,86 +64,95 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			mysqli_query($con, "UPDATE antrian SET status = 'Diperiksa' WHERE id_antrian = '$_GET[id_antrian]'");
 
       $qrm = mysqli_query($con, "SELECT p.*, a.*,(SELECT COUNT(*) FROM antrian WHERE id_pasien = '$_GET[p]' ) as jml_kunjungan FROM pasien p, antrian a WHERE p.id_pasien = '$_GET[p]' AND a.id_antrian='$_GET[id_antrian]'");
-      $rm = mysqli_fetch_assoc($qrm);
+			$rm = mysqli_fetch_assoc($qrm);
+			$qdokter = mysqli_query($con, "SELECT id_dokter, nm_dokter FROM dokter WHERE id_dokter = '$_SESSION[id_user]'");
+			$dokter = mysqli_fetch_assoc($qdokter);
       $today = new DateTime();
       $tgl_lahir = new DateTime($rm['tgl_lahir']);
       $usia = $today->diff($tgl_lahir)->y;
       date_default_timezone_set("Asia/Jakarta");
       $date = date("d-m-Y");
-		$suhu_err = $tensi1_err = $tensi2_err = $keluhan_err = $pemeriksaan_err = $diagnosa_err = $pelayanan_err = "";
-		$suhu = $tensi1 = $tensi2 = $keluhan = $pemeriksaan = $diagnosa = $pelayanan = "";
+			$suhu_err = $tensi1_err = $tensi2_err = $keluhan_err = $pemeriksaan_err = $diagnosa_err = $pelayanan_err = "";
+			$suhu = $tensi1 = $tensi2 = $keluhan = $pemeriksaan = $diagnosa = $pelayanan = "";
 
-    $qid = mysqli_query($con, "SELECT MAX(id_rm) as id FROM rekam_medis");
-    $id = mysqli_fetch_assoc($qid);
+    	$qid = mysqli_query($con, "SELECT MAX(id_pemeriksaan) as id FROM pemeriksaan");
+    	$id = mysqli_fetch_assoc($qid);
 
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			$qtindakan = mysqli_query($con, "SELECT * FROM pelayanan WHERE pelayanan = '$_POST[pelayanan]'");
-			$cektindakan = mysqli_num_rows($qtindakan);
+			if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				$qtindakan = mysqli_query($con, "SELECT * FROM pelayanan WHERE pelayanan = '$_POST[pelayanan]'");
+				$cektindakan = mysqli_num_rows($qtindakan);
 
-			if (empty($_POST['tensi1'])) {
-				$tensi1_err = "* Tensi harus diisi !";
-			}
-			else if ($_POST['tensi1'] <= 0) {
-				$tensi1_err = "* Tensi tidak valid !";
-			}
-			else {
+				if (empty($_POST['tensi1'])) {
+					$tensi1_err = "* Tensi harus diisi !";
+				}
+				else if ($_POST['tensi1'] <= 0) {
+					$tensi1_err = "* Tensi tidak valid !";
+				}
+				else {
 				$tensi1 = trim($_POST['tensi1']);
-			}
+				}
 
-			if (empty($_POST['tensi2'])) {
-				$tensi2_err = "* Tensi harus diisi !";
-			}
-			else if ($_POST['tensi1'] <= 0) {
-				$tensi2_err = "* Tensi tidak valid !";
-			}
-			else {
-				$tensi2 = trim($_POST['tensi1']);
-			}
+				if (empty($_POST['tensi2'])) {
+					$tensi2_err = "* Tensi harus diisi !";
+				}
+				else if ($_POST['tensi2'] <= 0) {
+					$tensi2_err = "* Tensi tidak valid !";
+				}
+				else {
+					$tensi2 = trim($_POST['tensi2']);
+				}
 
-			if (empty($_POST['suhu'])) {
-				$suhu_err = "* Suhu badan harus diisi !";
-			}
-			elseif ($_POST['suhu'] <= 0) {
-				$suhu_err = "* Suhu badan tidak valid !";
-			}
-			else {
-				$suhu = trim($_POST['suhu']);
-			}
+				if (empty($_POST['suhu'])) {
+					$suhu_err = "* Suhu badan harus diisi !";
+				}
+				elseif ($_POST['suhu'] <= 0) {
+					$suhu_err = "* Suhu badan tidak valid !";
+				}
+				else {
+					$suhu = trim($_POST['suhu']);
+				}
 
-			if (empty($_POST['keluhan'])) {
-				$keluhan_err = "* Ananemse harus diisi !";
-			}
-			else {
-				$keluhan = trim($_POST['keluhan']);
-			}
+				if (empty($_POST['keluhan'])) {
+					$keluhan_err = "* Ananemse harus diisi !";
+				}
+				else {
+					$keluhan = trim($_POST['keluhan']);
+				}
 
-			if (empty($_POST['pemeriksaan']) || $_POST['pemeriksaan'] == "Pemeriksaan Fisik") {
-				$pemeriksaan_err = "* Pemeriksaan fisik harus diisi !";
-			}
-			else {
-				$pemeriksaan = trim($_POST['pemeriksaan']);
-			}
+				if (empty($_POST['pemeriksaan']) || $_POST['pemeriksaan'] == "Pemeriksaan Fisik") {
+					$pemeriksaan_err = "* Pemeriksaan fisik harus diisi !";
+				}
+				else {
+					$pemeriksaan = trim($_POST['pemeriksaan']);
+				}
 
-			if (empty($_POST['diagnosa']) || $_POST['diagnosa'] == "Diagnosa") {
-				$diagnosa_err = "* Diagnosa harus diisi !";
-			}
-			else {
-				$diagnosa = trim($_POST['diagnosa']);
-			}
+				if (empty($_POST['diagnosa']) || $_POST['diagnosa'] == "Diagnosa") {
+					$diagnosa_err = "* Diagnosa harus diisi !";
+				}
+				else {
+					$diagnosa = trim($_POST['diagnosa']);
+				}
 
-			if (empty($_POST['pelayanan'])) {
-				$pelayanan_err = "* Pilih tindakan !";
-			}
-			elseif ($cektindakan == 0) {
-				$pelayanan_err = "* Tindakan tidak sesuai !";
-			}
-			else {
-				//
-			}
+				if (empty($_POST['pelayanan'])) {
+					$pelayanan_err = "* Pilih tindakan !";
+				}
+				elseif ($cektindakan == 0) {
+					$pelayanan_err = "* Tindakan tidak sesuai !";
+				}
+				else {
+					$pelayanan = trim($_POST['pelayanan']);
+				}
 
-		}
+				if ($tensi1_err == "" && $tensi2_err == "" & $suhu_err == "" && $keluhan_err == "" && 			$pemeriksaan_err == "" && $diagnosa_err == "" && $pelayanan_err == "") {
+					mysqli_query($con, "INSERT INTO pemeriksaan (id_antrian, id_dokter, pemeriksaan_fisik, tensi, suhu, diagnosa) VALUE ('$_GET[id_antrian]', '$_SESSION[id_user]', '$pemeriksaan', '$tensi1 / $tensi2', '$suhu', '$diagnosa')");
 
-		 ?>
+					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan) VALUE ('$id[id]'+1, (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan') )");
+
+					mysqli_query($con, "UPDATE antrian SET keluhan = '$keluhan' WHERE id_antrian = '$_GET[id_antrian]'");
+				}
+
+			}
+		?>
 		 <div class="main">
 		 	<div class="main-content">
 		 		<div class="container-fluid">
@@ -160,7 +169,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                       <div class="table-responsive">
                         <table>
                           <tr>
-                            <th>ID RM</th>
+                            <th>No Pemeriksaan</th>
                             <td>&ensp;&emsp;</td>
                             <td><?php echo $id['id'] + 1; ?></td>
                           </tr>
@@ -205,6 +214,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                             <th>Tanggal</th>
                             <td>&ensp;&emsp;</td>
                             <td><?php echo $date; ?></td>
+                          </tr>
+                          <tr>
+                            <th>Dokter Pemeriksa</th>
+                            <td>&ensp;&emsp;</td>
+                            <td><?php echo $dokter['nm_dokter']; ?></td>
                           </tr>
                         </table>
                       </div>
