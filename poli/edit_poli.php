@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
  <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Edit Profil | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,7 +32,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 			$query = "SELECT * FROM poli WHERE id_poli = '$_GET[id_poli]'";
@@ -61,7 +61,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Poli</h3>
+					<div class="row">
+
+						<div class="col-md-6">
+
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title"><i class="fa fa-hospital-o"></i>&ensp;Edit Poli</h3>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="panel">
