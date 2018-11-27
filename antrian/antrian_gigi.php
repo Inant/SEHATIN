@@ -39,13 +39,11 @@ echo "<script>
   <div class="main">
     <div class="main-content">
       <div class="container-fluid">
-        <h3 class="page-title">Antrian</h3>
         <div class="row">
           <div class="col-md-12">
             <div class="panel">
             <div class="panel-heading">
-                <h4 class="panel-title">Antrian Poli Gigi</h4>
-
+            <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian Poli Gigi</h1>
             </div>
               <div class="row">
                     <div class="col-md-4 col-md-offset-8">
