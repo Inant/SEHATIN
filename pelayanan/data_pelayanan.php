@@ -39,16 +39,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Pelayanan</h3>
+					<div class="panel">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-stethoscope"></i>&ensp;Data Pelayanan</h3>
+							<div class="col-md-2 col-md-offset-10">
+
+							</div>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-12">
-
 							<div class="panel">
-
-								<div class="panel-heading">
-									<h4 class="panel-title">Data Pelayanan</h4>
-
-								</div>
+								<br>
 								<div class="row">
 									<div class="col-md-2">
 										<?php if ($_SESSION['level'] == "Admin"): ?>
