@@ -137,13 +137,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			 <div class="main">
 			 	<div class="main-content">
 			 		<div class="container-fluid">
-			 			<h3 class="page-title">Pasien</h3>
+						<div class="panel">
+							<div class="panel-heading">
+								<h1 class="panel-title"><i class="lnr lnr-wheelchair"></i>&ensp;Edit Pasien</h1>
+							</div>
+						</div>
 						<div class="row">
 						  <div class="col-md-12">
 						    <div class="panel">
-						    	<div class="panel-heading">
-						    		<h3 class="panel-title">Edit Pasien</h3>
-						    	</div>
+						    	<br>
 									<div class="panel-body">
 										<form class="" action="" method="POST">
                       <input type="hidden" name="id_pasien" value="<?php echo ($val['id_pasien']) ?>">
