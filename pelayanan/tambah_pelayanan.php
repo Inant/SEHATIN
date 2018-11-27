@@ -54,12 +54,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$pelayanan = trim($_POST['pelayanan']);
 			}
 
-      if ($_POST['umum'] == 0) {
-        $umum = trim($_POST['umum']);
-      }
-			elseif (empty($_POST['umum'])) {
+			if (empty($_POST['umum'])) {
 				$umum_err = "* Harga harus diisi !";
 			}
+      elseif ($_POST['umum'] == 0) {
+        $umum = trim($_POST['umum']);
+      }
       elseif ($_POST['umum'] < 0) {
         $umum_err = "* Harga tidak boleh dibawah 0 !";
       }
@@ -67,11 +67,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$umum = $_POST['umum'];
 			}
 
-      if ($_POST['karyawan'] == 0) {
-        $karyawan = trim($_POST['karyawan']);
-      }
-			elseif (empty($_POST['karyawan'])) {
+			if (empty($_POST['karyawan'])) {
 				$karyawan_err = "* Harga harus diisi !";
+			}
+			elseif ($_POST['karyawan'] == 0) {
+				$karyawan = trim($_POST['karyawan']);
 			}
       elseif ($_POST['karyawan'] < 0) {
         $karyawan_err = "* Harga tidak boleh dibawah 0 !";
@@ -80,11 +80,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$karyawan = $_POST['karyawan'];
 			}
 
-      if ($_POST['keluarga'] == 0) {
-        $keluarga = trim($_POST['keluarga']);
-      }
-			elseif (empty($_POST['keluarga'])) {
+			if (empty($_POST['keluarga'])) {
 				$keluarga_err = "* Harga harus diisi !";
+			}
+			elseif ($_POST['keluarga'] == 0) {
+				$keluarga = trim($_POST['keluarga']);
 			}
       elseif ($_POST['keluarga'] < 0) {
         $keluarga_err = "* Harga tidak boleh dibawah 0 !";
@@ -93,12 +93,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$keluarga = $_POST['keluarga'];
 			}
 
-      if ($_POST['mahasiswa'] == 0) {
-        $mahasiswa = trim($_POST['mahasiswa']);
-      }
-			elseif (empty($_POST['mahasiswa'])) {
+			if (empty($_POST['mahasiswa'])) {
 				$mahasiswa_err = "* Harga harus diisi !";
 			}
+      elseif ($_POST['mahasiswa'] == 0) {
+        $mahasiswa = trim($_POST['mahasiswa']);
+      }
       elseif ($_POST['mahasiswa'] < 0) {
         $mahasiswa_err = "* Harga tidak boleh dibawah 0 !";
       }
@@ -121,13 +121,14 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 <div class="main">
 		 	<div class="main-content">
 		 		<div class="container-fluid">
-		 			<h3 class="page-title">Petugas</h3>
+					<div class="panel">
+						<div class="panel-heading">
+							<h1 class="panel-title"><i class="fa fa-stethoscope"></i>&ensp;Tambah Pelayanan</h1>
+						</div>
+					</div>
 		 			<div class="row">
 		 				<div class="col-md-12">
 		 					<div class="panel">
-		 						<div class="panel-heading">
-		 							<h3 class="panel-title">Tambah Pelayanan</h3>
-		 						</div>
 		 						<div class="panel-body">
 		 							<form method="POST" action="">
 		 								<div class="row">
@@ -138,7 +139,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 									</div>
 		 									<div class="col-md-6">
 												<label for="">Harga Pasien Umum</label>
-		 										<input type="text" class="form-control" placeholder="Harga pasien umum" name="umum" value="<?php echo(isset($_POST['umum']) ? $_POST['umum'] : $umum) ?>">
+		 										<input type="number" class="form-control" placeholder="Harga pasien umum" name="umum" value="<?php echo(isset($_POST['umum']) ? $_POST['umum'] : $umum) ?>">
 		 										<span class="text-danger"> <?php echo($umum_err); ?></span>
 		 									</div>
 		 								</div>
@@ -146,12 +147,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<div class="row">
 		 									<div class="col-md-6">
 												<label for="">Harga Pasien Karyawan</label>
-		 										<input type="text" name="karyawan" placeholder="Harga pasien karyawan" class="form-control" value="<?php echo(isset($_POST['karyawan']) ? $_POST['karyawan'] : $karyawan) ?>">
+		 										<input type="number" name="karyawan" placeholder="Harga pasien karyawan" class="form-control" value="<?php echo(isset($_POST['karyawan']) ? $_POST['karyawan'] : $karyawan) ?>">
 		 										<span class="text-danger"> <?php echo($karyawan_err); ?></span>
 		 									</div>
                       <div class="col-md-6">
 												<label for="">Harga Pasien Keluarga Karyawan</label>
-		 										<input type="text" name="keluarga" placeholder="Harga pasien karyawan" class="form-control" value="<?php echo(isset($_POST['keluarga']) ? $_POST['keluarga'] : $keluarga) ?>">
+		 										<input type="number" name="keluarga" placeholder="Harga pasien karyawan" class="form-control" value="<?php echo(isset($_POST['keluarga']) ? $_POST['keluarga'] : $keluarga) ?>">
 		 										<span class="text-danger"> <?php echo($keluarga_err); ?></span>
 		 									</div>
 		 								</div>
@@ -159,7 +160,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<div class="row">
                       <div class="col-md-6">
                         <label for="">Harga Pasien Mahasiswa</label>
-                        <input type="text" name="mahasiswa" placeholder="Harga pasien mahasiswa" class="form-control" value="<?php echo(isset($_POST['mahasiswa']) ? $_POST['mahasiswa'] : $mahasiswa) ?>">
+                        <input type="number" name="mahasiswa" placeholder="Harga pasien mahasiswa" class="form-control" value="<?php echo(isset($_POST['mahasiswa']) ? $_POST['mahasiswa'] : $mahasiswa) ?>">
                         <span class="text-danger"> <?php echo($mahasiswa_err); ?></span>
                       </div>
 		 								</div>
