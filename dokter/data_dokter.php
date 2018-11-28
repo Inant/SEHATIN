@@ -37,17 +37,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/left_sidebar.php';
 		 ?>
 		 <div class="main">
-		 	<div class="main-content">
-		 		<div class="container-fluid">
-		 			<h3 class="page-title">Dokter</h3>
-		 			<div class="row">
-		 				<div class="col-md-12">
-		 					<div class="panel">
-		 						<div class="panel-heading">
-		 							<div class="row"><h4 class="panel-title">Data Dokter</h4></div>
-
-		 						</div>
-		 						<div class="row">
+			 <div class="main-content">
+				 <div class="container-fluid">
+					 <div class="panel">
+						 <div class="panel-heading">
+						<h1 class="panel-title"><i class="fa fa-user-md"></i>&ensp;Data Dokter</h1>
+						 </div>
+					 </div>
+					 <div class="row">
+						 <div class="col-md-12">
+							 <div class="panel">
+								 <div class="row">
+								<div class="panel-body">
 		 							<div class="row">
 		 								<div class="col-md-2">
 		 									<a href="tambah_dokter.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>

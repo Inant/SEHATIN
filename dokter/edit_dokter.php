@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
 <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Edit Dokter | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,7 +32,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 			$query = "SELECT * FROM dokter WHERE id_dokter = '$_GET[id_dokter]'";
@@ -93,19 +93,21 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				}
 			}
 		?>
-		
-		
+
+
 		<div class="main">
-			<div class="main-content">
-				<div class="container-fluid">
-					<h3 class="page-title">Dokter</h3>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Tambah Dokter</h3>
-								</div>
-								<div class="panel-body">
+ 		 <div class="main-content">
+ 			 <div class="container-fluid">
+ 				 <div class="panel">
+ 					 <div class="panel-heading">
+ 						 <h1 class="panel-title"><i class="fa fa-user-md"></i>&ensp;Tambah Dokter</h1>
+ 					 </div>
+ 				 </div>
+ 				 <div class="row">
+ 					 <div class="col-md-12">
+ 						 <div class="panel">
+ 							 <div class="row">
+ 							<div class="panel-body">
 									<form method="POST" action="">
 										<input type="hidden" name="id_dokter" value="<?php echo $val['id_dokter']?>">
 										<div class="row">
@@ -151,7 +153,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>  Simpan</button> &nbsp; &nbsp;
 		 										<button type="reset" name="reset" class="btn btn-danger" onclick="history.go(-1);"><i class="fa fa-times-circle"></i> &nbsp;  Batal</button>
 		 									</div>
-		 								</div>	
+		 								</div>
 									</form>
 								</div>
 							</div>

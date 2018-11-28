@@ -41,7 +41,7 @@ echo "<script>
       <div class="container-fluid">
         <div class="panel">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian Poli KIA</h1>
+            <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian KIA </h1>
           </div>
         </div>
         <div class="row">
