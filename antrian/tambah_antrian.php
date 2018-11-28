@@ -118,15 +118,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				}
 			 ?>
 			 <div class="main">
-			 	<div class="main-content">
-			 		<div class="container-fluid">
-			 			<h3 class="page-title">Antrian</h3>
-						<div class="row">
-						  <div class="col-md-12">
-						    <div class="panel">
-						    	<div class="panel-heading">
-						    		<h3 class="panel-title">Tambah Antrian</h3>
-						    	</div>
+				 <div class="main-content">
+					 <div class="container-fluid">
+						 <div class="panel">
+							 <div class="panel-heading">
+								 <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Tambah Antrian</h1>
+							 </div>
+						 </div>
+						 <div class="row">
+							 <div class="col-md-12">
+								 <div class="panel">
+									 <div class="row">
 									<div class="panel-body">
 										<form class="" action="" method="POST">
 											<div class="row">
