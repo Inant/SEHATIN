@@ -38,8 +38,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       $qpasien = mysqli_query($con, "SELECT * FROM pasien WHERE id_pasien = '$_GET[p]'");
       $valpasien = mysqli_fetch_assoc($qpasien);
       $tgl_lahir = date("d-m-Y", strtotime($valpasien['tgl_lahir']));
-      $qhistory = mysqli_query($con, "SELECT DISTINCT a.*, pm.* FROM antrian a INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian WHERE id_pasien = '$_GET[p]'");
-      //$qpemeriksaan = mysqli_query($con, "SELECT ")
+      $qhistory = mysqli_query($con, "SELECT DISTINCT * FROM antrian WHERE id_pasien = '$_GET[p]'");
+      $qpemeriksaan = mysqli_query($con, "SELECT DISTINCT a.*, pm.*, t.*, p.pelayanan FROM antrian a INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN tindakan t ON t.id_pemeriksaan = pm.id_pemeriksaan INNER JOIN pelayanan p ON p.id_pelayanan = t.id_pelayanan WHERE a.id_pasien = '$_GET[p]'");
 		 ?>
 		 <div class="main">
 		 	<div class="main-content">
@@ -64,7 +64,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                   <div class="profile-stat">
                     <div class="row">
                       <div class="col-md-12 stat-item">
-                        <?php echo mysqli_num_rows($qpasien) ?> <span>Kunjungan</span>
+                        <?php echo mysqli_num_rows($qhistory) ?> <span>Kunjungan</span>
                       </div>
                     </div>
                   </div>
@@ -88,7 +88,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
               </div>
 
               <div class="profile-right">
-                <h4 class="heading">History Pemeriksaan</h4>
+                <h4 class="heading">History Kunjungan</h4>
                 <div class="custom-tabs-line tabs-line-bottom left-aligned">
                   <ul class="nav" role="tablist">
                     <li class="active"> <a href="#" role="tab" data-toggle="tab">History</a> </li>
@@ -106,7 +106,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                       ?>
                           <li>
                             <i class="fa fa-medkit activity-icon"></i>
-                            <p><?php echo $valhistory['diagnosa'] ?> <span class="timestamp"><?php echo $tgl_periksa . " " . $waktu_periksa ?> </span> </p>
+                            <p><?php echo $valhistory['keluhan'] ?> <span class="timestamp"><?php echo $tgl_periksa . " " . $waktu_periksa ?> </span> </p>
                           </li>
                       <?php
                         }
@@ -114,24 +114,52 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 
                     </ul>
                   </div>
+									<br><br>
                 </div>
               </div>
 
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="panel">
-              adsfdf
-            </div>
-          </div>
+
           <?php
-            while ($pemeriksaan = mysqli_fetch_assoc($qhistory)) {
+            while ($pemeriksaan = mysqli_fetch_assoc($qpemeriksaan)) {
+							$tgl_pemeriksaan = explode(" ", $pemeriksaan['waktu']);
+							$tgl_pemeriksaan = date("d-m-Y", strtotime($tgl_pemeriksaan[0]));
           ?>
-
-              <div class="panel">
-                <?php echo $pemeriksaan['keluhan'] ?>
-              </div>
-
+						<div class="col-md-6">
+							<div class="panel">
+								<table class="table">
+									<tr>
+										<td>Tanggal</td>
+										<td><?php echo $tgl_pemeriksaan ?></td>
+									</tr>
+								  <tr>
+								  	<td>Keluhan</td>
+								  	<td><?php echo $pemeriksaan['keluhan'] ?></td>
+								  </tr>
+									<tr>
+										<td>Pemeriksaan Fisik</td>
+										<td><?php echo $pemeriksaan['pemeriksaan_fisik'] ?></td>
+									</tr>
+									<tr>
+										<td>Tekanan Darah</td>
+										<td><?php echo $pemeriksaan['tensi'] ?></td>
+									</tr>
+									<tr>
+										<td>Suhu Badan</td>
+										<td><?php echo $pemeriksaan['suhu'] ?></td>
+									</tr>
+									<tr>
+										<td>Diagnosa</td>
+										<td><?php echo $pemeriksaan['diagnosa'] ?></td>
+									</tr>
+									<tr>
+										<td>Tindakan</td>
+										<td><?php echo $pemeriksaan['pelayanan'] ?></td>
+									</tr>
+								</table>
+							</div>
+						</div>
           <?php
             }
           ?>
