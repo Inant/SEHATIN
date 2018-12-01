@@ -76,7 +76,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 												<th rowspan="2" style="text-align:center;">Pelayanan</th>
 												<th colspan="4" style="text-align:center;">Harga</th>
                         <th rowspan="2">Status</th>
-                        <th rowspan="2">Aksi</th>
+												<?php if ($_SESSION['level'] == "Admin"): ?>
+													<th rowspan="2">Aksi</th>
+												<?php endif; ?>
                           <tr>
                           <th>Umum</th>
                           <th>Karyawan</th>
@@ -109,7 +111,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
 													$edit = "";
 													if ($_SESSION['level'] == "Admin") {
-														$edit = "<a href='edit_pelayanan.php?id_pelayanan=$val[id_pelayanan]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a>";
+														$edit = "<td><a href='edit_pelayanan.php?id_pelayanan=$val[id_pelayanan]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a> <a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>";
 													}
 
 													echo "<tr>
@@ -120,8 +122,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															<td>$val[harga_kel_karyawan]</td>
 															<td>$val[harga_mahasiswa]</td>
 															<td><span class='$label'>$val[status]</span></td>
-															<td>$edit
-															<a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
+															$edit
 														  </tr>
 													";
 													$no++;

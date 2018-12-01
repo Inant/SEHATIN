@@ -121,6 +121,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
             </div>
           </div>
 
+					<div class="panel">
+						<div class="panel-heading">
+							<h4 class="panel-title">Pemeriksaan</h4>
+						</div>
+					</div>
           <?php
             while ($pemeriksaan = mysqli_fetch_assoc($qpemeriksaan)) {
 							$tgl_pemeriksaan = explode(" ", $pemeriksaan['waktu']);
