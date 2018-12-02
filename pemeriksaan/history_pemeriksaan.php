@@ -9,7 +9,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Data Poli | Sehatin</title>
+	<title>History Pemeriksaan | Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -39,7 +39,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       $valpasien = mysqli_fetch_assoc($qpasien);
       $tgl_lahir = date("d-m-Y", strtotime($valpasien['tgl_lahir']));
       $qhistory = mysqli_query($con, "SELECT DISTINCT * FROM antrian WHERE id_pasien = '$_GET[p]'");
-      $qpemeriksaan = mysqli_query($con, "SELECT DISTINCT a.*, pm.*, t.*, p.pelayanan FROM antrian a INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN tindakan t ON t.id_pemeriksaan = pm.id_pemeriksaan INNER JOIN pelayanan p ON p.id_pelayanan = t.id_pelayanan WHERE a.id_pasien = '$_GET[p]'");
+      $qpemeriksaan = mysqli_query($con, "SELECT DISTINCT a.*, pm.*, t.*, p.pelayanan, d.nm_dokter FROM antrian a INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN tindakan t ON t.id_pemeriksaan = pm.id_pemeriksaan INNER JOIN pelayanan p ON p.id_pelayanan = t.id_pelayanan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.id_pasien = '$_GET[p]'");
 		 ?>
 		 <div class="main">
 		 	<div class="main-content">
@@ -142,6 +142,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 								  	<td>Keluhan</td>
 								  	<td><?php echo $pemeriksaan['keluhan'] ?></td>
 								  </tr>
+									<tr>
+										<td>Dokter</td>
+										<td><?php echo $pemeriksaan['nm_dokter'] ?></td>
+									</tr>
 									<tr>
 										<td>Pemeriksaan Fisik</td>
 										<td><?php echo $pemeriksaan['pemeriksaan_fisik'] ?></td>

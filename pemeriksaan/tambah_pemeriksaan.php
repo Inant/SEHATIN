@@ -77,6 +77,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 
     	$qid = mysqli_query($con, "SELECT MAX(id_pemeriksaan) as id FROM pemeriksaan");
     	$id = mysqli_fetch_assoc($qid);
+			$id = $id['id'] + 1;
 
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$qtindakan = mysqli_query($con, "SELECT * FROM pelayanan WHERE pelayanan = '$_POST[pelayanan]'");
@@ -146,12 +147,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				if ($tensi1_err == "" && $tensi2_err == "" & $suhu_err == "" && $keluhan_err == "" && 			$pemeriksaan_err == "" && $diagnosa_err == "" && $pelayanan_err == "") {
 					mysqli_query($con, "INSERT INTO pemeriksaan (id_antrian, id_dokter, pemeriksaan_fisik, tensi, suhu, diagnosa) VALUE ('$_GET[id_antrian]', '$_SESSION[id_user]', '$pemeriksaan', '$tensi1 / $tensi2', '$suhu', '$diagnosa')");
 
-					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan) VALUE ('$id[id]'+1, (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan') )");
+					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan) VALUE ('$id', (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan') )");
 
 					mysqli_query($con, "UPDATE antrian SET keluhan = '$keluhan' WHERE id_antrian = '$_GET[id_antrian]'");
 
 					echo "<script>
-									window.location.href='../resep/tambah_resep.php?id_antrian=$_GET[id_antrian]';
+									window.location.href='../resep/tambah_resep.php?id_antrian=$_GET[id_antrian]&id_pemeriksaan=$id&id_pasien=$rm[id_pasien]';
 								</script>";
 				}
 
@@ -175,7 +176,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           <tr>
                             <th>No Pemeriksaan</th>
                             <td>&ensp;&emsp;</td>
-                            <td><?php echo $id['id'] + 1; ?></td>
+                            <td><?php echo $id; ?></td>
                           </tr>
                           <tr>
                             <th>Nama Pasien</th>

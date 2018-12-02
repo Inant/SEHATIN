@@ -62,7 +62,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
-
+			$qrm = mysqli_query($con, "SELECT p.*, a.*,(SELECT COUNT(*) FROM antrian WHERE id_pasien = '$_GET[id_pasien]' ) as jml_kunjungan FROM pasien p, antrian a WHERE p.id_pasien = '$_GET[id_pasien]' AND a.id_antrian='$_GET[id_antrian]'");
+			$rm = mysqli_fetch_assoc($qrm);
+			$qdokter = mysqli_query($con, "SELECT id_dokter, nm_dokter FROM dokter WHERE id_dokter = '$_SESSION[id_user]'");
+			$dokter = mysqli_fetch_assoc($qdokter);
+			$today = new DateTime();
+      $tgl_lahir = new DateTime($rm['tgl_lahir']);
+      $usia = $today->diff($tgl_lahir)->y;
+      date_default_timezone_set("Asia/Jakarta");
+      $date = date("d-m-Y");
 		?>
 		 <div class="main">
 		 	<div class="main-content">
@@ -82,7 +90,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           <tr>
                             <th>No Pemeriksaan</th>
                             <td>&ensp;&emsp;</td>
-                            <td><?php echo $id['id'] + 1; ?></td>
+                            <td><?php echo $_GET['id_pemeriksaan'] ?></td>
                           </tr>
                           <tr>
                             <th>Nama Pasien</th>
@@ -137,13 +145,22 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                   </div>
                   <br>
                   <br>
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <form name="add_name" id="add_name">
                       <div class="table-responsive">
                         <table class="table" id="dynamic_field">
+													<tr>
+														<th>Nama Obat</th>
+														<th colspan="3">Dosis</th>
+														<th>Jumlah</th>
+													</tr>
                           <tr>
                             <td><input type="text" id="obat" name="obat[]" placeholder="Nama Obat" class="form-control" required="" /></td>
-                            <td><button type="button" name="add" id="add" class="btn btn-success"> <i class="fa fa-plus-circle"></i> </button></td>
+														<td> <input type="number" id="dosis1" name="dosis1[]" value="" class="form-control" required=""> </td>
+														<td> <b>X</b> </td>
+														<td> <input type="number" id="dosis2" name="dosis2[]" value="" class="form-control" required=""> </td>
+														<td> <input type="number" id="jumlah" name="jumlah[]" value="" class="form-control" placeholder="Jumlah" required=""> </td>
+														<td><button type="button" name="add" id="add" class="btn btn-success"> <i class="fa fa-plus-circle"></i> </button></td>
                           </tr>
                         </table>
                       </div>
@@ -181,7 +198,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
          }
        });
            i++;
-           $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" id="obat" name="obat[]" placeholder="Nama Obat" class="form-control" required /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"> <i class="fa fa-times-circle"> </i> </button></td></tr>');
+           $('#dynamic_field').append('<tr id="row'+i+'" class="dynamic-added"><td><input type="text" id="obat" name="obat[]" placeholder="Nama Obat" class="form-control" required="" /></td><td><input type="number" id="dosis1" name="dosis1[]" value="" class="form-control" required=""></td><td><b>X</b></td><td><input type="number" id="dosis2" name="dosis2[]" value="" class="form-control" required=""></td><td><input type="number" id="jumlah" name="jumlah[]" value="" class="form-control" placeholder="Jumlah" required=""></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><i class="fa fa-times-circle"></i> </button></td></tr>');
 
       });
 

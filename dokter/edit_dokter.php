@@ -38,8 +38,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			$query = "SELECT * FROM dokter WHERE id_dokter = '$_GET[id_dokter]'";
 			$result = mysqli_query($con, $query);
 			$val = mysqli_fetch_assoc($result);
-			$nama_err = $gender_err = $alamat_err = $nohp_err = $nip_err = "";
-			$nama = $gender = $nohp = $nip = "";
+			$nama_err = $gender_err = $alamat_err = $nohp_err = $nip_err = $poli_err ="";
+			$nama = $gender = $nohp = $nip = $poli = "";
 			$alamat = "Alamat";
 
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -84,8 +84,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$nip = trim($_POST['nip']);
 				}
 
-				if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "" && $nip_err == "") {
-					mysqli_query($con, "UPDATE dokter SET nm_dokter = '$nama', gender = '$gender', alamat = '$alamat', no_hp = '$nohp', no_ijin_praktek = '$nip' WHERE id_dokter = '$_POST[id_dokter]' ");
+				if (empty($_POST['poli'])) {
+					$poli_err = "* Pilih poli !";
+				}
+				else {
+					$poli = trim($_POST['poli']);
+				}
+
+				if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "" && $nip_err == "" && $poli_err == "") {
+					mysqli_query($con, "UPDATE dokter SET nm_dokter = '$nama', gender = '$gender', alamat = '$alamat', no_hp = '$nohp', no_ijin_praktek = '$nip', id_poli = '$poli' WHERE id_dokter = '$_POST[id_dokter]' ");
 					echo "<script>
 						alert('Data berhasil diperbarui');
 						window.location.href='data_dokter.php';
@@ -100,7 +107,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
  			 <div class="container-fluid">
  				 <div class="panel">
  					 <div class="panel-heading">
- 						 <h1 class="panel-title"><i class="fa fa-user-md"></i>&ensp;Tambah Dokter</h1>
+ 						 <h1 class="panel-title"><i class="fa fa-user-md"></i>&ensp;Edit Dokter</h1>
  					 </div>
  				 </div>
  				 <div class="row">
@@ -112,10 +119,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										<input type="hidden" name="id_dokter" value="<?php echo $val['id_dokter']?>">
 										<div class="row">
 											<div class="col-md-6">
+												<label for="">Nama Dokter</label>
 												<input type="text" name="nama" class="form-control" placeholder="Nama Dokter" value="<?php echo($val['nm_dokter']) ?>">
 		 										<span class="text-danger"> <?php echo($nama_err); ?></span>
 											</div>
 											<div class="col-md-6">
+												<label for="">No Handphone</label>
 												<input type="text" name="nohp" minlength="11" maxlength="13" class="form-control" placeholder="No Handphone" value="<?php echo($val['no_hp']) ?>">
 		 										<span class="text-danger"> <?php echo($nohp_err); ?></span>
 											</div>
@@ -123,6 +132,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										<br>
 										<div class="row">
 											<div class="col-md-6">
+												<label for="">Gender</label>
+												<br>
 												<div class="col-md-3">
 		 											<label class="fancy-radio">
 		 											<input type="radio" name="gender" class="form-control" value="Laki-laki" <?php echo($val['gender'] == "Laki-laki" ? 'checked' : '') ?> ><span><i></i>Laki-Laki</span>
@@ -136,6 +147,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<span class="text-danger"> <?php echo($gender_err); ?></span>
 											</div>
 											<div class="col-md-6">
+												<label for="">No Izin Praktek</label>
 												<input type="text" name="nip" class="form-control" placeholder="Nomor Izin Praktek" value="<?php echo($val['no_ijin_praktek']) ?>">
 		 										<span class="text-danger"> <?php echo($nip_err); ?></span>
 											</div>
@@ -143,9 +155,23 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										<br>
 										<div class="row">
 											<div class="col-md-6">
+												<label for="">Alamat</label>
 												<textarea name="alamat" class="form-control" rows="2"><?php echo $val['alamat'] ?></textarea>
 		 										<span class="text-danger"> <?php echo($alamat_err); ?></span>
 											</div>
+											<div class="col-md-6">
+												<label for="">Poli</label>
+										    <select class="form-control" name="poli">
+													<option value="">-- Pilih Poli --</option>
+													<?php
+														$qpoli = mysqli_query($con, "SELECT * FROM poli");
+														while ($valpoli = mysqli_fetch_assoc($qpoli)) {
+															echo "<option value = '$valpoli[id_poli]' $val[id_poli] == $valpoli[id_poli] ? 'selected' : ''> $valpoli[id_poli] </option>";
+														}
+													 ?>
+										    </select>
+												<span class="text-danger"><?php echo ($val['id_poli']) ?></span>
+										  </div>
 										</div>
 										<br>
 										<div class="row">

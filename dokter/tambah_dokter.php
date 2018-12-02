@@ -195,7 +195,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													<?php
 														$qpoli = mysqli_query($con, "SELECT * FROM poli");
 														while ($val = mysqli_fetch_assoc($qpoli)) {
-															echo "<option value = '$val[id_poli]' isset($_POST[poli]) && $_POST[poli] = $val[id_poli] ? 'selected' : ''> $val[poli] </option>";
+															echo "<option value = '$val[id_poli]' isset($_POST[poli]) && $_POST[poli] == $val[id_poli] ? 'selected' : ''> $val[poli] </option>";
 														}
 													 ?>
 										    </select>
