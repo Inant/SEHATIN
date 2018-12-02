@@ -149,6 +149,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan) VALUE ('$id[id]'+1, (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan') )");
 
 					mysqli_query($con, "UPDATE antrian SET keluhan = '$keluhan' WHERE id_antrian = '$_GET[id_antrian]'");
+
+					echo "<script>
+									window.location.href='../resep/tambah_resep.php?id_antrian=$_GET[id_antrian]';
+								</script>";
 				}
 
 			}
