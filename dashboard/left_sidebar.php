@@ -35,7 +35,6 @@
 								</ul>
 							</div>
 						</li>
-						<li><a href="../kunjungan/data_kunjungan.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 
 				<?php
 					}
