@@ -35,6 +35,10 @@
 								</ul>
 							</div>
 						</li>
+<<<<<<< HEAD
+=======
+						<li><a href="../kunjungan/data_kunjungan.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Data Kunjungan</span></a></li>
+>>>>>>> 96eeebfadd7d0825a3f2bb44138ca462c58b61c5
 
 				<?php
 					}
@@ -54,6 +58,7 @@
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						<li><a href="../antrian/<?php echo $page ?>" class="<?php echo ($nav == "antrian" ? 'active' : '') ?>"><i class="lnr lnr-list"></i> <span>Antrian</span></a></li>
 						<li><a href="../pelayanan/data_pelayanan.php" class="<?php echo ($nav == "pelayanan" ? 'active' : '') ?>"><i class="fa fa-stethoscope"></i> <span>Pelayanan</span></a></li>
+						<li><a href="../kunjungan/data_kunjungan.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Data Kunjungan</span></a></li>
 				<?php
 					}
 
