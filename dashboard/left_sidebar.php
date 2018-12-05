@@ -55,7 +55,8 @@
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						<li><a href="../antrian/<?php echo $page ?>" class="<?php echo ($nav == "antrian" ? 'active' : '') ?>"><i class="lnr lnr-list"></i> <span>Antrian</span></a></li>
 						<li><a href="../pelayanan/data_pelayanan.php" class="<?php echo ($nav == "pelayanan" ? 'active' : '') ?>"><i class="fa fa-stethoscope"></i> <span>Pelayanan</span></a></li>
-						<li><a href="../kunjungan/data_kunjungan.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Data Kunjungan</span></a></li>
+						<li><a href="../kunjungan/pasien_perhari.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Pasien Hari Ini</span></a></li>
+						<li><a href="../obat/data_obat.php" class="<?php echo ($nav == "obat" ? 'active' : '') ?>"><i class="fa fa-medkit"></i> <span>Data Obat</span></a></li>
 				<?php
 					}
 

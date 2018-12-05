@@ -71,16 +71,32 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       $usia = $today->diff($tgl_lahir)->y;
       date_default_timezone_set("Asia/Jakarta");
       $date = date("d-m-Y");
+			$qpage = mysqli_query($con, "SELECT id_poli FROM dokter WHERE id_dokter = '$_SESSION[id_user]'");
+			$rpage = mysqli_fetch_assoc($qpage);
+			if ($rpage['id_poli'] == 1) {
+				$page = 'antrian_umum.php';
+			}
+			elseif ($rpage['id_poli'] == 2) {
+				$page = 'antrian_gigi.php';
+			}
+			else {
+				$page = 'antrian_kia.php';
+			}
 			if(isset($_POST['submit'])){
 				mysqli_query($con, "INSERT INTO resep (id_pemeriksaan) VALUE ('$_GET[id_pemeriksaan]')");
 				$var = mysqli_query($con, "SELECT id_resep FROM resep ORDER BY id_resep DESC LIMIT 1");
 				$varr = mysqli_fetch_assoc($var);
 				for($i=0;$i<count($_POST['obat']);$i++){
-					mysqli_query($con, "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$_POST[obat][$i]'), '$_POST[dosis1][$i]', '$_POST[dosis2][$i]', '$_POST[jumlah][$i]' ) ");
-					echo "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$_POST[obat][$i]'), '$_POST[dosis1][$i]', '$_POST[dosis2][$i]', '$_POST[jumlah][$i]' )";
-				}
-				for ($j=0; $j < count($_POST['obat']) ; $j++) {
-					echo $_POST['obat'][$j];
+					$obat = $_POST['obat'][$i];
+					$dosis1 = $_POST['dosis1'][$i];
+					$dosis2 = $_POST['dosis2'][$i];
+					$jumlah = $_POST['jumlah'][$i];
+					mysqli_query($con, "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$obat'), '$dosis1', '$dosis2', '$jumlah' ) ");
+					mysqli_query($con, "UPDATE antrian SET status ='Menuggu obat' WHERE id_antrian = '$_GET[id_antrian]'");
+					echo "<script>
+									alert('Pasien selesai diperiksa ');
+									window.location.href='../antrian/$page';
+								</script>";
 				}
 			}
 		?>

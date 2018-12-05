@@ -55,7 +55,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                    <a href="tambah_obat.php"> <button type="button" class="btn btn-primary btn-sm" style="margin-left:25px; margin-bottom:10px;">Tambah</button> </a>
+										<?php if ($_SESSION['level'] == "Apoteker"): ?>
+											<a href="tambah_obat.php"> <button type="button" class="btn btn-primary btn-sm" style="margin-left:25px; margin-bottom:10px;">Tambah</button> </a>
+										<?php endif; ?>
                   </div>
                 </div>
                 <div class="panel-body">
@@ -71,7 +73,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           <th>Harga Jual</th>
                           <th>Stok</th>
                           <th>Tgl Kadaluarsa</th>
-													<th>Aksi</th>
+													<?php if ($_SESSION['level'] == "Apoteker"): ?>
+														<th>Aksi</th>
+													<?php endif; ?>
                         </tr>
                       </thead>
 											<tbody>
@@ -86,6 +90,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$jml_obat = mysqli_fetch_assoc($r);
 													$pages = ceil($jml_obat['jml_obat']/$halaman);
 													$no = $mulai + 1;
+													$aksi = "";
+													if ($_SESSION['level'] == "Apoteker") {
+														$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
+													}
 													foreach ($result as $val) {
 														echo "<tr>
 																		<td>$no</td>
@@ -96,8 +104,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 																		<td>$val[harga_jual]</td>
 																		<td>$val[stok]</td>
 																		<td>$val[tgl_kadaluarsa]</td>
-																		<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a>
-																		</td>
+																		$aksi
 																	</tr>";
 																	$no++;
 													}
