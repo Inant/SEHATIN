@@ -35,7 +35,10 @@
 								</ul>
 							</div>
 						</li>
+<<<<<<< HEAD
+=======
 						<li><a href="../kunjungan/data_kunjungan.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Data Kunjungan</span></a></li>
+>>>>>>> 96eeebfadd7d0825a3f2bb44138ca462c58b61c5
 
 				<?php
 					}
