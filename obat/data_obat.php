@@ -48,7 +48,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
          <div class="container-fluid">
               <div class="panel">
                 <div class="panel-heading">
-                	<h1 class="panel-title"><i class="fa fa-user-md"></i>&ensp;List Obat</h1>
+                	<h1 class="panel-title"><i class="fa fa-medkit"></i>&ensp;List Obat</h1>
                 </div>
 							</div>
 						</div>
@@ -94,10 +94,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													$pages = ceil($jml_obat['jml_obat']/$halaman);
 													$no = $mulai + 1;
 													$aksi = "";
-													if ($_SESSION['level'] == "Apoteker") {
-														$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
-													}
 													foreach ($result as $val) {
+														if ($_SESSION['level'] == "Apoteker") {
+															$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
+														}
 														echo "<tr>
 																		<td>$no</td>
 																		<td>$val[nm_obat]</td>

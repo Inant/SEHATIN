@@ -48,7 +48,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				<div class="container-fluid">
 							<div class="panel">
 								<div class="panel-heading">
-									<h1 class="panel-title"><i class="fa fa-user-md"></i>&ensp;Satuan Obat</h1>
+									<h1 class="panel-title"><i class="fa fa-medkit"></i>&ensp;Satuan Obat</h1>
 									<div class="col-md-2 col-md-offset-10">
 									</div>
 								</div>

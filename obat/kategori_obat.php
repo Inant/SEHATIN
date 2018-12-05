@@ -48,7 +48,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 		<div class="container-fluid">
 		 					<div class="panel">
 		 						<div class="panel-heading">
-		 							<h1 class="panel-title"><i class="fa fa-user-md"></i>&ensp;Kategori Obat</h1>
+		 							<h1 class="panel-title"><i class="fa fa-medkit"></i>&ensp;Kategori Obat</h1>
 									<div class="col-md-2 col-md-offset-10">
 								</div>
 		 						</div>
@@ -56,7 +56,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 								<div class="row">
 									<div class="col-md-12">
 										<div class="panel">
-											<br>	
+											<br>
 		 						<div class="row">
 		 							<div class="col-md-12">
 		 								<a href="tambah_kategori.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
