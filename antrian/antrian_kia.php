@@ -41,14 +41,14 @@ echo "<script>
       <div class="container-fluid">
         <div class="panel">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian KIA </h1>
+            <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian Poli Umum</h1>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="panel">
               <div class="row">
-              <div class="row">
+                <br>
                     <div class="col-md-4 col-md-offset-8">
                       <form action="" method="POST">
                         <div class="input-group" style="margin-right: 25px;">
@@ -57,10 +57,9 @@ echo "<script>
                         </div>
                       </form>
                     </div>
-                  </div>
+              </div>
                   <div class="panel-body">
                     <div class="table-responsive">
-
                       <table class="table table-striped table-hover table-bordered">
                         <thead>
                           <tr>
@@ -85,7 +84,7 @@ echo "<script>
                             //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
                           }
                           else{
-                            $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 5 AND a.status = 'Mengantri' AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC";
+                            $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 5 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Mengantri' ORDER BY a.waktu ASC";
                           }
                           $result = mysqli_query($con, $query);
                           $jml = mysqli_num_rows($result);
@@ -97,7 +96,8 @@ echo "<script>
                             $t = explode(" ", $val['waktu']);
                             $time = $t[1];
                             if ($_SESSION['level'] == 'Dokter') {
-                              $aksi = "<td><a href='#' class='btn btn-success btn-xs' title='Periksa'><i class='lnr lnr-plus-circle'></i></a></td>";
+                              $aksi = "<td><a href='../pemeriksaan/tambah_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-success btn-xs' title='Periksa'><i class='lnr lnr-file-add'></i></a>
+                              <a href='../pemeriksaan/history_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-info btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>";
                             }
                             elseif ($_SESSION['level'] == 'Resepsionis') {
                               $aksi = "<td><a href='edit_antrian.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>";
