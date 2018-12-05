@@ -77,7 +77,7 @@
 								</ul>
 							</div>
 						</li>
-						<li><a href="../resep/data_resep.php" class="<?php echo ($nav == "resep" ? 'active' : '') ?>"><i class="material-icons" style="font-size:21px">receipt</i> <span>Antrian Resep</span></a></li>
+						<li><a href="../resep/antrian_resep.php" class="<?php echo ($nav == "resep" ? 'active' : '') ?>"><i class="material-icons" style="font-size:21px">receipt</i> <span>Antrian Resep</span></a></li>
 				<?php
 					}
  				?>
