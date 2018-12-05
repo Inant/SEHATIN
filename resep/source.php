@@ -5,7 +5,7 @@
 
     $obat = $_GET["query"];
 
-    $query = mysqli_query($con, "SELECT id_obat, nm_obat FROM obat WHERE nm_obat LIKE '%$obat%' ORDER BY nm_obat ASC");
+    $query = mysqli_query($con, "SELECT id_obat, nm_obat FROM obat WHERE nm_obat LIKE '%$obat%' AND stok > 0 ORDER BY nm_obat ASC");
 
     while($data = mysqli_fetch_assoc($query)) {
       $output['suggestions'][] = [

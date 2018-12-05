@@ -9,7 +9,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Kategori Obat | Sehatin</title>
+	<title>List Obat | Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -51,7 +51,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                 	<h1 class="panel-title"><i class="fa fa-medkit"></i>&ensp;List Obat</h1>
                 </div>
 							</div>
-						</div>
+
 						<div class="row">
 							<div class="col-md-12">
 								<div class="panel">
@@ -98,6 +98,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 														if ($_SESSION['level'] == "Apoteker") {
 															$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
 														}
+														$tgl_kadaluarsa = date("d-m-Y", strtotime($val['tgl_kadaluarsa']));
 														echo "<tr>
 																		<td>$no</td>
 																		<td>$val[nm_obat]</td>
@@ -106,7 +107,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 																		<td>$val[harga_beli]</td>
 																		<td>$val[harga_jual]</td>
 																		<td>$val[stok]</td>
-																		<td>$val[tgl_kadaluarsa]</td>
+																		<td>$tgl_kadaluarsa</td>
 																		$aksi
 																	</tr>";
 																	$no++;
