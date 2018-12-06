@@ -105,7 +105,7 @@ echo "<script>
                             <td>$val[keluhan]</td>
                             <td>$val[diagnosa]</td>
                             <td>$val[nm_dokter]</td>
-                            <td> <a href='detail_resep.php?id_resep=$val[id_resep]' class='btn btn-primary btn-xs' title='Detail Resep'> <i class='material-icons' style='font-size:20px'>receipt</i> </a> </td>
+                            <td> <a href='detail_resep.php?id_resep=$val[id_resep]' class='btn btn-primary btn-xs' title='Detail Resep'> <i class='fa fa-info-circle'></i> </a> </td>
                             </tr>
                             ";
                             $no++;

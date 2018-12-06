@@ -74,64 +74,81 @@ echo "<script>
                       <form action="" method="POST">
                         <div class="input-group" style="margin-right: 25px;">
                           <input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama...">
-                          <span class="input-group-btn"><button type="submit" name="btn-cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
+                          <span class="input-group-btn"><button type="submit" name="btn_cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
                         </div>
                       </form>
                     </div>
                   </div>
                   <div class="panel-body">
-                    <table class="table table-striped table-hover table-bordered">
-                      <thead>
-                        <tr>
-                          <th>No</th>
-                          <th>Nama</th>
-                          <th>Usia</th>
-                          <th>Gender</th>
-                          <th>No HP</th>
-                          <th>Alamat</th>
-                          <th>Kategori</th>
-                          <th>Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <script type="text/javascript">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                          <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Usia</th>
+                            <th>Gender</th>
+                            <th>No HP</th>
+                            <th>Alamat</th>
+                            <th>Kategori</th>
+                            <th>Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <script type="text/javascript">
                           function konfirm() {
                             tanya = confirm("Anda yakin ?");
                             if (tanya == true) return true;
                             else return false;
                           }
-                        </script>
-                        <?php
-                        if (isset($_POST['btn_cari'])) {
-                          $query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
-                        }
-                        else{
-                          $query = "SELECT * FROM pasien ORDER BY nama ASC";
-                        }
-                        $result = mysqli_query($con, $query);
-                        $jml = mysqli_num_rows($result);
-                        $no = 1;
-                        foreach ($result as $val) {
-                          $today = new DateTime();
-                          $tgl_lahir = new DateTime($val['tgl_lahir']);
-                          $usia = $today->diff($tgl_lahir)->y;
-                          echo "<tr>
-                              <td>$no</td>
-                              <td>$val[nama]</td>
-                              <td>$usia</td>
-                              <td>$val[gender]</td>
-                              <td>$val[no_hp]</td>
-                              <td>$val[alamat]</td>
-                              <td>$val[kategori]</td>
-                              <td><a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>
-                              </tr>
-                              ";
-                          $no++;
+                          </script>
+                          <?php
+                          if (isset($_POST['btn_cari'])) {
+                            $query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
+                            $no = 1;
+                            $result = mysqli_query($con, $query);
                           }
-                        ?>
-                      </tbody>
-                    </table>
-                    <span class="text-default">Jumlah data : <?php echo($jml) ?></span>
+                          else{
+                            $halaman = 5;
+                            $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+                            $mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
+                            $query = "SELECT * FROM pasien ORDER BY nama ASC LIMIT $mulai, $halaman";
+                            $ttl = mysqli_query($con, "SELECT COUNT(*) AS jml_pasien FROM pasien");
+                            $result = mysqli_query($con, $query);
+                            $jml = mysqli_fetch_assoc($ttl);
+                            $pages = ceil($jml['jml_pasien']/$halaman);
+                            $no = $mulai + 1;
+                          }
+                          foreach ($result as $val) {
+                            $today = new DateTime();
+                            $tgl_lahir = new DateTime($val['tgl_lahir']);
+                            $usia = $today->diff($tgl_lahir)->y;
+                            echo "<tr>
+                            <td>$no</td>
+                            <td>$val[nama]</td>
+                            <td>$usia</td>
+                            <td>$val[gender]</td>
+                            <td>$val[no_hp]</td>
+                            <td>$val[alamat]</td>
+                            <td>$val[kategori]</td>
+                            <td><a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>
+                            </tr>
+                            ";
+                            $no++;
+                          }
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
+                    <?php if (!isset($_POST['btn_cari'])): ?>
+                      <div class="col-md-2 col-md-offset-11">
+                        <ul class="pagination">
+                          <?php for ($i=1; $i <= $pages ; $i++) { ?>
+                            <li> <a href="?halaman=<?php echo $i ?>" class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i ?> </a> </li>
+                          <?php } ?>
+                        </ul>
+                      </div>
+                    <?php endif; ?>
               </div>
             </div>
           </div>

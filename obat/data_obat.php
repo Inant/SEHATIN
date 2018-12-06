@@ -116,12 +116,14 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</tbody>
                     </table>
                   </div>
-									<ul class="pagination">
-										<?php for ($i=1; $i <= $pages; $i++) { ?>
-														<li><a href="?halaman=<?php echo $i; ?> " class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i; ?></a></li>
-									  <?php
-									  			} ?>
-									</ul>
+									<div class="col-md-2 col-md-offset-11">
+										<ul class="pagination">
+											<?php for ($i=1; $i <= $pages; $i++) { ?>
+												<li><a href="?halaman=<?php echo $i; ?> " class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i; ?></a></li>
+												<?php
+											} ?>
+										</ul>
+									</div>
 									</div>
                 </div>
               </div>
