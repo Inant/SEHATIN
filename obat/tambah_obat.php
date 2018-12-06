@@ -74,7 +74,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       if (empty($_POST['tgl'])) {
         $tgl_err = "* Tanggal kadaluarsa harus diisi !";
       }
-      elseif ($tgl >= $now) {
+      elseif ($_POST['tgl'] <= $now) {
         $tgl_err = "* Obat kadaluarsa !";
       }
       else {

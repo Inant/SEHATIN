@@ -119,7 +119,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
     $query = "SELECT * FROM obat WHERE id_obat = '$_GET[id_obat]'";
     $result = mysqli_query($con, $query);
     $val = mysqli_fetch_assoc($result);
-    $tgl = strtotime($val['tgl']);
+    $tgl = strtotime($val['tgl_kadaluarsa']);
 		 ?>
 		 <div class="main">
 		 	<div class="main-content">
@@ -138,17 +138,21 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<div class="row">
 		 									<div class="col-md-6">
 												<label for="">Nama Obat</label>
-		 										<input type="text" name="nm_obat" class="form-control" placeholder="Nama Obat" value="<?php echo($_val['nm_obat']) ?>">
+		 										<input type="text" name="nm_obat" class="form-control" placeholder="Nama Obat" value="<?php echo($val['nm_obat']) ?>">
 		 										<span class="text-danger"> <?php echo($nm_obat_err); ?></span>
 		 									</div>
-		 									<div class="col-md-6">
+											<div class="col-md-6">
 												<label for="">Kategori Obat</label>
 		 										<select class="form-control" name="kategori">
                            <option value="">-- Pilih Kategori --</option>
-                           <option value="Alat Kesehatan" <?php echo ($val['kategori'] == 'Alat Kesehatan' ? 'selected' : '') ?>> Alat Kesehatan </option>
-                           <option value="Obat Luar" <?php echo ($val['kategori'] == 'Obat Luar' ? 'selected' : '') ?>> Obat Luar </option>
-                           <option value="Sirup" <?php echo ($val['kategori'] == 'Sirup' ? 'selected' : '') ?>> Sirup </option>
-                           <option value="Tablet" <?php echo ($val['kategori'] == 'Tablet' ? 'selected' : '') ?>> Tablet </option>
+                           <?php
+                              $qkategori = mysqli_query($con, "SELECT * FROM kategori_obat WHERE status = 'Aktif' ORDER BY kategori ASC");
+                              while ($valkategori = mysqli_fetch_assoc($qkategori)) {
+                            ?>
+                                <option value="<?php echo $valkategori['id_kategori'] ?>" <?php echo ($val['id_kategori'] ==  $valkategori['id_kategori'] ? 'selected' : '') ?>> <?php echo $valkategori['kategori'] ?> </option>
+                            <?php
+                              }
+                            ?>
                          </select>
 		 										<span class="text-danger"> <?php echo($kategori_err); ?></span>
 		 									</div>
@@ -157,13 +161,21 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                     <div class="row">
 		 									<div class="col-md-6">
 												<label for="">Tanggal Kadaluarsa</label>
-		 										<input type="date" name="tgl" class="form-control" value="<?php echo($val['tgl']) ?>">
+		 										<input type="date" name="tgl" class="form-control" value="<?php echo($val['tgl_kadaluarsa']) ?>">
 		 										<span class="text-danger"> <?php echo($tgl_err); ?></span>
 		 									</div>
-		 									<div class="col-md-6">
+											<div class="col-md-6">
 												<label for="">Satuan Obat</label>
 		 										<select class="form-control" name="satuan">
                            <option value="">-- Pilih Satuan --</option>
+                           <?php
+                              $qsatuan = mysqli_query($con, "SELECT * FROM satuan_obat WHERE status = 'Aktif' ORDER BY satuan ASC");
+                              while ($valsatuan = mysqli_fetch_assoc($qsatuan)) {
+                            ?>
+                                <option value="<?php echo $valsatuan['id_satuan'] ?>" <?php echo ($val['id_satuan'] == $valsatuan['id_satuan'] ? 'selected' : '') ?>> <?php echo $valsatuan['satuan'] ?> </option>
+                            <?php
+                              }
+                            ?>
                          </select>
 		 										<span class="text-danger"> <?php echo($satuan_err); ?></span>
 		 									</div>
@@ -172,12 +184,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                     <div class="row">
 		 									<div class="col-md-6">
 												<label for="">Harga Beli</label>
-		 										<input type="number" name="hbeli" placeholder="Harga Beli" class="form-control" value="<?php echo($val['hbeli'] ) ?>">
+		 										<input type="number" name="hbeli" placeholder="Harga Beli" class="form-control" value="<?php echo($val['harga_beli'] ) ?>">
 		 										<span class="text-danger"> <?php echo($hbeli_err); ?></span>
 		 									</div>
 		 									<div class="col-md-6">
                         <label for="">Harga Jual</label>
-		 										<input type="number" name="hjual" placeholder="Harga Jual" class="form-control" value="<?php echo($val['hjual']) ?>">
+		 										<input type="number" name="hjual" placeholder="Harga Jual" class="form-control" value="<?php echo($val['harga_jual']) ?>">
 		 										<span class="text-danger"> <?php echo($hjual_err); ?></span>
 		 									</div>
 		 								</div>
@@ -192,7 +204,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<br>
 		 								<div class="row">
 		 									<div class="col-md-6">
-		 										<button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Tambah</button> &nbsp; &nbsp;
+		 										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>  Simpan</button> &nbsp; &nbsp;
 		 										<button type="reset" name="reset" class="btn btn-danger" onclick="history.go(-1);"><i class="fa fa-times-circle"></i> &nbsp;  Batal</button>
 		 									</div>
 		 								</div>
