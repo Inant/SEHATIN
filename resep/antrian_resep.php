@@ -67,12 +67,11 @@ echo "<script>
                             <th>Nama</th>
                             <th>Usia</th>
                             <th>Gender</th>
-                            <th>No HP</th>
                             <th>Alamat</th>
-                            <th>Kategori</th>
-                            <th>Waktu</th>
-                            <th>Status</th>
+                            <th>Poli</th>
                             <th>Keluhan</th>
+                            <th>Diagnosa</th>
+                            <th>Dokter</th>
                             <th>Aksi</th>
                           </tr>
                         </thead>
@@ -84,7 +83,7 @@ echo "<script>
                             //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
                           }
                           else{
-                            $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 1 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Mengantri' ORDER BY a.waktu ASC";
+                            $query = "SELECT DISTINCT p.*, a.*, pl.poli, pm.diagnosa, r.id_resep, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli pl ON a.id_poli = pl.id_poli INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN resep r ON pm.id_pemeriksaan = r.id_pemeriksaan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Menuggu obat' ORDER BY a.waktu ASC ";
                           }
                           $result = mysqli_query($con, $query);
                           $jml = mysqli_num_rows($result);
@@ -95,25 +94,18 @@ echo "<script>
                             $usia = $today->diff($tgl_lahir)->y;
                             $t = explode(" ", $val['waktu']);
                             $time = $t[1];
-                            if ($_SESSION['level'] == 'Dokter') {
-                              $aksi = "<td><a href='../pemeriksaan/tambah_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-success btn-xs' title='Periksa'><i class='lnr lnr-file-add'></i></a>
-                              <a href='../pemeriksaan/history_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-info btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>";
-                            }
-                            elseif ($_SESSION['level'] == 'Resepsionis') {
-                              $aksi = "<td><a href='edit_antrian.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>";
-                            }
+
                             echo "<tr>
                             <td>$no</td>
                             <td>$val[nama]</td>
                             <td>$usia</td>
                             <td>$val[gender]</td>
-                            <td>$val[no_hp]</td>
                             <td>$val[alamat]</td>
-                            <td>$val[kategori]</td>
-                            <td>$time</td>
-                            <td><span class='label label-success'>$val[status]</span></td>
+                            <td>$val[poli]</td>
                             <td>$val[keluhan]</td>
-                            $aksi
+                            <td>$val[diagnosa]</td>
+                            <td>$val[nm_dokter]</td>
+                            <td> <a href='detail_resep.php?id_resep=$val[id_resep]' class='btn btn-primary btn-xs' title='Detail Resep'> <i class='material-icons' style='font-size:20px'>receipt</i> </a> </td>
                             </tr>
                             ";
                             $no++;

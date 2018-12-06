@@ -92,12 +92,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$dosis2 = $_POST['dosis2'][$i];
 					$jumlah = $_POST['jumlah'][$i];
 					mysqli_query($con, "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$obat'), '$dosis1', '$dosis2', '$jumlah' ) ");
-					mysqli_query($con, "UPDATE antrian SET status ='Menuggu obat' WHERE id_antrian = '$_GET[id_antrian]'");
-					echo "<script>
-									alert('Pasien selesai diperiksa ');
-									window.location.href='../antrian/$page';
-								</script>";
+					mysqli_query($con, "UPDATE obat SET stok = (SELECT stok FROM (SELECT * FROM obat) as ob WHERE nm_obat = '$obat') - '$jumlah' WHERE id_obat = (SELECT id_obat FROM (SELECT * FROM obat) as obt WHERE nm_obat = '$obat')");
 				}
+				mysqli_query($con, "UPDATE antrian SET status ='Menuggu obat' WHERE id_antrian = '$_GET[id_antrian]'");
+				echo "<script>
+								alert('Pasien selesai diperiksa ');
+								window.location.href='../antrian/$page';
+							</script>";
 			}
 		?>
 		 <div class="main">
