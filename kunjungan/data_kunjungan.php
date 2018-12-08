@@ -9,7 +9,7 @@ echo "<script>
 <!doctype html>
 <html lang="en">
 <head>
-<title>Pasien Hari Ini | Sehatin</title>
+<title>Data Kunjungan | Sehatin</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -41,7 +41,7 @@ echo "<script>
       <div class="container-fluid">
         <div class="panel">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Pasien Hari Ini</h1>
+            <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Data Kunjungan</h1>
           </div>
         </div>
         <div class="row">

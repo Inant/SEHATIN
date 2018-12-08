@@ -84,7 +84,12 @@ echo "<script>
                             //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
                           }
                           else{
-                            $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 1 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Mengantri' ORDER BY a.waktu ASC";
+                            if ($_SESSION['level'] == "Resepsionis") {
+                              $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 1 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC"; 
+                            }
+                            else{
+                              $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 1 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Mengantri' ORDER BY a.waktu ASC";
+                            }
                           }
                           $result = mysqli_query($con, $query);
                           $jml = mysqli_num_rows($result);

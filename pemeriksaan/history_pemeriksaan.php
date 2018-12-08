@@ -120,10 +120,14 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 
             </div>
           </div>
-
 					<div class="panel">
 						<div class="panel-heading">
-							<h4 class="panel-title">Pemeriksaan</h4>
+							<div class="row">
+								<div class="col-md-2"><h4 class="panel-title">Pemeriksaan</h4></div>
+								<?php if (mysqli_num_rows($qpemeriksaan) > 0): ?>
+									<div class="col-md-2 col-md-offset-8"><a href="export.php?id_pasien=<?php echo $_GET['p']?>" class="btn btn-success btn-md" title="Export ke Excel"><i class="fa fa-file-excel-o"></i></a></div>
+								<?php endif ?>
+							</div>
 						</div>
 					</div>
           <?php

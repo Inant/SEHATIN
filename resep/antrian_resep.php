@@ -83,7 +83,7 @@ echo "<script>
                             //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
                           }
                           else{
-                            $query = "SELECT DISTINCT p.*, a.*, pl.poli, pm.diagnosa, r.id_resep, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli pl ON a.id_poli = pl.id_poli INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN resep r ON pm.id_pemeriksaan = r.id_pemeriksaan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Menuggu obat' ORDER BY a.waktu ASC ";
+                            $query = "SELECT DISTINCT p.*, a.*, pl.poli, pm.id_pemeriksaan,pm.diagnosa, r.id_resep, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli pl ON a.id_poli = pl.id_poli INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN resep r ON pm.id_pemeriksaan = r.id_pemeriksaan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Menuggu obat' ORDER BY a.waktu ASC ";
                           }
                           $result = mysqli_query($con, $query);
                           $jml = mysqli_num_rows($result);
@@ -105,7 +105,7 @@ echo "<script>
                             <td>$val[keluhan]</td>
                             <td>$val[diagnosa]</td>
                             <td>$val[nm_dokter]</td>
-                            <td> <a href='detail_resep.php?id_resep=$val[id_resep]' class='btn btn-primary btn-xs' title='Detail Resep'> <i class='fa fa-info-circle'></i> </a> </td>
+                            <td> <a href='detail_resep.php?id_resep=$val[id_resep]&id_pemeriksaan=$val[id_pemeriksaan]&id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Detail Resep'> <i class='fa fa-info-circle'></i> </a> </td>
                             </tr>
                             ";
                             $no++;
