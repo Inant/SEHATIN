@@ -82,13 +82,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Ganti Password</h3>
+					<div class="row">
+						<div class="col-md-6">
+					<div class="panel">
+						<div class="panel-heading">
+							<h1 class="panel-title"><i class="lnr lnr-lock"></i>&ensp;Ganti Password</h1>
+						</div>
+					</div>
+				</div>
+			</div>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Ganti Password</h3>
-								</div>
 								<div class="panel-body">
 									<form method="POST" action="">
 										<div class="row">
