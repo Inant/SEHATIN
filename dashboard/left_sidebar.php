@@ -36,7 +36,16 @@
 								</ul>
 							</div>
 						</li>
-						<li><a href="../kunjungan/data_kunjungan.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Data Kunjungan</span></a></li>
+						<li>
+							<a href="#subPages2" data-toggle="collapse" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i><span>Data Kunjungan</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages2" class="collapse">
+								<ul class="nav">
+									<li><a href="pasien_hari_ini.php">Kunjungan hari ini</a></li>
+									<li><a href="pasien_bulan_ini.php">Kunjungan bulan ini</a></li>
+								</ul>
+								
+							</div>
+						</li>
 				<?php
 					}
 					elseif ($_SESSION['level'] == 'Dokter') {

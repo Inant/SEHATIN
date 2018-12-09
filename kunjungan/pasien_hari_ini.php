@@ -35,14 +35,14 @@ echo "<script>
   <?php
   include '../dashboard/navbar.php';
   include '../dashboard/left_sidebar.php';
+
   date_default_timezone_set("Asia/Jakarta");
   $now = date('Y-m-d');
   if (isset($_POST['btn_cari'])) {
     //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
   }
   else{
-    $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 1 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Mengantri' ORDER BY a.waktu ASC";
-                            
+    $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC";
   }
   $result = mysqli_query($con, $query);
   $jml = mysqli_num_rows($result);
@@ -52,7 +52,7 @@ echo "<script>
       <div class="container-fluid">
         <div class="panel">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="lnr lnr-list"></i>&ensp;Antrian Poli Umum</h1>
+            <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Pasien Hari Ini</h1>
           </div>
         </div>
         <div class="row">
@@ -62,25 +62,22 @@ echo "<script>
                   <div class="panel-body">
                     <div class="table-responsive">
                       <table class="table table-striped table-hover table-bordered">
-                        <?php if ($jml > 0): ?>
-                          <thead>
+                        <thead>
                           <tr>
                             <th>No</th>
                             <th>Nama</th>
                             <th>Usia</th>
                             <th>Gender</th>
-                            <th>No HP</th>
                             <th>Alamat</th>
                             <th>Kategori</th>
                             <th>Waktu</th>
+                            <th>Poli</th>
                             <th>Status</th>
                             <th>Keluhan</th>
-                            <th>Aksi</th>
+                            <th>Diagnosa</th>
+                            <th>Dokter</th>
                           </tr>
                         </thead>
-                        <?php else: ?>
-                          <i><h5>Tidak ada antrian</h5></i>
-                        <?php endif ?>
                         <tbody>
                           <?php
                           $no = 1;
@@ -90,25 +87,19 @@ echo "<script>
                             $usia = $today->diff($tgl_lahir)->y;
                             $t = explode(" ", $val['waktu']);
                             $time = $t[1];
-                            if ($_SESSION['level'] == 'Dokter') {
-                              $aksi = "<td><a href='../pemeriksaan/tambah_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-success btn-xs' title='Periksa'><i class='lnr lnr-file-add'></i></a>
-                              <a href='../pemeriksaan/history_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-info btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>";
-                            }
-                            elseif ($_SESSION['level'] == 'Resepsionis') {
-                              $aksi = "<td><a href='edit_antrian.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>";
-                            }
                             echo "<tr>
                             <td>$no</td>
                             <td>$val[nama]</td>
                             <td>$usia</td>
                             <td>$val[gender]</td>
-                            <td>$val[no_hp]</td>
                             <td>$val[alamat]</td>
                             <td>$val[kategori]</td>
                             <td>$time</td>
+                            <td>$val[poli]</td>
                             <td><span class='label label-success'>$val[status]</span></td>
                             <td>$val[keluhan]</td>
-                            $aksi
+                            <td>$val[diagnosa]</td>
+                            <td>$val[nm_dokter]</td>
                             </tr>
                             ";
                             $no++;

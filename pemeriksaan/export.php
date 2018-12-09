@@ -12,42 +12,32 @@
  ?>
  	<center>
  		<h4>History Pemeriksaan</h4>
- 		<table>
+ 		<table class="table">
  			<tr>
  				<td><b>No RM</b></td>
- 				<td></td>
  				<td><?php echo $valpasien['id_pasien'] ?></td>
+ 				<td></td>
  				<td>&ensp;<b>Usia</b></td>
- 				<td></td>
  				<td><?php echo $usia ?></td>
- 				<td>&ensp;<b>Pendidikan Terakhir</b></td>
- 				<td></td>
- 				<td><?php echo $valpasien['pendidikan'] ?></td>
  			</tr>
  			<tr>
  				<td><b>Nama Pasien</b></td>
- 				<td></td>
  				<td><?php echo $valpasien['nama'] ?></td>
+ 				<td></td>
  				<td>&ensp;<b>Alamat</b></td>
- 				<td></td>
  				<td><?php echo $valpasien['alamat'] ?></td>
- 				<td>&ensp;<b>Status Perkawinan</b></td>
- 				<td></td>
- 				<td><?php echo $valpasien['status_perkawinan'] ?></td>
  			</tr>
  			<tr>
  				<td><b>Gender</b></td>
- 				<td></td>
  				<td><?php echo $valpasien['gender'] ?></td>
- 				<td>&ensp;<b>No Hp</b></td>
  				<td></td>
- 				<td><?php echo $valpasien['no_hp'] ?></td>
  				<td>&ensp;<b>Kategori</b></td>
- 				<td></td>
  				<td><?php echo $valpasien['kategori'] ?></td>
   			</tr>
  		</table>
- 		<table>
+ 		<br>
+ 		<br>
+ 		<table border="1">
  			<tr>
  				<th>No</th>
  				<th>Tanggal</th>

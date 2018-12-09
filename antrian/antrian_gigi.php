@@ -35,6 +35,19 @@ echo "<script>
   <?php
   include '../dashboard/navbar.php';
   include '../dashboard/left_sidebar.php';
+  date_default_timezone_set("Asia/Jakarta");
+  $now = date('Y-m-d');
+  if (isset($_POST['btn_cari'])) {
+    //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
+  }
+  else{
+                            
+    $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 2 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Mengantri' ORDER BY a.waktu ASC";  
+                            
+                            
+  }
+  $result = mysqli_query($con, $query);
+  $jml = mysqli_num_rows($result);
   ?>
   <div class="main">
     <div class="main-content">
@@ -47,21 +60,12 @@ echo "<script>
         <div class="row">
           <div class="col-md-12">
             <div class="panel">
-              <div class="row">
-                <br>
-                    <div class="col-md-4 col-md-offset-8">
-                      <form action="" method="POST">
-                        <div class="input-group" style="margin-right: 25px;">
-                          <input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama...">
-                          <span class="input-group-btn"><button type="submit" name="btn-cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
-                        </div>
-                      </form>
-                    </div>
-              </div>
+              <br>
                   <div class="panel-body">
                     <div class="table-responsive">
                       <table class="table table-striped table-hover table-bordered">
-                        <thead>
+                        <?php if ($jml > 0): ?>
+                          <thead>
                           <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -76,24 +80,12 @@ echo "<script>
                             <th>Aksi</th>
                           </tr>
                         </thead>
+                        <?php else: ?>
+                          <i><h5>Tidak ada antrian</h5></i>
+                        <?php endif ?>
+                        
                         <tbody>
                           <?php
-                          date_default_timezone_set("Asia/Jakarta");
-                          $now = date('Y-m-d');
-                          if (isset($_POST['btn_cari'])) {
-                            //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
-                          }
-                          else{
-                            if ($_SESSION['level'] == "Resepsionis") {
-                              $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 2 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' ORDER BY a.waktu ASC";
-                            }
-                            else{
-                              $query = "SELECT DISTINCT p.*, a.id_antrian,a.status, a.waktu, a.keluhan FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli WHERE a.id_poli = 2 AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Mengantri' ORDER BY a.waktu ASC";  
-                            }
-                            
-                          }
-                          $result = mysqli_query($con, $query);
-                          $jml = mysqli_num_rows($result);
                           $no = 1;
                           foreach ($result as $val) {
                             $today = new DateTime();
