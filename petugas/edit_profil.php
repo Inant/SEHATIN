@@ -7,7 +7,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 }
  ?>
  <!doctype html>
-<html lang="en">	
+<html lang="en">
 <head>
 	<title>Edit Profil | Sehatin</title>
 	<meta charset="utf-8">
@@ -32,7 +32,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
-		<?php 
+		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
@@ -41,7 +41,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			$val = mysqli_fetch_assoc($result);
 
 			$nama_err = $gender_err = $alamat_err = $nohp_err = $username_err = "";
-			
+
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				if (empty($_POST['nama'])) {
 					$nama_err = "* Nama harus diisi !";
@@ -99,7 +99,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 <div class="main">
 		 	<div class="main-content">
 		 		<div class="container-fluid">
-		 			<h3 class="page-title">Profil</h3>
+					<div class="panel">
+						<div class="panel-heading">
+							<h1 class="panel-title"><i class="lnr lnr-user"></i>&ensp;Profil</h1>
+						</div>
+					</div>
 		 			<div class="row">
 		 				<div class="col-md-12">
 		 					<div class="panel">
@@ -113,7 +117,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<h3 class="panel-title">Edit Profil</h3>
 		 							</div>
 		 						</div>
-		 						
+
 		 						<div class="panel-body">
 		 							<form method="POST" action="">
 		 								<input type="hidden" name="id_petugas" value="<?php echo($val['id_petugas']) ?>">
@@ -157,7 +161,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<textarea name="alamat" class="form-control" rows="2"><?php echo $val['alamat'] ?></textarea>
 		 										<span class="text-danger"> <?php echo($alamat_err); ?></span>
 		 									</div>
-		 								</div>	
+		 								</div>
 		 								<br>
 		 								<div class="row">
 		 									<div class="col-md-6">
@@ -187,7 +191,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>  Simpan</button> &nbsp; &nbsp;
 		 										<button type="reset" name="reset" class="btn btn-danger" onclick="history.go(-1);"><i class="fa fa-times-circle"></i> &nbsp;  Batal</button>
 		 									</div>
-		 								</div>	
+		 								</div>
 		 							</form>
 		 						</div>
 		 					</div>
@@ -203,7 +207,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="../assets/scripts/klorofil-common.js"></script>
-	
+
 </body>
 
 </html>
