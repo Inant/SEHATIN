@@ -47,7 +47,7 @@ echo "<script>
              </div>
              <div class="col-md-1 col-md-offset-7">
                 <?php if (isset($_GET['submit'])): ?>
-                  <a href="export_all.php" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
+                  <a href="export_all.php?dari=<?php echo $_GET['dari']?>&sampai=<?php echo $_GET['sampai']?>&poli=<?php echo $_GET['poli']?>" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
                 <?php endif ?>
              </div>
            </div>
@@ -84,7 +84,7 @@ echo "<script>
                         </div>
                         <div class="col-md-2">
                           <br>
-                          <button style="margin-top: 5px;" type="submit" name="submit" value="submit" class="btn btn-success">Filter</button>
+                          <button style="margin-top: 5px;" type="submit" name="submit" value="submit" class="btn btn-success"><i class="glyphicon glyphicon-filter"></i>&nbsp;Filter</button>
                         </div>
                       </div>
                     </form>

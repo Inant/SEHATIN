@@ -90,7 +90,7 @@ echo "<script>
                           </tr>
                         </thead>
                         <?php else: ?>
-                          
+                          <h4><i>Belum ada kunjungan</i></h4>
                         <?php endif ?>
                         <tbody>
                           <?php
