@@ -40,6 +40,7 @@
 							<a href="#subPages2" data-toggle="collapse" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="glyphicon glyphicon-list-alt"></i><span>Data Kunjungan</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse">
 								<ul class="nav">
+									<li><a href="../kunjungan/semua_kunjungan.php">Semua Kunjungan</a></li>
 									<li><a href="../kunjungan/pasien_hari_ini.php">Kunjungan hari ini</a></li>
 									<li><a href="../kunjungan/pasien_bulan_ini.php">Kunjungan bulan ini</a></li>
 								</ul>

@@ -9,7 +9,7 @@ echo "<script>
 <!doctype html>
 <html lang="en">
 <head>
-<title>Antrian | Sehatin</title>
+<title>Kunjungan Perhari | Sehatin</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -38,6 +38,7 @@ echo "<script>
 
   date_default_timezone_set("Asia/Jakarta");
   $now = date('Y-m-d');
+  $tgl = date('d-m-Y');
   if (isset($_POST['btn_cari'])) {
     //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
   }
@@ -52,7 +53,16 @@ echo "<script>
       <div class="container-fluid">
         <div class="panel">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Pasien Hari Ini</h1>
+            <div class="row">
+              <div class="col-md-4">
+                <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Data Kunjungan Tanggal <?php echo $tgl ?></h1>
+              </div>
+              <div class="col-md-1 col-md-offset-7">
+                <?php if ($jml > 0): ?>
+                  <a href="export_per_hari.php" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
+                <?php endif ?>
+              </div>  
+            </div>
           </div>
         </div>
         <div class="row">
@@ -62,7 +72,8 @@ echo "<script>
                   <div class="panel-body">
                     <div class="table-responsive">
                       <table class="table table-striped table-hover table-bordered">
-                        <thead>
+                        <?php if ($jml > 0): ?>
+                          <thead>
                           <tr>
                             <th>No</th>
                             <th>Nama</th>
@@ -78,6 +89,9 @@ echo "<script>
                             <th>Dokter</th>
                           </tr>
                         </thead>
+                        <?php else: ?>
+                          
+                        <?php endif ?>
                         <tbody>
                           <?php
                           $no = 1;

@@ -9,7 +9,7 @@ echo "<script>
 <!doctype html>
 <html lang="en">
 <head>
-<title>Kunjungan Perbulan | Sehatin</title>
+<title>Data Kunjungan | Sehatin</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -35,7 +35,6 @@ echo "<script>
   <?php
   include '../dashboard/navbar.php';
   include '../dashboard/left_sidebar.php';
-  $bulan = date("F");
   ?>
   <div class="main">
     <div class="main-content">
@@ -44,10 +43,12 @@ echo "<script>
           <div class="panel-heading">
            <div class="row">
              <div class="col-md-4">
-              <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Kunjungan Bulan <?php echo $bulan ?></h1>
+              <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Data Kunjungan</h1>
              </div>
              <div class="col-md-1 col-md-offset-7">
-                <a href="export_per_bulan.php" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
+                <?php if (isset($_GET['submit'])): ?>
+                  <a href="export_all.php" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
+                <?php endif ?>
              </div>
            </div>
           </div>
@@ -57,6 +58,37 @@ echo "<script>
             <div class="panel">
               <br>
                   <div class="panel-body">
+                    <form action="" method="GET">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label for="">Dari tanggal</label>
+                          <input type="date" name="dari" class="form-control" value="<?php echo(isset($_GET['dari']) ? $_GET['dari'] : "" ) ?>">
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Sampai tanggal</label>
+                          <input type="date" name="sampai" class="form-control" value="<?php echo(isset($_GET['sampai']) ? $_GET['sampai'] : "" ) ?>">
+                        </div>
+                        <div class="col-md-2">
+                          <label for="">Poli</label>
+                          <select name="poli" class="form-control">
+                            <option value="">-- Pilih Poli --</option>
+                            <?php 
+                              $qpoli = mysqli_query($con, "SELECT * FROM poli WHERE status = 'Aktif' ORDER BY poli ASC");
+                              while ($valpoli = mysqli_fetch_assoc($qpoli)) {
+                            ?>
+                                <option value="<?php echo $valpoli['id_poli'] ?>" <?php echo !empty($_GET['poli']) && $_GET['poli'] == $valpoli['id_poli'] ? 'selected' : '' ?>><?php echo $valpoli['poli'] ?></option>
+                            <?php
+                              }
+                             ?>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
+                          <br>
+                          <button style="margin-top: 5px;" type="submit" name="submit" value="submit" class="btn btn-success">Filter</button>
+                        </div>
+                      </div>
+                    </form>
+                    <br>
                     <div class="table-responsive">
                       <table class="table table-striped table-hover table-bordered">
                         <thead>
@@ -80,21 +112,32 @@ echo "<script>
                           $now = date('d-m-Y');
                           $now = explode("-", $now);
                           $now = $now[1];
-                          if (isset($_POST['btn_cari'])) {
-                            //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
+                          $where = "";
+                          $no = 1;
+                          if (isset($_GET['submit'])) {
+                            if (!empty($_GET['dari']) && !empty($_GET['sampai']) && !empty($_GET['poli'])) {
+                               $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC";
+                            }
+                            elseif (!empty($_GET['dari']) && !empty($_GET['sampai']) && empty($_GET['poli'])) {
+                              $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' ORDER BY a.waktu ASC";
+                            }
+                            elseif( empty($_GET['dari']) && empty($_GET['sampai']) && !empty($_GET['poli'])) {
+                              $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC";
+                            }
+                            
                           }
                           else{
                             $halaman = 10;
                             $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
                             $mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
-                            $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE month(waktu) = '$now' ORDER BY a.waktu ASC LIMIT $mulai, $halaman";
-                            $ttl = mysqli_query($con, "SELECT COUNT(*) AS jml_pasien FROM antrian WHERE month(waktu) = '$now'");
+                            $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter ORDER BY a.waktu ASC LIMIT $mulai, $halaman";
+                            $ttl = mysqli_query($con, "SELECT COUNT(*) AS jml_pasien FROM antrian");
+                            $jml_pasien = mysqli_fetch_assoc($ttl);
+                            $pages = ceil($jml_pasien['jml_pasien'] / $halaman);
+                            $no = $mulai + 1;
                           }
                           $result = mysqli_query($con, $query);
                           $jml = mysqli_num_rows($result);
-                          $jml_pasien = mysqli_fetch_assoc($ttl);
-                          $pages = ceil($jml_pasien['jml_pasien'] / $halaman);
-                          $no = $mulai + 1;
                           foreach ($result as $val) {
                             $today = new DateTime();
                             $tgl_lahir = new DateTime($val['tgl_lahir']);
@@ -121,8 +164,12 @@ echo "<script>
                         </tbody>
                       </table>
                     </div>
-                    <?php if (!isset($_POST['btn_cari'])): ?>
-                      <div class="col-md-2 col-md-offset-11">
+                    <div class="rows">
+                    <div class="col-md-2">
+                      <span>Jumlah data : <?php echo $jml ?></span>
+                    </div>  
+                    <?php if (!isset($_GET['submit'])): ?>
+                      <div class="col-md-2 col-md-offset-8">
                         <ul class="pagination">
                           <?php for ($i=1; $i <= $pages ; $i++) { ?>
                             <li> <a href="?halaman=<?php echo $i ?>" class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i ?> </a> </li>
@@ -130,6 +177,7 @@ echo "<script>
                         </ul>
                       </div>
                     <?php endif; ?>
+                    </div>
               </div>
             </div>
           </div>
