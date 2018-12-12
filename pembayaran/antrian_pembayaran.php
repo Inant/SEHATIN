@@ -101,7 +101,7 @@ echo "<script>
                             <td>$time</td>
                             <td><span class='label label-success'>$val[status]</span></td>
                             <td>$val[keluhan]</td>
-                            <td> <a href='form_pembayaran.php?id_antrian=$val[id_antrian]&id_pemeriksaan=$val[id_pemeriksaan]' class='btn btn-primary btn-xs' ><i class='fa fa-money'></i> </a> </td>
+                            <td> <a href='form_pembayaran.php?id_pasien=$val[id_pasien]&id_antrian=$val[id_antrian]&id_pemeriksaan=$val[id_pemeriksaan]' class='btn btn-primary btn-xs' ><i class='fa fa-money'></i> </a> </td>
                             </tr>
                             ";
                             $no++;

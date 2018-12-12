@@ -9,7 +9,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Pemeriksaan | Sehatin</title>
+	<title>Resep | Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -92,10 +92,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$dosis1 = $_POST['dosis1'][$i];
 					$dosis2 = $_POST['dosis2'][$i];
 					$jumlah = $_POST['jumlah'][$i];
-					mysqli_query($con, "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$obat'), '$dosis1', '$dosis2', '$jumlah' ) ");
+					$harga = 0;
+					if ($rm['kategori'] == "Umum") {
+						$qharga = mysqli_query($con, "SELECT harga_jual FROM obat WHERE nm_obat = '$obat'");
+						$harga = mysqli_fetch_assoc($qharga);
+						$harga = $harga['harga_jual'];
+					}
+					$subtotal = $harga * $jumlah;
+					mysqli_query($con, "INSERT INTO detail_resep (id_resep, id_obat, dosis1, dosis2, jml, subtotal) VALUE ( '$varr[id_resep]', (SELECT id_obat FROM obat WHERE nm_obat = '$obat'), '$dosis1', '$dosis2', '$jumlah', '$subtotal') ");
 					mysqli_query($con, "UPDATE obat SET stok = (SELECT stok FROM (SELECT * FROM obat) as ob WHERE nm_obat = '$obat') - '$jumlah' WHERE id_obat = (SELECT id_obat FROM (SELECT * FROM obat) as obt WHERE nm_obat = '$obat')");
 				}
+				mysqli_query($con, "UPDATE resep SET resep.harga_resep = (SELECT SUM(dt.subtotal) FROM detail_resep dt WHERE id_resep = '$varr[id_resep]' GROUP BY dt.id_resep) WHERE id_resep = '$varr[id_resep]' ");
 				mysqli_query($con, "UPDATE antrian SET status ='Menuggu obat' WHERE id_antrian = '$_GET[id_antrian]'");
+				mysqli_query($con, "INSERT INTO pembayaran (id_antrian, waktu, grand_total) VALUE ('$_GET[id_antrian]', '2018-12-13 00:52:52', (SELECT resep.harga_resep FROM resep WHERE resep.id_pemeriksaan = '$_GET[id_pemeriksaan]') + (SELECT SUM(tindakan.subtotal) FROM tindakan WHERE tindakan.id_pemeriksaan = '$_GET[id_pemeriksaan]'))");
 				echo "<script>
 								alert('Pasien selesai diperiksa ');
 								window.location.href='../antrian/$page';

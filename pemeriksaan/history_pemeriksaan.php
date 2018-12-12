@@ -38,8 +38,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       $qpasien = mysqli_query($con, "SELECT * FROM pasien WHERE id_pasien = '$_GET[p]'");
       $valpasien = mysqli_fetch_assoc($qpasien);
       $tgl_lahir = date("d-m-Y", strtotime($valpasien['tgl_lahir']));
-      $qhistory = mysqli_query($con, "SELECT DISTINCT * FROM antrian WHERE id_pasien = '$_GET[p]'");
-      $qpemeriksaan = mysqli_query($con, "SELECT DISTINCT a.*, pm.*, t.*, p.pelayanan, d.nm_dokter FROM antrian a INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN tindakan t ON t.id_pemeriksaan = pm.id_pemeriksaan INNER JOIN pelayanan p ON p.id_pelayanan = t.id_pelayanan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.id_pasien = '$_GET[p]'");
+      $qhistory = mysqli_query($con, "SELECT DISTINCT * FROM antrian WHERE id_pasien = '$_GET[p]' ORDER BY waktu DESC");
+      $qpemeriksaan = mysqli_query($con, "SELECT DISTINCT a.*, pm.*, t.*, p.pelayanan, d.nm_dokter FROM antrian a INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN tindakan t ON t.id_pemeriksaan = pm.id_pemeriksaan INNER JOIN pelayanan p ON p.id_pelayanan = t.id_pelayanan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.id_pasien = '$_GET[p]' AND t.id_pelayanan != 1 ORDER BY a.id_antrian DESC");
 		 ?>
 		 <div class="main">
 		 	<div class="main-content">
