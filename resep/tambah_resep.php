@@ -67,10 +67,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			$qdokter = mysqli_query($con, "SELECT id_dokter, nm_dokter FROM dokter WHERE id_dokter = '$_SESSION[id_user]'");
 			$dokter = mysqli_fetch_assoc($qdokter);
 			$today = new DateTime();
-      $tgl_lahir = new DateTime($rm['tgl_lahir']);
-      $usia = $today->diff($tgl_lahir)->y;
-      date_default_timezone_set("Asia/Jakarta");
-      $date = date("d-m-Y");
+      		$tgl_lahir = new DateTime($rm['tgl_lahir']);
+     		$usia = $today->diff($tgl_lahir)->y;
+      		date_default_timezone_set("Asia/Jakarta");
+      		$date = date("d-m-Y");
 			$qpage = mysqli_query($con, "SELECT id_poli FROM dokter WHERE id_dokter = '$_SESSION[id_user]'");
 			$rpage = mysqli_fetch_assoc($qpage);
 			if ($rpage['id_poli'] == 1) {
@@ -82,8 +82,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			else {
 				$page = 'antrian_kia.php';
 			}
+			$tgl = date("Y-m-d H:i:s");
 			if(isset($_POST['submit'])){
-				mysqli_query($con, "INSERT INTO resep (id_pemeriksaan) VALUE ('$_GET[id_pemeriksaan]')");
+				mysqli_query($con, "INSERT INTO resep (id_pemeriksaan, tanggal) VALUE ('$_GET[id_pemeriksaan]', '$tgl')");
 				$var = mysqli_query($con, "SELECT id_resep FROM resep ORDER BY id_resep DESC LIMIT 1");
 				$varr = mysqli_fetch_assoc($var);
 				for($i=0;$i<count($_POST['obat']);$i++){

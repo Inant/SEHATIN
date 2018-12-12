@@ -72,12 +72,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
       $usia = $today->diff($tgl_lahir)->y;
       date_default_timezone_set("Asia/Jakarta");
       $date = date("d-m-Y");
-			$suhu_err = $tensi1_err = $tensi2_err = $keluhan_err = $pemeriksaan_err = $diagnosa_err = $pelayanan_err = "";
-			$suhu = $tensi1 = $tensi2 = $keluhan = $pemeriksaan = $diagnosa = $pelayanan = "";
+	  $suhu_err = $tensi1_err = $tensi2_err = $keluhan_err = $pemeriksaan_err = $diagnosa_err = $pelayanan_err = "";
+	  $suhu = $tensi1 = $tensi2 = $keluhan = $pemeriksaan = $diagnosa = $pelayanan = "";
 
-    	$qid = mysqli_query($con, "SELECT MAX(id_pemeriksaan) as id FROM pemeriksaan");
-    	$id = mysqli_fetch_assoc($qid);
-			$id = $id['id'] + 1;
+      $qid = mysqli_query($con, "SELECT MAX(id_pemeriksaan) as id FROM pemeriksaan");
+      $id = mysqli_fetch_assoc($qid);
+	  $id = $id['id'] + 1;
+	  $harga = 0;
 
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$qtindakan = mysqli_query($con, "SELECT * FROM pelayanan WHERE pelayanan = '$_POST[pelayanan]'");
@@ -143,11 +144,56 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				else {
 					$pelayanan = trim($_POST['pelayanan']);
 				}
+					
 
 				if ($tensi1_err == "" && $tensi2_err == "" & $suhu_err == "" && $keluhan_err == "" && 			$pemeriksaan_err == "" && $diagnosa_err == "" && $pelayanan_err == "") {
+					if ($rm['kategori'] == "Mahasiswa") {
+	  					$qpelayanan = mysqli_query($con, "SELECT harga_mahasiswa FROM pelayanan WHERE pelayanan = '$pelayanan'");
+	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
+	  					$harga_pelayanan = $harga_pelayanan['harga_mahasiswa'];
+	  					
+	  					$qloket = mysqli_query($con, "SELECT harga_mahasiswa FROM pelayanan WHERE id_pelayanan = 1");
+	  					$harga_loket = mysqli_fetch_assoc($qloket);
+	  					$harga_loket = $harga_loket['harga_mahasiswa'];
+	  					echo $harga_pelayanan;
+	  					echo $harga_loket;
+	  				}
+	  				else if ($rm['kategori'] == "Umum") {
+	  					$qpelayanan = mysqli_query($con, "SELECT harga_umum FROM pelayanan WHERE pelayanan = '$pelayanan'");
+	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
+	  					$harga_pelayanan = $harga_pelayanan['harga_umum'];
+	  					
+	  					$qloket = mysqli_query($con, "SELECT harga_umum FROM pelayanan WHERE id_pelayanan = 1");
+	  					$harga_loket = mysqli_fetch_assoc($qloket);
+	  					$harga_loket = $harga_loket['harga_umum'];
+	  					echo $harga_pelayanan;
+	  					echo $harga_loket;
+	  				}
+	  				else if ($rm['kategori'] == "Karyawan") {
+	  					$qpelayanan = mysqli_query($con, "SELECT harga_karyawan FROM pelayanan WHERE pelayanan = '$pelayanan'");
+	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
+	  					$harga_pelayanan = $harga_pelayanan['harga_karyawan'];
+	  					
+	  					$qloket = mysqli_query($con, "SELECT harga_karyawan FROM pelayanan WHERE id_pelayanan = 1");
+	  					$harga_loket = mysqli_fetch_assoc($qloket);
+	  					$harga_loket = $harga_loket['harga_karyawan'];
+	  					echo $harga_pelayanan;
+	  					echo $harga_loket;
+	  				}
+	  				else if ($rm['kategori'] == "Keluarga Karyawan") {
+	  					$qpelayanan = mysqli_query($con, "SELECT harga_kel_karyawan FROM pelayanan WHERE pelayanan = '$pelayanan'");
+	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
+	  					$harga_pelayanan = $harga_pelayanan['harga_kel_karyawan'];
+	  					
+	  					$qloket = mysqli_query($con, "SELECT harga_kel_karyawan FROM pelayanan WHERE id_pelayanan = 1");
+	  					$harga_loket = mysqli_fetch_assoc($qloket);
+	  					$harga_loket = $harga_loket['harga_kel_karyawan'];
+	  					echo $harga_pelayanan."<br>";
+	  					echo $harga_loket;
+	  				}
 					mysqli_query($con, "INSERT INTO pemeriksaan (id_antrian, id_dokter, pemeriksaan_fisik, tensi, suhu, diagnosa) VALUE ('$_GET[id_antrian]', '$_SESSION[id_user]', '$pemeriksaan', '$tensi1 / $tensi2', '$suhu', '$diagnosa')");
 
-					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan) VALUE ('$id', (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan') )");
+					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan, subtotal) VALUES ('$id', 1, '$harga_loket'), ('$id', (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan'), '$harga_pelayanan' )");
 
 					mysqli_query($con, "UPDATE antrian SET keluhan = '$keluhan' WHERE id_antrian = '$_GET[id_antrian]'");
 

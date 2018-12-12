@@ -1,4 +1,5 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <?php
 	$nav = explode('/', $_SERVER['REQUEST_URI']);
 	//$nav_dok = $nav[count($nav)]
@@ -71,7 +72,8 @@
 					}
 
 					elseif ($_SESSION['level'] == 'Kasir') { ?>
-
+						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="../pembayaran/antrian_pembayaran.php" class="<?php echo ($nav == "pembayaran" ? 'active' : '') ?>"><i class="fa fa-money"></i> <span>Antrian Pembayaran</span></a></li>
 				<?php
 					}
 					elseif ($_SESSION['level'] == 'Apoteker') {
@@ -84,6 +86,7 @@
 									<li><a href="../obat/kategori_obat.php" class="">Kategori Obat</a></li>
 									<li><a href="../obat/satuan_obat.php" class="">Satuan Obat</a></li>
 									<li><a href="../obat/data_obat.php" class="">List Obat</a></li>
+									<li><a href="../obat/obat_keluar.php" class="">Obat Keluar</a></li>
 								</ul>
 							</div>
 						</li>

@@ -81,39 +81,39 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													<?php endif; ?>
                         </tr>
                       </thead>
-											<tbody>
-												<?php
-													$halaman = 5;
-													$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-													$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
-													$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan ORDER BY obat.nm_obat ASC LIMIT $mulai, $halaman";
-													$jml = "SELECT COUNT(*) AS jml_obat FROM obat";
-													$r = mysqli_query($con, $jml);
-													$result = mysqli_query($con, $q);
-													$jml_obat = mysqli_fetch_assoc($r);
-													$pages = ceil($jml_obat['jml_obat']/$halaman);
-													$no = $mulai + 1;
-													$aksi = "";
-													foreach ($result as $val) {
-														if ($_SESSION['level'] == "Apoteker") {
-															$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
-														}
-														$tgl_kadaluarsa = date("d-m-Y", strtotime($val['tgl_kadaluarsa']));
-														echo "<tr>
-																		<td>$no</td>
-																		<td>$val[nm_obat]</td>
-																		<td>$val[kategori]</td>
-																		<td>$val[satuan]</td>
-																		<td>$val[harga_beli]</td>
-																		<td>$val[harga_jual]</td>
-																		<td>$val[stok]</td>
-																		<td>$tgl_kadaluarsa</td>
-																		$aksi
-																	</tr>";
-																	$no++;
-													}
-												 ?>
-											</tbody>
+					<tbody>
+						<?php
+							$halaman = 5;
+							$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+							$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
+							$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan ORDER BY obat.nm_obat ASC LIMIT $mulai, $halaman";
+							$jml = "SELECT COUNT(*) AS jml_obat FROM obat";
+							$r = mysqli_query($con, $jml);
+							$result = mysqli_query($con, $q);
+							$jml_obat = mysqli_fetch_assoc($r);
+							$pages = ceil($jml_obat['jml_obat']/$halaman);
+							$no = $mulai + 1;
+							$aksi = "";
+							foreach ($result as $val) {
+								if ($_SESSION['level'] == "Apoteker") {
+									$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
+								}
+								$tgl_kadaluarsa = date("d-m-Y", strtotime($val['tgl_kadaluarsa']));
+								echo "<tr>
+										<td>$no</td>
+										<td>$val[nm_obat]</td>
+										<td>$val[kategori]</td>
+										<td>$val[satuan]</td>
+										<td>$val[harga_beli]</td>
+										<td>$val[harga_jual]</td>
+										<td>$val[stok]</td>
+										<td>$tgl_kadaluarsa</td>
+										$aksi
+									</tr>";
+									$no++;
+							}
+						?>
+						</tbody>
                     </table>
                   </div>
 									<div class="col-md-2 col-md-offset-11">
