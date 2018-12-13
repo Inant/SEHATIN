@@ -5,7 +5,7 @@
 
     $pelayanan = $_GET["query"];
 
-    $query = mysqli_query($con, "SELECT id_pelayanan, pelayanan FROM pelayanan WHERE pelayanan LIKE '%$pelayanan%' ORDER BY pelayanan ASC");
+    $query = mysqli_query($con, "SELECT id_pelayanan, pelayanan FROM pelayanan WHERE pelayanan LIKE '%$pelayanan%' AND id_pelayanan != 1 ORDER BY pelayanan ASC");
 
     while($data = mysqli_fetch_assoc($query)) {
       $output['suggestions'][] = [

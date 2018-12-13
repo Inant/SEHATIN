@@ -9,7 +9,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Pemeriksaan | Sehatin</title>
+	<title>Pembayaran | Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -61,285 +61,182 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<?php
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
-			mysqli_query($con, "UPDATE antrian SET status = 'Diperiksa' WHERE id_antrian = '$_GET[id_antrian]'");
+			date_default_timezone_set("Asia/Jakarta");
+			$waktu = date("d-m-Y H:i");
+			$qpembayaran = mysqli_query($con, "SELECT pb.id_pembayaran, p.nama, p.kategori, pb.waktu FROM pembayaran pb INNER JOIN antrian a ON pb.id_antrian = a.id_antrian INNER JOIN pasien p ON a.id_pasien = p.id_pasien WHERE pb.id_antrian = '$_GET[id_antrian]' ");
+			$valpembayaran = mysqli_fetch_assoc($qpembayaran);
 
-      $qrm = mysqli_query($con, "SELECT p.*, a.*,(SELECT COUNT(*) FROM antrian WHERE id_pasien = '$_GET[id_pasien]' ) as jml_kunjungan FROM pasien p, antrian a WHERE p.id_pasien = '$_GET[id_pasien]' AND a.id_antrian='$_GET[id_antrian]'");
-			$rm = mysqli_fetch_assoc($qrm);
-			$qdokter = mysqli_query($con, "SELECT id_dokter, nm_dokter FROM dokter WHERE id_dokter = '$_SESSION[id_user]'");
-			$dokter = mysqli_fetch_assoc($qdokter);
-      $today = new DateTime();
-      $tgl_lahir = new DateTime($rm['tgl_lahir']);
-      $usia = $today->diff($tgl_lahir)->y;
-      date_default_timezone_set("Asia/Jakarta");
-      $date = date("d-m-Y");
-	  $suhu_err = $tensi1_err = $tensi2_err = $keluhan_err = $pemeriksaan_err = $diagnosa_err = $pelayanan_err = "";
-	  $suhu = $tensi1 = $tensi2 = $keluhan = $pemeriksaan = $diagnosa = $pelayanan = "";
+			$qtindakan = mysqli_query($con, "SELECT p.pelayanan, t.subtotal FROM tindakan t INNER JOIN pelayanan p ON t.id_pelayanan = p.id_pelayanan WHERE t.id_pemeriksaan = '$_GET[id_pemeriksaan]'");
+			$subtindakan = 0;
 
-      $qid = mysqli_query($con, "SELECT MAX(id_pemeriksaan) as id FROM pemeriksaan");
-      $id = mysqli_fetch_assoc($qid);
-	  $id = $id['id'] + 1;
-	  $harga = 0;
+			$qobat = mysqli_query($con, "SELECT o.nm_obat, dt.jml, dt.subtotal FROM resep r INNER JOIN detail_resep dt ON r.id_resep = dt.id_resep INNER JOIN obat o ON dt.id_obat = o.id_obat WHERE r.id_pemeriksaan = '$_GET[id_pemeriksaan]' ");
+			$subobat = 0;
 
-			if ($_SERVER["REQUEST_METHOD"] == "POST") {
-				$qtindakan = mysqli_query($con, "SELECT * FROM pelayanan WHERE pelayanan = '$_POST[pelayanan]'");
-				$cektindakan = mysqli_num_rows($qtindakan);
+			$qtotal = mysqli_query($con, "SELECT grand_total FROM pembayaran WHERE id_antrian = '$_GET[id_antrian]' ");
+			$valtotal = mysqli_fetch_assoc($qtotal);
 
-				if (empty($_POST['tensi1'])) {
-					$tensi1_err = "* Tensi harus diisi !";
-				}
-				else if ($_POST['tensi1'] <= 0) {
-					$tensi1_err = "* Tensi tidak valid !";
-				}
-				else {
-				$tensi1 = trim($_POST['tensi1']);
-				}
-
-				if (empty($_POST['tensi2'])) {
-					$tensi2_err = "* Tensi harus diisi !";
-				}
-				else if ($_POST['tensi2'] <= 0) {
-					$tensi2_err = "* Tensi tidak valid !";
-				}
-				else {
-					$tensi2 = trim($_POST['tensi2']);
-				}
-
-				if (empty($_POST['suhu'])) {
-					$suhu_err = "* Suhu badan harus diisi !";
-				}
-				elseif ($_POST['suhu'] <= 0) {
-					$suhu_err = "* Suhu badan tidak valid !";
-				}
-				else {
-					$suhu = trim($_POST['suhu']);
-				}
-
-				if (empty($_POST['keluhan'])) {
-					$keluhan_err = "* Ananemse harus diisi !";
-				}
-				else {
-					$keluhan = trim($_POST['keluhan']);
-				}
-
-				if (empty($_POST['pemeriksaan']) || $_POST['pemeriksaan'] == "Pemeriksaan Fisik") {
-					$pemeriksaan_err = "* Pemeriksaan fisik harus diisi !";
-				}
-				else {
-					$pemeriksaan = trim($_POST['pemeriksaan']);
-				}
-
-				if (empty($_POST['diagnosa']) || $_POST['diagnosa'] == "Diagnosa") {
-					$diagnosa_err = "* Diagnosa harus diisi !";
-				}
-				else {
-					$diagnosa = trim($_POST['diagnosa']);
-				}
-
-				if (empty($_POST['pelayanan'])) {
-					$pelayanan_err = "* Pilih tindakan !";
-				}
-				elseif ($cektindakan == 0) {
-					$pelayanan_err = "* Tindakan tidak sesuai !";
-				}
-				else {
-					$pelayanan = trim($_POST['pelayanan']);
-				}
-					
-
-				if ($tensi1_err == "" && $tensi2_err == "" & $suhu_err == "" && $keluhan_err == "" && 			$pemeriksaan_err == "" && $diagnosa_err == "" && $pelayanan_err == "") {
-					if ($rm['kategori'] == "Mahasiswa") {
-	  					$qpelayanan = mysqli_query($con, "SELECT harga_mahasiswa FROM pelayanan WHERE pelayanan = '$pelayanan'");
-	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
-	  					$harga_pelayanan = $harga_pelayanan['harga_mahasiswa'];
-	  					
-	  					$qloket = mysqli_query($con, "SELECT harga_mahasiswa FROM pelayanan WHERE id_pelayanan = 1");
-	  					$harga_loket = mysqli_fetch_assoc($qloket);
-	  					$harga_loket = $harga_loket['harga_mahasiswa'];
-	  					echo $harga_pelayanan;
-	  					echo $harga_loket;
-	  				}
-	  				else if ($rm['kategori'] == "Umum") {
-	  					$qpelayanan = mysqli_query($con, "SELECT harga_umum FROM pelayanan WHERE pelayanan = '$pelayanan'");
-	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
-	  					$harga_pelayanan = $harga_pelayanan['harga_umum'];
-	  					
-	  					$qloket = mysqli_query($con, "SELECT harga_umum FROM pelayanan WHERE id_pelayanan = 1");
-	  					$harga_loket = mysqli_fetch_assoc($qloket);
-	  					$harga_loket = $harga_loket['harga_umum'];
-	  					echo $harga_pelayanan;
-	  					echo $harga_loket;
-	  				}
-	  				else if ($rm['kategori'] == "Karyawan") {
-	  					$qpelayanan = mysqli_query($con, "SELECT harga_karyawan FROM pelayanan WHERE pelayanan = '$pelayanan'");
-	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
-	  					$harga_pelayanan = $harga_pelayanan['harga_karyawan'];
-	  					
-	  					$qloket = mysqli_query($con, "SELECT harga_karyawan FROM pelayanan WHERE id_pelayanan = 1");
-	  					$harga_loket = mysqli_fetch_assoc($qloket);
-	  					$harga_loket = $harga_loket['harga_karyawan'];
-	  					echo $harga_pelayanan;
-	  					echo $harga_loket;
-	  				}
-	  				else if ($rm['kategori'] == "Keluarga Karyawan") {
-	  					$qpelayanan = mysqli_query($con, "SELECT harga_kel_karyawan FROM pelayanan WHERE pelayanan = '$pelayanan'");
-	  					$harga_pelayanan = mysqli_fetch_assoc($qpelayanan);
-	  					$harga_pelayanan = $harga_pelayanan['harga_kel_karyawan'];
-	  					
-	  					$qloket = mysqli_query($con, "SELECT harga_kel_karyawan FROM pelayanan WHERE id_pelayanan = 1");
-	  					$harga_loket = mysqli_fetch_assoc($qloket);
-	  					$harga_loket = $harga_loket['harga_kel_karyawan'];
-	  					echo $harga_pelayanan."<br>";
-	  					echo $harga_loket;
-	  				}
-					mysqli_query($con, "INSERT INTO pemeriksaan (id_antrian, id_dokter, pemeriksaan_fisik, tensi, suhu, diagnosa) VALUE ('$_GET[id_antrian]', '$_SESSION[id_user]', '$pemeriksaan', '$tensi1 / $tensi2', '$suhu', '$diagnosa')");
-
-					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan, subtotal) VALUES ('$id', 1, '$harga_loket'), ('$id', (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan'), '$harga_pelayanan' )");
-
-					mysqli_query($con, "UPDATE antrian SET keluhan = '$keluhan' WHERE id_antrian = '$_GET[id_antrian]'");
-
-					echo "<script>
-									window.location.href='../resep/tambah_resep.php?id_antrian=$_GET[id_antrian]&id_pemeriksaan=$id&id_pasien=$rm[id_pasien]';
-								</script>";
-				}
-
-			}
 		?>
 		 <div class="main">
-		 	<div class="main-content">
-		 		<div class="container-fluid">
-		 			<h3 class="page-title">Pemeriksaan</h3>
-		 			<div class="row">
-		 				<div class="col-md-12">
-		 					<div class="panel">
-		 						<div class="panel-heading">
-		 							<h3 class="panel-title">Form Pemeriksaan</h3>
-		 						</div>
-		 						<div class="panel-body">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="table-responsive">
-                        <table>
-                          <tr>
-                            <th>No Pemeriksaan</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $id; ?></td>
-                          </tr>
-                          <tr>
-                            <th>Nama Pasien</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $rm['nama'] ?></td>
-                          </tr>
-                          <tr>
-                            <th>Gender</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $rm['gender'] ?></td>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="table-responsive">
-                        <table>
-                          <tr>
-                            <th>Usia</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $usia; ?></td>
-                          </tr>
-                          <tr>
-                            <th>Kategori Pasien</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $rm['kategori'] ?></td>
-                          </tr>
-                          <tr>
-                            <th>Jumlah Kunjungan</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $rm['jml_kunjungan'] ?></td>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="table-responsive">
-                        <table>
-                          <tr>
-                            <th>Tanggal</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $date; ?></td>
-                          </tr>
-                          <tr>
-                            <th>Dokter Pemeriksa</th>
-                            <td>&ensp;&emsp;</td>
-                            <td><?php echo $dokter['nm_dokter']; ?></td>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <br>
-		 							<form method="POST" action="">
+			<div class="main-content">
+				<div class="col-md-8">
+					<div class="panel">
+						<div class="panel-heading">
+							<h1 class="panel-title"> <i class="fa fa-money"></i>&ensp;Pembayaran</h1>
+						</div> 
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-8">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Form Pembayaran</h3>
+								</div>
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="table-responsive">
+												<table>
+													<tr>
+														<th>No Pembayaran</th>
+														<td>&ensp;&emsp;</td>
+														<td><?php echo $valpembayaran['id_pembayaran']; ?></td>
+													</tr>
+													<tr>
+														<th>Nama Pasien</th>
+														<td>&ensp;&emsp;</td>
+														<td><?php echo $valpembayaran['nama'] ?></td>
+													</tr>
+													<tr>
+														<th>Kategori</th>
+														<td>&ensp;&emsp;</td>
+														<td><?php echo $valpembayaran['kategori'] ?></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="table-responsive">
+												<table>
+													<tr>
+														<th>Waktu</th>
+														<td>&ensp;&emsp;</td>
+														<td><?php echo $waktu; ?></td>
+													</tr>
+													<tr>
+														<th>Kasir</th>
+														<td>&ensp;&emsp;</td>
+														<td><?php echo $_SESSION['username'] ?></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</div>
+									<br>
+									<h5 class="panel-title">Tindakan</h5>
+									 <div class="row"> 
+										<div class="col-md-12">
+											<div class="table-responsive">
+												<table class="table table-hover table-striped">
+													<thead>
+														<tr>
+															<th>No</th>
+															<th>Nama Tindakan</th>
+															<th>Harga</th>
+														</tr>
+													</thead>
+													<tbody>
+													<?php
+														$no = 1; 
+														while ($valtindakan = mysqli_fetch_assoc($qtindakan)) {
+															$subtindakan += $valtindakan['subtotal'];
+															echo "
+															<tr>
+																<td>$no</td>
+																<td>$valtindakan[pelayanan] </td>
+																<td>$valtindakan[subtotal] </td>
+															</tr>";
+															$no++;
+														}
+													?>
+													</tbody>
+													<tfoot>
+														<th colspan = "2" style = "text-align:center;">Subtotal</th>
+														<td><?php echo $subtindakan ?></td>
+													</tfoot>
+												</table>	
+											</div>
+										</div>
+									 </div>
+									<div class="row">
+										<div class="col-md-12">
+											<hr>
+										</div>
+									</div>
+									<h5 class="panel-title">Obat </h5>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="table-responsive">
+												<table class="table table-striped table-hover">
+													<thead>
+														<tr>
+															<th>No</th>
+															<th>Nama Obat</th>
+															<th>Jumlah</th>
+															<th>Harga</th>
+														</tr>
+													</thead>
+													<tbody>
+													<?php 
+														$no = 1;
+														while ($valobat = mysqli_fetch_assoc($qobat)) {
+															$subobat += $valobat['subtotal']; 
+															echo "
+															<tr>
+																<td>$no</td>
+																<td>$valobat[nm_obat]</td>
+																<td>$valobat[jml]</td>
+																<td>$valobat[subtotal]</td>
+															</tr>";
+															$no++;
+														}
+													?>
+													</tbody>
+													<tfoot>
+														<th colspan = "3" style = "text-align:center;">Subtotal</th>
+														<td><?php echo $subobat ?></td>
+													</tfoot>
+												</table>
+											</div>
+										</div>
+									</div>
+									<form action="" method="POST">
 										<div class="row">
-		 									<div class="col-md-6">
-                        <label for="">Tekanan Darah</label>
-												<br>
-												<div class="col-md-5">
-													<input type="number" name="tensi1" value="<?php echo (isset($_POST['tensi1']) ? $_POST['tensi1'] : '') ?>" class="form-control" placeholder="Tekanan atas">
-													<span class="text-danger"><?php echo $tensi1_err ?></span>
-												</div>
-												<div class="col-sm-1">
-												  <b>/</b>
-												</div>
-												<div class="col-md-5">
-													<input type="number" name="tensi2" value="<?php echo (isset($_POST['tensi2']) ? $_POST['tensi2'] : '') ?>" class="form-control" placeholder="Tekanan bawah">
-													<span class="text-danger"><?php echo $tensi2_err ?></span>
-												</div>
-		 									</div>
-                      <div class="col-md-6">
-                        <label for="">Suhu Badan</label>
-												<input type="number" name="suhu" value="<?php echo (isset($_POST['suhu']) ? $_POST['suhu'] : '') ?>" class="form-control" placeholder="Suhu badan (Celcius)">
-												<span class="text-danger"><?php echo $suhu_err ?></span>
-		 									</div>
-		 								</div>
-		 								<div class="row">
-		 									<div class="col-md-6">
-                        <label for="">Ananemse</label>
-												<textarea name="keluhan" class="form-control"><?php echo $rm['keluhan'] ?></textarea>
-                        <span class="text-danger"><?php echo $keluhan_err ?></span>
-		 									</div>
-                      <div class="col-md-6">
-                        <label for="">Pemeriksaan Fisik</label>
-												<textarea name="pemeriksaan" class="form-control">Pemeriksaan Fisik</textarea>
-                        <span class="text-danger"><?php echo $pemeriksaan_err ?></span>
-		 									</div>
-		 								</div>
-		 								<br>
-		 								<div class="row">
-                      <div class="col-md-6">
-                        <label for="">Diagnosa</label>
-												<textarea name="diagnosa" class="form-control">Diagnosa</textarea>
-                        <span class="text-danger"><?php echo $diagnosa_err ?></span>
-		 									</div>
-                      <div class="col-md-6">
-                        <label for="">Tindakan</label>
-                        <input type="text" id="pelayanan" name="pelayanan" value="<?php echo(isset($_POST['pelayanan']) ? $_POST['pelayanan'] : '') ?>" placeholder="Pilih Tindakan" class="form-control">
-                        <span class="text-danger"><?php echo(
-                          $pelayanan_err)?></span>
-                      </div>
-		 								</div>
-		 								<br>
-		 								<div class="row">
-		 									<div class="col-md-6">
-		 										<button type="submit" class="btn btn-primary"><i class="fa fa-plus-square"></i>  Tambah</button> &nbsp; &nbsp;
-		 										<button type="reset" name="reset" class="btn btn-danger"><i class="fa fa-times-circle"></i> &nbsp;  Batal</button>
-		 									</div>
-		 								</div>
-		 							</form>
-		 						</div>
-		 					</div>
-		 				</div>
-		 			</div>
-		 		</div>
-		 	</div>
+											<div class="col-md-6">
+												<label for="">Grand Total</label>
+													<input type="number" name="grand_total" class="form-control" value="<?php echo $valtotal['grand_total'] ?>" readonly="">
+											</div>
+											<div class="col-md-6">
+												<label>Kembalian</label>
+												<input type="number" name="kembalian" value="2000" class="form-control" readonly="">
+											</div>	
+										</div>
+										<br>
+										<div class="row">
+											<div class="col-md-6">
+												<label for="">Bayar</label>
+													<input type="number" name="bayar" class="form-control" placeholder="Total bayar">
+											</div>	
+										</div>
+										<br>
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Simpan</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		 </div>
 		 <div class="clearfix"></div>
 		<?php include '../dashboard/footer.php'; ?>

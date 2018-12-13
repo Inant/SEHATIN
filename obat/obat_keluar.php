@@ -45,7 +45,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 ?>
      <div class="main">
        <div class="main-content">
-         <div class="container-fluid">
          	<div class="col-md-8">	
               <div class="panel">
                 <div class="panel-heading">
@@ -62,6 +61,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                 </div>
 			  </div>
          	</div>
+         <div class="container-fluid">
 
 			<div class="row">
 				<div class="col-md-8">

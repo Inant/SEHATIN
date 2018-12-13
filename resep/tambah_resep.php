@@ -114,13 +114,18 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 <div class="main">
 		 	<div class="main-content">
 		 		<div class="container-fluid">
-		 			<h3 class="page-title">Resep</h3>
+		 			<div class="panel">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-4">
+									<h3 class="panel-title"><i class="material-icons" style="font-size:21px">receipt</i>&ensp;Resep</h3>
+								</div>
+							</div>
+						</div>
+					</div>
 		 			<div class="row">
 		 				<div class="col-md-12">
 		 					<div class="panel">
-		 						<div class="panel-heading">
-		 							<h3 class="panel-title">Input Resep</h3>
-		 						</div>
 		 						<div class="panel-body">
                   <div class="row">
                     <div class="col-md-4">

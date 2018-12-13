@@ -131,7 +131,8 @@ echo "<script>
                             <td>$val[no_hp]</td>
                             <td>$val[alamat]</td>
                             <td>$val[kategori]</td>
-                            <td><a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>
+                            <td><a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a>
+                              <a href='../pemeriksaan/history_pemeriksaan.php?p=$val[id_pasien]' class='btn btn-success btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>
                             </tr>
                             ";
                             $no++;

@@ -79,6 +79,7 @@
 					elseif ($_SESSION['level'] == 'Apoteker') {
 				?>
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="../resep/antrian_resep.php" class="<?php echo ($nav == "resep" ? 'active' : '') ?>"><i class="material-icons" style="font-size:21px">receipt</i> <span>Antrian Resep</span></a></li>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "obat" ? 'active' : '') ?>"><i class="fa fa-medkit"></i><span>Obat</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse">
@@ -90,7 +91,7 @@
 								</ul>
 							</div>
 						</li>
-						<li><a href="../resep/antrian_resep.php" class="<?php echo ($nav == "resep" ? 'active' : '') ?>"><i class="material-icons" style="font-size:21px">receipt</i> <span>Antrian Resep</span></a></li>
+						<li><a href="../obat_kadaluarsa/obat_kadaluarsa.php" class="<?php echo ($nav == "obat_kadaluarsa" ? 'active' : '') ?>"><i class="fa fa-calendar-times-o"></i> <span>Obat Kadaluarsa</span></a></li>
 				<?php
 					}
  				?>
