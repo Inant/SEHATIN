@@ -53,6 +53,24 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			border-bottom: 1px solid #000;
 		}
 	</style>
+	<script type="text/javascript">
+		function startCalc(){
+			interval = setInterval("calc()", 1);
+		}
+		function calc(){
+			grand = document.pembayaran.grand_total.value;
+			byr = document.pembayaran.bayar.value;
+			if(grand ==  0){
+				document.pembayaran.bayar.readOnly = true;
+				document.pembayaran.bayar.value = 0;
+			}
+			document.pembayaran.kembalian.value = byr - grand;
+		}
+		function stopCalc(){
+			clearInterval(interval);
+		}
+		
+	</script>
 </head>
 
 <body>
@@ -63,6 +81,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/left_sidebar.php';
 			date_default_timezone_set("Asia/Jakarta");
 			$waktu = date("d-m-Y H:i");
+			$waktu2 = date("d-m-Y H:i:s");
 			$qpembayaran = mysqli_query($con, "SELECT pb.id_pembayaran, p.nama, p.kategori, pb.waktu FROM pembayaran pb INNER JOIN antrian a ON pb.id_antrian = a.id_antrian INNER JOIN pasien p ON a.id_pasien = p.id_pasien WHERE pb.id_antrian = '$_GET[id_antrian]' ");
 			$valpembayaran = mysqli_fetch_assoc($qpembayaran);
 
@@ -74,6 +93,30 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 
 			$qtotal = mysqli_query($con, "SELECT grand_total FROM pembayaran WHERE id_antrian = '$_GET[id_antrian]' ");
 			$valtotal = mysqli_fetch_assoc($qtotal);
+
+			$bayar_err = ""; 
+			$bayar = 0;
+			if (isset($_POST['submit'])) {
+				if (!is_numeric($_POST['bayar'])) {
+					$bayar_err = "* Hanya bisa menginput angka ";
+				}
+				elseif ($_POST['bayar'] < $_POST['grand_total']) {
+					$bayar_err = "* Total bayar tidak boleh kurang dari grand total";
+				}
+				else{
+					$bayar = trim($_POST['bayar']);
+				}
+
+				if ($bayar_err == "") {
+					mysqli_query($con, "UPDATE pembayaran SET waktu = '$waktu2', total_bayar = '$bayar', kembalian = '$_POST[kembalian]', id_user = '$_SESSION[id_user]' WHERE id_pembayaran = '$valpembayaran[id_pembayaran]'  ");
+					mysqli_query($con, "UPDATE antrian SET status = 'Selesai' WHERE id_antrian = '$_GET[id_antrian]' ");
+					echo "<script>
+									alert('Pembayaran sukses ');
+									window.location.href='antrian_pembayaran.php';
+								</script>";
+
+				}
+			}
 
 		?>
 		 <div class="main">
@@ -210,26 +253,27 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</div>
 										</div>
 									</div>
-									<form action="" method="POST">
+									<form name="pembayaran" action="" method="POST">
 										<div class="row">
 											<div class="col-md-6">
 												<label for="">Grand Total</label>
-													<input type="number" name="grand_total" class="form-control" value="<?php echo $valtotal['grand_total'] ?>" readonly="">
+													<input type="number" name="grand_total" class="form-control" value="<?php echo $valtotal['grand_total'] ?>" readonly="" onFocus="startCalc();" onBlur="stopCalc();">
 											</div>
 											<div class="col-md-6">
 												<label>Kembalian</label>
-												<input type="number" name="kembalian" value="2000" class="form-control" readonly="">
+												<input type="number" name="kembalian" value="<?php echo isset($_POST['kembalian']) ? $_POST['kembalian'] : 0 ?>" class="form-control" readonly="" onchange='tryNumberFormat(this.form.thirdBox);'>
 											</div>	
 										</div>
 										<br>
 										<div class="row">
 											<div class="col-md-6">
 												<label for="">Bayar</label>
-													<input type="number" name="bayar" class="form-control" placeholder="Total bayar">
+													<input type="number" name="bayar" class="form-control" placeholder="Total bayar" onFocus="startCalc();" onblur="stopCalc();" value="<?php echo isset($_POST['bayar']) ? $_POST['bayar'] : '' ?>" required="">
+													<span class="text text-danger"><?php echo $bayar_err?></span>
 											</div>	
 										</div>
 										<br>
-										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Simpan</button>
+										<button type="submit" class="btn btn-primary" name="submit" value="submit"><i class="fa fa-check"></i>Simpan</button>
 									</form>
 								</div>
 							</div>
