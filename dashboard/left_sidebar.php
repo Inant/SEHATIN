@@ -75,7 +75,7 @@
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == "dashboard" ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						<li><a href="../pembayaran/antrian_pembayaran.php" class="<?php echo ($nav == "pembayaran" ? 'active' : '') ?>"><i class="fa fa-money"></i> <span>Antrian Pembayaran</span></a></li>
 						<li>
-							<a href="#subPages2" data-toggle="collapse" class="<?php echo ($nav == "data pembayaran" ? 'active' : '') ?>"><i class="fa fa-file-text-o"></i><span>Data Pembayaran</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<a href="#subPages2" data-toggle="collapse" class="<?php echo ($nav == "data%20pembayaran" ? 'active' : '') ?>"><i class="fa fa-file-text-o"></i><span>Data Pembayaran</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse">
 								<ul class="nav">
 									<li><a href="../data pembayaran/semua_pembayaran.php">Semua Pembayaran</a></li>

@@ -81,7 +81,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/left_sidebar.php';
 			date_default_timezone_set("Asia/Jakarta");
 			$waktu = date("d-m-Y H:i");
-			$waktu2 = date("d-m-Y H:i:s");
+			$waktu2 = date("Y-m-d H:i:s");
 			$qpembayaran = mysqli_query($con, "SELECT pb.id_pembayaran, p.nama, p.kategori, pb.waktu FROM pembayaran pb INNER JOIN antrian a ON pb.id_antrian = a.id_antrian INNER JOIN pasien p ON a.id_pasien = p.id_pasien WHERE pb.id_antrian = '$_GET[id_antrian]' ");
 			$valpembayaran = mysqli_fetch_assoc($qpembayaran);
 

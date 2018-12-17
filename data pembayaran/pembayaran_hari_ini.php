@@ -59,7 +59,7 @@ echo "<script>
           <div class="panel-heading">
             <div class="row">
               <div class="col-md-4">
-                <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Data Kunjungan Tanggal <?php echo $tgl ?></h1>
+                <h1 class="panel-title"><i class="fa fa-file-text-o"></i>&ensp;Data Pembayaran Tanggal <?php echo $tgl ?></h1>
               </div>
               <div class="col-md-1 col-md-offset-7">
                 <?php if ($jml > 0): ?>
@@ -89,7 +89,7 @@ echo "<script>
                           </tr>
                         </thead>
                         <?php else: ?>
-                          <h4><i>Belum ada kunjungan</i></h4>
+                          <h4><i>Belum ada pembayaran</i></h4>
                         <?php endif ?>
                         <tbody>
                           <?php
@@ -97,6 +97,7 @@ echo "<script>
                           foreach ($result as $val) {
                             $waktu = explode(" ", $val['waktu']);
                             $waktu = $waktu[1];
+                            $waktu = date("H:i", strtotime($waktu));
                             echo "<tr>
                             <td>$no</td>
                             <td>$val[nama]</td>
@@ -111,11 +112,13 @@ echo "<script>
                           }
                           ?>
                         </tbody>
-                        <tfoot>
-                          <tr>
-                            <th colspan="4" style="text-align: center;">Pendapatan</th><th colspan="3" style="text-align: left;"><?php echo $pendapatan ?></th>
-                          </tr>
-                        </tfoot>
+                        <?php if ($jml > 0): ?>
+                          <tfoot>
+                            <tr>
+                              <th colspan="4" style="text-align: center;">Pendapatan</th><th colspan="3" style="text-align: left;"><?php echo $pendapatan ?></th>
+                            </tr>
+                          </tfoot>
+                        <?php endif ?>
                       </table>
                     </div>
                     <span class="text-default">Jumlah data : <?php echo($jml) ?></span>

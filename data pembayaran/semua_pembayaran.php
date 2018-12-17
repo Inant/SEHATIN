@@ -1,4 +1,4 @@
-	<?php
+  <?php
 session_start();
 if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 echo "<script>
@@ -42,19 +42,21 @@ echo "<script>
   $now = explode("-", $now);
   $now = $now[1];
   $tgl = date('d-m-Y');
-  if (isset($_POST['btn_cari'])) {
-    //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
+  if (isset($_GET['submit'])) {
+    $query = "SELECT DISTINCT p.nama, p.kategori, pb.grand_total, pb.waktu, pb.total_bayar, pb.kembalian FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN pembayaran pb ON a.id_antrian = pb.id_antrian WHERE pb.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.status = 'Selesai'  ORDER BY pb.waktu";
+
+    $qpendapatan = mysqli_query($con, "SELECT SUM(pb.grand_total) as pendapatan FROM pembayaran pb INNER JOIN antrian a ON a.id_antrian = pb.id_antrian WHERE pb.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.status = 'Selesai' ");
   }
   else{
     $halaman = 10;
     $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
     $mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
-    $query = "SELECT DISTINCT p.nama, p.kategori, pb.grand_total, pb.waktu, pb.total_bayar, pb.kembalian FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN pembayaran pb ON a.id_antrian = pb.id_antrian WHERE month(pb.waktu) = '$now'  AND a.status = 'Selesai'  ORDER BY pb.waktu ASC LIMIT $mulai, $halaman";
+    $query = "SELECT DISTINCT p.nama, p.kategori, pb.grand_total, pb.waktu, pb.total_bayar, pb.kembalian FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN pembayaran pb ON a.id_antrian = pb.id_antrian WHERE a.status = 'Selesai'  ORDER BY pb.waktu ASC LIMIT $mulai, $halaman";
 
-    $qpendapatan = mysqli_query($con, "SELECT SUM(pembayaran.grand_total) as pendapatan FROM pembayaran INNER JOIN antrian a ON a.id_antrian = pembayaran.id_antrian WHERE month(pembayaran.waktu) = '$now' AND a.status = 'Selesai' ");
-    $pendapatan = mysqli_fetch_assoc($qpendapatan);
-    $pendapatan = $pendapatan['pendapatan'];
+    $qpendapatan = mysqli_query($con, "SELECT SUM(pembayaran.grand_total) as pendapatan FROM pembayaran INNER JOIN antrian a ON a.id_antrian = pembayaran.id_antrian WHERE a.status = 'Selesai' ");
   }
+  $pendapatan = mysqli_fetch_assoc($qpendapatan);
+  $pendapatan = $pendapatan['pendapatan'];
   $result = mysqli_query($con, $query);
   $jml = mysqli_num_rows($result);
   ?>
@@ -65,11 +67,11 @@ echo "<script>
           <div class="panel-heading">
             <div class="row">
               <div class="col-md-4">
-                <h1 class="panel-title"><i class="fa fa-file-text-o"></i>&ensp;Data Pembayaran Bulan <?php echo date('F'); ?></h1>
+                <h1 class="panel-title"><i class="fa fa-file-text-o"></i>&ensp;Data Pembayaran</h1>
               </div>
               <div class="col-md-1 col-md-offset-7">
-                <?php if ($jml > 0): ?>
-                  <a href="export_per_bulan.php" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
+                <?php if (isset($_GET['submit'])): ?>
+                  <a href="export_all.php?dari=<?php echo $_GET['dari'] ?>&sampai=<?php echo $_GET['sampai'] ?>" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
                 <?php endif ?>
               </div>  
             </div>
@@ -80,6 +82,22 @@ echo "<script>
             <div class="panel">
               <br>
                   <div class="panel-body">
+                    <form action="" method="GET">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label>Dari tanggal</label>
+                          <input type="date" name="dari" class="form-control" value="<?php echo isset($_GET['dari']) ? $_GET['dari'] : "" ?>">
+                        </div>
+                        <div class="col-md-3">
+                          <label>Sampai tanggal</label>
+                          <input type="date" name="sampai" class="form-control" value="<?php echo isset($_GET['sampai']) ? $_GET['sampai'] : "" ?>">
+                        </div>
+                        <div class="col-md-2">  
+                          <button type="submit" style="margin-top: 25px;" name="submit" value="submit" class="btn btn-success"><i class=" glyphicon glyphicon-filter"></i>&nbsp;Filter </button>
+                        </div>
+                      </div>
+                    </form>
+                    <br>
                     <div class="table-responsive">
                       <table class="table table-striped table-hover">
                         <?php if ($jml > 0): ?>
@@ -88,7 +106,7 @@ echo "<script>
                             <th>No</th>
                             <th>Nama</th>
                             <th>Kategori</th>
-                            <th>Tanggal</th>
+                            <th>Waktu</th>
                             <th>Grand Total</th>
                             <th>Total Bayar</th>
                             <th>Kembalian</th>
