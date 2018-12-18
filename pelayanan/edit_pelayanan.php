@@ -54,7 +54,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$pelayanan = trim($_POST['pelayanan']);
 			}
 
-			if (empty($_POST['umum'])) {
+			if (!isset($_POST['umum'])) {
 				$umum_err = "* Harga harus diisi !";
 			}
       elseif ($_POST['umum'] == 0) {
@@ -67,7 +67,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$umum = $_POST['umum'];
 			}
 
-			if (empty($_POST['karyawan'])) {
+			if (!isset($_POST['karyawan'])) {
 				$karyawan_err = "* Harga harus diisi !";
 			}
 			elseif ($_POST['karyawan'] == 0) {
@@ -80,7 +80,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$karyawan = $_POST['karyawan'];
 			}
 
-			if (empty($_POST['keluarga'])) {
+			if (!isset($_POST['keluarga'])) {
 				$keluarga_err = "* Harga harus diisi !";
 			}
 			elseif ($_POST['keluarga'] == 0) {
@@ -93,7 +93,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$keluarga = $_POST['keluarga'];
 			}
 
-			if (empty($_POST['mahasiswa'])) {
+			if (!isset($_POST['mahasiswa'])) {
 				$mahasiswa_err = "* Harga harus diisi !";
 			}
       elseif ($_POST['mahasiswa'] == 0) {
@@ -131,15 +131,16 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 					<div class="panel">
 		 						<div class="panel-body">
 		 							<form method="POST" action="">
+		 								<input type="hidden" name="id_pelayanan" value="<?php echo $val['id_pelayanan'] ?>">
 		 								<div class="row">
 		 									<div class="col-md-6">
 												<label for="">Nama Pelayanan</label>
-		 										<input type="text" name="pelayanan" class="form-control" placeholder="Nama Pelayanan" value="<?php echo(isset($_POST['pelayanan']) ? $_POST['pelayanan'] : $pelayanan ) ?>">
+		 										<input type="text" name="pelayanan" class="form-control" placeholder="Nama Pelayanan" value="<?php echo($val['pelayanan']) ?>">
 		 										<span class="text-danger"> <?php echo($pelayanan_err); ?></span>
 		 									</div>
 		 									<div class="col-md-6">
 												<label for="">Harga Pasien Umum</label>
-		 										<input type="number" class="form-control" placeholder="Harga pasien umum" name="umum" value="<?php echo(isset($_POST['umum']) ? $_POST['umum'] : $umum) ?>">
+		 										<input type="number" class="form-control" placeholder="Harga pasien umum" name="umum" value="<?php echo($val['harga_umum']) ?>">
 		 										<span class="text-danger"> <?php echo($umum_err); ?></span>
 		 									</div>
 		 								</div>
@@ -147,12 +148,12 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<div class="row">
 		 									<div class="col-md-6">
 												<label for="">Harga Pasien Karyawan</label>
-		 										<input type="number" name="karyawan" placeholder="Harga pasien karyawan" class="form-control" value="<?php echo(isset($_POST['karyawan']) ? $_POST['karyawan'] : $karyawan) ?>">
+		 										<input type="number" name="karyawan" placeholder="Harga pasien karyawan" class="form-control" value="<?php echo($val['harga_karyawan']) ?>">
 		 										<span class="text-danger"> <?php echo($karyawan_err); ?></span>
 		 									</div>
                       <div class="col-md-6">
 												<label for="">Harga Pasien Keluarga Karyawan</label>
-		 										<input type="number" name="keluarga" placeholder="Harga pasien karyawan" class="form-control" value="<?php echo(isset($_POST['keluarga']) ? $_POST['keluarga'] : $keluarga) ?>">
+		 										<input type="number" name="keluarga" placeholder="Harga pasien keluarga karyawan" class="form-control" value="<?php echo($val['harga_kel_karyawan']) ?>">
 		 										<span class="text-danger"> <?php echo($keluarga_err); ?></span>
 		 									</div>
 		 								</div>
@@ -160,7 +161,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<div class="row">
                       <div class="col-md-6">
                         <label for="">Harga Pasien Mahasiswa</label>
-                        <input type="number" name="mahasiswa" placeholder="Harga pasien mahasiswa" class="form-control" value="<?php echo(isset($_POST['mahasiswa']) ? $_POST['mahasiswa'] : $mahasiswa) ?>">
+                        <input type="number" name="mahasiswa" placeholder="Harga pasien mahasiswa" class="form-control" value="<?php echo($val['harga_mahasiswa']) ?>">
                         <span class="text-danger"> <?php echo($mahasiswa_err); ?></span>
                       </div>
 		 								</div>

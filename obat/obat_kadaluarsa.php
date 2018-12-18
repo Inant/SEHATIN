@@ -56,6 +56,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 							<div class="col-md-12">
 								<div class="panel">
 									<br>
+                <div class="row">
+                  <div class="col-md-12">
+										<?php if ($_SESSION['level'] == "Apoteker"): ?>
+											<a href="tambah_obat.php"> <button type="button" class="btn btn-primary btn-sm" style="margin-left:25px; margin-bottom:10px;">Tambah</button> </a>
+										<?php endif; ?>
+                  </div>
+                </div>
                 <div class="panel-body">
                   <div class="table-responsive">
                     <table class="table table-striped table-hover table-bordered">
@@ -81,7 +88,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 							$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 							$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
 							$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan WHERE obat.tgl_kadaluarsa <= '$now' ORDER BY obat.nm_obat ASC LIMIT $mulai, $halaman";
-							$jml = "SELECT COUNT(*) AS jml_obat FROM obat";
+							$jml = "SELECT COUNT(*) AS jml_obat FROM obat WHERE tgl_kadaluarsa <= '$now'";
 							$r = mysqli_query($con, $jml);
 							$result = mysqli_query($con, $q);
 							$jml_obat = mysqli_fetch_assoc($r);

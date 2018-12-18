@@ -37,7 +37,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/left_sidebar.php';
 			$pass_lama_err = $pass_baru_err = $konfirmasi_err = "";
 			$pass_lama = $pass_baru = $konfirmasi = "";
-			$query = "SELECT password as password_lama FROM petugas WHERE id_petugas = '$_GET[id_petugas]'";
+			$query = "SELECT password as password_lama FROM login WHERE id_user = '$_SESSION[id_user]'";
 			$result = mysqli_query($con, $query);
 			$val = mysqli_fetch_assoc($result);
 			if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -71,7 +71,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				}
 
 				if ($pass_lama_err == "" && $pass_baru_err == "" && $konfirmasi_err == "") {
-					mysqli_query($con, "UPDATE petugas SET password = '$pass_baru' WHERE id_petugas = '$_GET[id_petugas]'");
+					mysqli_query($con, "UPDATE login SET password = '$pass_baru' WHERE id_user = '$_SESSION[id_user]'");
 					echo "<script>
 									alert('Silahkan login kembali');
 									window.location.href='../logout.php';
@@ -97,16 +97,19 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 								<div class="panel-body">
 									<form method="POST" action="">
 										<div class="row">
+											<label>Password Lama</label>
 											<input type="password" name="pass_lama" placeholder="Masukan password lama" class="form-control" value="<?php echo isset($_POST['pass_lama']) ? $_POST['pass_lama'] : $pass_lama ?>">
 											<span class="text-danger"><?php echo $pass_lama_err ?></span>
 										</div>
 										<br>
 										<div class="row">
+											<label>Password Baru</label>
 											<input type="password" name="pass_baru" placeholder="Masukan password baru" class="form-control" value="<?php echo isset($_POST['pass_baru']) ? $_POST['pass_baru'] : $pass_baru ?>">
 											<span class="text-danger"><?php echo $pass_baru_err ?></span>
 										</div>
 										<br>
 										<div class="row">
+											<label>Konfirmasi Password Baru</label>
 											<input type="password" name="konfirmasi" placeholder="konfirmasi password baru" class="form-control" value="<?php echo isset($_POST['konfirmasi']) ? $_POST['konfirmasi'] : $konfirmasi ?>">
 											<span class="text-danger"><?php echo $konfirmasi_err ?></span>
 										</div>

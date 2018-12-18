@@ -97,7 +97,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</script>
 											<?php
 												if (isset($_POST['btn_cari'])) {
-													//$query = "SELECT * FROM petugas WHERE nama_petugas LIKE '%$_POST[cari]%' AND username != '$_SESSION[username]' ORDER BY nama_petugas ASC";
+													$query = "SELECT * FROM pelayanan WHERE pelayanan LIKE '%$_POST[cari]%' ORDER BY pelayanan ASC";
 												}
 												else{
 													$query = "SELECT * FROM pelayanan ORDER BY pelayanan ASC";

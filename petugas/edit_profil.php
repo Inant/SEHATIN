@@ -36,7 +36,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			include '../dashboard/navbar.php';
 			include '../dashboard/left_sidebar.php';
 
-			$query = "SELECT * FROM petugas WHERE id_petugas = '$_GET[id_petugas]'";
+			$query = "SELECT * FROM petugas INNER JOIN login ON petugas.id_petugas = login.id_user WHERE petugas.id_petugas = '$_SESSION[id_user]'";
 			$result = mysqli_query($con, $query);
 			$val = mysqli_fetch_assoc($result);
 
@@ -85,7 +85,8 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				}
 
 				if ($nama_err == "" && $gender_err == "" && $alamat_err == "" && $nohp_err == "" && $username_err == "") {
-					mysqli_query($con, "UPDATE petugas SET nama_petugas = '$nama', gender = '$gender', alamat = '$alamat', no_hp = '$nohp', username = '$user' WHERE id_petugas = '$_POST[id_petugas]' ");
+					mysqli_query($con, "UPDATE petugas SET nama_petugas = '$nama', gender = '$gender', alamat = '$alamat', no_hp = '$nohp' WHERE id_petugas = '$_POST[id_petugas]' ");
+					mysqli_query($con, "UPDATE login SET username = '$user' WHERE id_user = '$_POST[id_petugas]'");
 					echo "<script>
 							alert('Berhasil diperbarui');
 							history.go(-1);

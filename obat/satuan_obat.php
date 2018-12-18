@@ -46,15 +46,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-							<div class="panel">
-								<div class="panel-heading">
-									<h1 class="panel-title"><i class="fa fa-medkit"></i>&ensp;Satuan Obat</h1>
-									<div class="col-md-2 col-md-offset-10">
+					<div class="row">
+								<div class="col-md-6">
+									<div class="panel">
+										<div class="panel-heading">
+											<h1 class="panel-title"><i class="fa fa-medkit"></i>&ensp;Satuan Obat</h1>
+										</div>
 									</div>
-								</div>
 							</div>
+						</div>
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-6">
 									<div class="panel">
 										<br>
 								<div class="row">

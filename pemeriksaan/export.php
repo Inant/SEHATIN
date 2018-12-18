@@ -15,7 +15,7 @@
  		<table class="table">
  			<tr>
  				<td><b>No RM</b></td>
- 				<td><?php echo $valpasien['id_pasien'] ?></td>
+ 				<td><?php echo "RM".$valpasien['id_pasien'] ?></td>
  				<td></td>
  				<td>&ensp;<b>Usia</b></td>
  				<td><?php echo $usia ?></td>

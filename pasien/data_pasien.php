@@ -109,7 +109,7 @@ echo "<script>
                             $result = mysqli_query($con, $query);
                           }
                           else{
-                            $halaman = 5;
+                            $halaman = 10;
                             $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
                             $mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
                             $query = "SELECT * FROM pasien ORDER BY nama ASC LIMIT $mulai, $halaman";

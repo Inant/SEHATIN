@@ -5,6 +5,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		window.location.href='../login.php';
 	</script>";
 }
+else{
+	include '../koneksi.php';
+}
  ?>
 <!doctype html>
 <html lang="en">
@@ -27,111 +30,38 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
-	<style media="screen">
-		.autocomplete-suggestions {
-			border: 1px solid #999;
-			background: #FFF;
-			overflow: auto;
-		}
-		.autocomplete-suggestion {
-			padding: 2px 5px;
-			white-space: nowrap;
-			overflow: hidden;
-		}
-		.autocomplete-selected {
-			background: #F0F0F0;
-		}
-		.autocomplete-suggestions strong {
-			font-weight: normal;
-			color: #3399FF;
-		}
-		.autocomplete-group {
-			padding: 2px 5px;
-		}
-		.autocomplete-group strong {
-			display: block;
-			border-bottom: 1px solid #000;
-		}
-	</style>
 	<script type="text/javascript">
-		function startCalc(){
-			interval = setInterval("calc()", 1);
-		}
-		function calc(){
-			grand = document.pembayaran.grand_total.value;
-			byr = document.pembayaran.bayar.value;
-			if(grand ==  0){
-				document.pembayaran.bayar.readOnly = true;
-				document.pembayaran.bayar.value = 0;
-			}
-			document.pembayaran.kembalian.value = byr - grand;
-		}
-		function stopCalc(){
-			clearInterval(interval);
-		}
-	</script>
+		window.print();
+</script>
 </head>
 
 <body>
 	<!-- WRAPPER -->
 	<div id="wrapper">
 		<?php
-			include '../dashboard/navbar.php';
-			include '../dashboard/left_sidebar.php';
 			date_default_timezone_set("Asia/Jakarta");
 			$waktu = date("d-m-Y H:i");
 			$waktu2 = date("Y-m-d H:i:s");
-			$qpembayaran = mysqli_query($con, "SELECT pb.id_pembayaran, p.nama, p.kategori, a.status,pb.waktu FROM pembayaran pb INNER JOIN antrian a ON pb.id_antrian = a.id_antrian INNER JOIN pasien p ON a.id_pasien = p.id_pasien WHERE pb.id_antrian = '$_GET[id_antrian]' ");
+			$qpembayaran = mysqli_query($con, "SELECT pb.id_pembayaran, p.nama, p.kategori, pb.waktu FROM pembayaran pb INNER JOIN antrian a ON pb.id_antrian = a.id_antrian INNER JOIN pasien p ON a.id_pasien = p.id_pasien WHERE pb.id_antrian = '$_GET[id_antrian]' ");
 			$valpembayaran = mysqli_fetch_assoc($qpembayaran);
+
 			$qtindakan = mysqli_query($con, "SELECT p.pelayanan, t.subtotal FROM tindakan t INNER JOIN pelayanan p ON t.id_pelayanan = p.id_pelayanan WHERE t.id_pemeriksaan = '$_GET[id_pemeriksaan]'");
 			$subtindakan = 0;
 
 			$qobat = mysqli_query($con, "SELECT o.nm_obat, dt.jml, dt.subtotal FROM resep r INNER JOIN detail_resep dt ON r.id_resep = dt.id_resep INNER JOIN obat o ON dt.id_obat = o.id_obat WHERE r.id_pemeriksaan = '$_GET[id_pemeriksaan]' ");
 			$subobat = 0;
 
-			$qtotal = mysqli_query($con, "SELECT grand_total FROM pembayaran WHERE id_antrian = '$_GET[id_antrian]' ");
+			$qtotal = mysqli_query($con, "SELECT grand_total, total_bayar, kembalian FROM pembayaran WHERE id_pembayaran = '$_GET[id_pembayaran]' ");
 			$valtotal = mysqli_fetch_assoc($qtotal);
 
-			$bayar_err = ""; 
-			$bayar = 0;
-			if (isset($_POST['submit'])) {
-				if (!is_numeric($_POST['bayar'])) {
-					$bayar_err = "* Hanya bisa menginput angka ";
-				}
-				elseif ($_POST['bayar'] < $_POST['grand_total']) {
-					$bayar_err = "* Total bayar tidak boleh kurang dari grand total";
-				}
-				else{
-					$bayar = trim($_POST['bayar']);
-				}
-
-				if ($bayar_err == "") {
-					mysqli_query($con, "UPDATE pembayaran SET waktu = '$waktu2', total_bayar = '$bayar', kembalian = '$_POST[kembalian]', id_user = '$_SESSION[id_user]' WHERE id_pembayaran = '$valpembayaran[id_pembayaran]'  ");
-					mysqli_query($con, "UPDATE antrian SET status = 'Selesai' WHERE id_antrian = '$_GET[id_antrian]' ");
-					echo "<script>
-									alert('Pembayaran sukses ');
-									window.location.href='cetak_struk.php?id_pasien=$_GET[id_pasien]&id_antrian=$_GET[id_antrian]&id_pembayaran=$valpembayaran[id_pembayaran]&id_pemeriksaan=$_GET[id_pemeriksaan]';
-								</script>";
-
-				}
-			}
-
 		?>
-		 <div class="main">
 			<div class="main-content">
-				<div class="col-md-8">
-					<div class="panel">
-						<div class="panel-heading">
-							<h1 class="panel-title"> <i class="fa fa-money"></i>&ensp;Pembayaran</h1>
-						</div> 
-					</div>
-				</div>
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-md-6">
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Form Pembayaran</h3>
+									<h5 class="panel-title" style="text-align: center;">Poliklinik Politeknik Negeri Jember</h5>
 								</div>
 								<div class="panel-body">
 									<div class="row">
@@ -178,7 +108,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									 <div class="row"> 
 										<div class="col-md-12">
 											<div class="table-responsive">
-												<table class="table table-hover table-striped">
+												<table class="table table-hover table-striped table-condensed">
 													<thead>
 														<tr>
 															<th>No</th>
@@ -251,37 +181,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 											</div>
 										</div>
 									</div>
-									<form name="pembayaran" action="" method="POST">
-										<div class="row">
-											<div class="col-md-6">
-												<label for="">Grand Total</label>
-													<input type="number" name="grand_total" class="form-control" value="<?php echo $valtotal['grand_total'] ?>" readonly="" onFocus="startCalc();" onBlur="stopCalc();">
-											</div>
-											<div class="col-md-6">
-												<label>Kembalian</label>
-												<input type="number" name="kembalian" value="<?php echo isset($_POST['kembalian']) ? $_POST['kembalian'] : 0 ?>" class="form-control" readonly="" onchange='tryNumberFormat(this.form.thirdBox);'>
-											</div>	
-										</div>
-										<br>
-										<div class="row">
-											<div class="col-md-6">
-												<label for="">Bayar</label>
-													<input type="number" name="bayar" class="form-control" placeholder="Total bayar" onFocus="startCalc();" onblur="stopCalc();" value="<?php echo isset($_POST['bayar']) ? $_POST['bayar'] : '' ?>" required="">
-													<span class="text text-danger"><?php echo $bayar_err?></span>
-											</div>	
-										</div>
-										<br>
-										<button type="submit" class="btn btn-primary" name="submit" value="submit"><i class="fa fa-check"></i>Simpan</button>
-									</form>
+									<table>
+										<tr><th>Grand Total</th><td>&ensp;&ensp;&ensp;</td><td><?php echo $valtotal['grand_total'] ?></td></tr>
+										<tr><th>Total Bayar</th><td>&ensp;&ensp;&ensp;</td><td><?php echo $valtotal['total_bayar'] ?></td></tr>
+										<tr><th>Kembalian</th><td>&ensp;&ensp;&ensp;</td><td><?php echo $valtotal['kembalian'] ?></td></tr>
+									</table>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		 </div>
-		 <div class="clearfix"></div>
-		<?php include '../dashboard/footer.php'; ?>
 	</div>
 	<script src="../assets/vendor/jquery/jquery.min.js"></script>
 	<script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>

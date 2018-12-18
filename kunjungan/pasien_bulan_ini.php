@@ -122,7 +122,7 @@ echo "<script>
                       </table>
                     </div>
                     <?php if (!isset($_POST['btn_cari'])): ?>
-                      <div class="col-md-2 col-md-offset-11">
+                      <div class="col-md-2 col-md-offset-10">
                         <ul class="pagination">
                           <?php for ($i=1; $i <= $pages ; $i++) { ?>
                             <li> <a href="?halaman=<?php echo $i ?>" class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i ?> </a> </li>
