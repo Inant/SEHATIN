@@ -57,7 +57,15 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Satuan Obat</h4>
+					<div class="row">
+								<div class="col-md-6">
+									<div class="panel">
+										<div class="panel-heading">
+											<h1 class="panel-title"><i class="fa fa-medkit"></i>&ensp;Satuan Obat</h1>
+										</div>
+									</div>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="panel">
