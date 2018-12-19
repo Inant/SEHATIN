@@ -19,8 +19,9 @@
 						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Data Dokter</span></a></li>
 						<li><a href="../pelayanan/data_pelayanan.php" class="<?php echo ($nav == "pelayanan" ? 'active' : '') ?>"><i class="fa fa-stethoscope"></i> <span>Pelayanan</span></a></li>
-						<li><a href="#" class=""><i class="lnr lnr-alarm"></i> <span>Info</span></a></li>
 						<li><a href="../petugas/data_petugas.php" class="<?php echo ($nav == "petugas" ? 'active' : '') ?>"><i class="lnr lnr-user"></i> <span>Data Petugas</span></a></li>
+						<!-- <li><a href="../database/export.php" class="<?php echo ($nav == "database" ? 'active' : '') ?>"><i class="fa fa-database"></i> <span>Databaseta</span></a></li> -->
+						<li><a href="#" class=""><i class="lnr lnr-alarm"></i> <span>Info Poliklinik</span></a></li>
 				<?php
 					}
 					elseif ($_SESSION['level'] == 'Resepsionis') { ?>
