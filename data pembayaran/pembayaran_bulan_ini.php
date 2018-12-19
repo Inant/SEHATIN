@@ -10,7 +10,7 @@ echo "<script>
 <!doctype html>
 <html lang="en">
 <head>
-<title>Kunjungan Perhari | Sehatin</title>
+<title>Pembayaran Perbulan | Sehatin</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -46,10 +46,7 @@ echo "<script>
     //$query = "SELECT * FROM pasien WHERE nama LIKE '%$_POST[cari]%' ORDER BY nama ASC";
   }
   else{
-    $halaman = 10;
-    $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-    $mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
-    $query = "SELECT DISTINCT p.nama, p.kategori, pb.grand_total, pb.waktu, pb.total_bayar, pb.kembalian FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN pembayaran pb ON a.id_antrian = pb.id_antrian WHERE month(pb.waktu) = '$now'  AND a.status = 'Selesai'  ORDER BY pb.waktu ASC LIMIT $mulai, $halaman";
+    $query = "SELECT DISTINCT p.nama, p.kategori, pb.grand_total, pb.waktu, pb.total_bayar, pb.kembalian FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN pembayaran pb ON a.id_antrian = pb.id_antrian WHERE month(pb.waktu) = '$now'  AND a.status = 'Selesai'  ORDER BY pb.waktu ASC";
 
     $qpendapatan = mysqli_query($con, "SELECT SUM(pembayaran.grand_total) as pendapatan FROM pembayaran INNER JOIN antrian a ON a.id_antrian = pembayaran.id_antrian WHERE month(pembayaran.waktu) = '$now' AND a.status = 'Selesai' ");
     $pendapatan = mysqli_fetch_assoc($qpendapatan);

@@ -48,10 +48,7 @@ echo "<script>
     $qpendapatan = mysqli_query($con, "SELECT SUM(pb.grand_total) as pendapatan FROM pembayaran pb INNER JOIN antrian a ON a.id_antrian = pb.id_antrian WHERE pb.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.status = 'Selesai' ");
   }
   else{
-    $halaman = 10;
-    $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-    $mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
-    $query = "SELECT DISTINCT p.nama, p.kategori, pb.grand_total, pb.waktu, pb.total_bayar, pb.kembalian FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN pembayaran pb ON a.id_antrian = pb.id_antrian WHERE a.status = 'Selesai'  ORDER BY pb.waktu ASC LIMIT $mulai, $halaman";
+    $query = "SELECT DISTINCT p.nama, p.kategori, pb.grand_total, pb.waktu, pb.total_bayar, pb.kembalian FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN pembayaran pb ON a.id_antrian = pb.id_antrian WHERE a.status = 'Selesai'  ORDER BY pb.waktu ASC";
 
     $qpendapatan = mysqli_query($con, "SELECT SUM(pembayaran.grand_total) as pendapatan FROM pembayaran INNER JOIN antrian a ON a.id_antrian = pembayaran.id_antrian WHERE a.status = 'Selesai' ");
   }

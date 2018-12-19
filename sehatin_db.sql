@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2018 at 07:53 PM
+-- Generation Time: Dec 19, 2018 at 04:38 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 5.6.38
 
@@ -63,22 +63,32 @@ INSERT INTO `antrian` (`id_antrian`, `id_pasien`, `waktu`, `status`, `id_poli`, 
 (40, 5, '2018-12-06 22:57:28', 'Menuggu obat', 2, 'Keluhana'),
 (41, 7, '2018-12-06 23:00:15', 'Menuggu obat', 2, 'Keluhanas'),
 (42, 9, '2018-12-06 23:04:50', 'Menuggu obat', 2, 'Keluhanasd'),
-(43, 5, '2018-12-09 01:49:14', 'Proses Pembayaran', 1, 'Panas tinggi'),
-(44, 4, '2018-12-09 01:49:38', 'Proses Pembayaran', 2, 'Sakit gigi'),
-(45, 8, '2018-12-10 00:44:08', 'Proses Pembayaran', 2, 'Gusi bengkak'),
-(46, 9, '2018-12-10 01:29:25', 'Proses Pembayaran', 1, 'Keluhanfd'),
-(47, 6, '2018-12-10 01:49:22', 'Proses Pembayaran', 1, 'Keluhanfd'),
-(48, 11, '2018-12-11 14:18:00', 'Proses Pembayaran', 1, 'Panas 2 hari'),
-(49, 11, '2018-12-11 23:15:36', 'Proses Pembayaran', 1, 'Keluhansdf'),
+(43, 5, '2018-12-09 01:49:14', 'Diperiksa', 1, 'Panas tinggi'),
+(44, 4, '2018-12-09 01:49:38', 'Selesai', 2, 'Sakit gigi'),
+(45, 8, '2018-12-10 00:44:08', 'Selesai', 2, 'Gusi bengkak'),
+(46, 9, '2018-12-10 01:29:25', 'Selesai', 1, 'Keluhanfd'),
+(47, 6, '2018-12-10 01:49:22', 'Selesai', 1, 'Keluhanfd'),
+(48, 11, '2018-12-11 14:18:00', 'Selesai', 1, 'Panas 2 hari'),
+(49, 11, '2018-12-11 23:15:36', 'Selesai', 1, 'Keluhansdf'),
 (50, 9, '2018-12-11 23:15:50', 'Mengantri', 1, 'Keluhanfdfds'),
 (51, 6, '2018-12-11 23:16:03', 'Mengantri', 2, 'Keluhanasdfd'),
 (52, 7, '2018-12-12 02:24:52', 'Menuggu obat', 1, 'Keluhanasdfd'),
 (53, 6, '2018-12-12 02:30:12', 'Menuggu obat', 1, 'Keluhannya'),
 (54, 5, '2018-12-12 02:34:30', 'Menuggu obat', 1, 'Keluhanq'),
 (55, 9, '2018-12-13 00:34:52', 'Diperiksa', 1, 'Keluhanb'),
-(56, 11, '2018-12-13 00:35:05', 'Proses Pembayaran', 1, 'Keluhanf'),
-(57, 7, '2018-12-13 00:35:26', 'Proses Pembayaran', 1, 'Keluhana'),
-(58, 8, '2018-12-13 01:14:00', 'Proses Pembayaran', 2, 'Sakit gigi');
+(56, 11, '2018-12-13 00:35:05', 'Selesai', 1, 'Keluhanf'),
+(57, 7, '2018-12-13 00:35:26', 'Selesai', 1, 'Keluhana'),
+(58, 8, '2018-12-13 01:14:00', 'Selesai', 2, 'Sakit gigi'),
+(59, 4, '2018-12-14 02:11:16', 'Selesai', 1, 'Keluhanaa'),
+(60, 10, '2018-12-14 02:23:21', 'Selesai', 2, 'Gigi berlubang'),
+(61, 3, '2018-12-14 02:37:35', 'Selesai', 1, 'Selalu begadang'),
+(62, 11, '2018-12-15 12:35:20', 'Selesai', 1, 'Keluhanf'),
+(63, 12, '2018-12-13 22:04:06', 'Selesai', 1, 'Luka panjang'),
+(64, 7, '2018-12-17 10:55:17', 'Selesai', 1, 'Pusing'),
+(65, 12, '2018-12-18 01:11:19', 'Selesai', 1, 'Batuk 2 hari'),
+(66, 7, '2018-12-18 21:34:27', 'Selesai', 1, 'Sakit'),
+(67, 8, '2018-12-18 21:47:58', 'Mengantri', 1, 'Sakit Tua'),
+(68, 13, '2018-12-19 10:26:30', 'Selesai', 1, 'Pilek 1 hari');
 
 -- --------------------------------------------------------
 
@@ -127,7 +137,19 @@ INSERT INTO `detail_resep` (`id_detail`, `id_resep`, `id_obat`, `dosis1`, `dosis
 (24, 18, 5, 1, 1, 1, 8000),
 (25, 19, 6, 1, 1, 1, 0),
 (26, 19, 5, 1, 1, 1, 0),
-(27, 20, 8, 2, 1, 1, 5000);
+(27, 20, 8, 2, 1, 1, 5000),
+(28, 21, 8, 2, 1, 3, 0),
+(29, 21, 1, 2, 1, 1, 0),
+(30, 22, 8, 2, 1, 2, 0),
+(31, 23, 3, 1, 1, 1, 0),
+(32, 24, 4, 3, 1, 1, 6500),
+(33, 24, 1, 2, 1, 1, 7000),
+(34, 25, 7, 2, 1, 1, 17500),
+(35, 26, 3, 2, 1, 1, 0),
+(36, 27, 8, 1, 1, 2, 10000),
+(37, 28, 5, 1, 1, 5, 0),
+(38, 29, 12, 2, 1, 2, 0),
+(39, 29, 2, 3, 1, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -176,7 +198,9 @@ INSERT INTO `kategori_obat` (`id_kategori`, `kategori`, `status`) VALUES
 (2, 'Tablet', 'Aktif'),
 (3, 'Obat Luar', 'Aktif'),
 (4, 'Alat Kesehatan', 'Non Aktif'),
-(5, 'Salep', 'Aktif');
+(5, 'Salep', 'Aktif'),
+(6, 'Kapsul', 'Aktif'),
+(7, 'Obat Tetes', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -230,14 +254,20 @@ CREATE TABLE `obat` (
 --
 
 INSERT INTO `obat` (`id_obat`, `nm_obat`, `id_kategori`, `id_satuan`, `harga_beli`, `harga_jual`, `stok`, `tgl_kadaluarsa`, `id_petugas`) VALUES
-(1, 'Milanta', 1, 1, 5000, 7000, 15, '2019-09-19', 11),
-(2, 'Bodrex', 2, 1, 5000, 7000, 17, '2018-11-17', 11),
-(3, 'Antangin', 4, 2, 10000, 20000, 3, '2019-04-11', 11),
-(4, 'Hemaviton', 2, 2, 5000, 6500, 16, '2019-04-11', 11),
-(5, 'Sangobion', 4, 2, 6000, 8000, 8, '2019-06-14', 11),
-(6, 'Komix', 3, 1, 2000, 3000, 7, '2019-09-20', 11),
-(7, 'Bioplacenton', 5, 3, 15500, 17500, 8, '2023-02-07', 20),
-(8, 'Acetaminophen', 2, 1, 4000, 5000, 9, '2020-06-16', 20);
+(1, 'Acyclovir', 5, 3, 3000, 4000, 23, '2019-09-19', 11),
+(2, 'Abdelyn', 7, 3, 7000, 9000, 14, '2020-06-16', 11),
+(3, 'A-D Plex Oral Drops', 7, 3, 8000, 10000, 30, '2019-04-11', 11),
+(4, 'Acelaxon', 5, 3, 12500, 14500, 15, '2020-06-16', 11),
+(5, 'Sangobion', 4, 2, 6000, 8000, 3, '2018-12-18', 11),
+(6, 'Acatal', 2, 1, 12000, 13500, 7, '2019-09-20', 11),
+(7, 'Bioplacenton', 5, 3, 15500, 17500, 7, '2023-02-07', 20),
+(8, 'Acetaminophen', 2, 1, 4000, 5000, 20, '2020-06-16', 20),
+(9, 'Benacol', 1, 2, 10000, 12000, 15, '2021-06-10', 20),
+(10, 'Betason', 2, 1, 10000, 11500, 30, '2021-07-15', 20),
+(11, 'Garamycin', 3, 3, 35000, 37000, 12, '2023-12-19', 20),
+(12, 'Amoxicilin', 1, 2, 4000, 5500, 16, '2021-05-02', 20),
+(13, 'Palmicol', 1, 2, 8000, 9000, 13, '2023-08-18', 20),
+(14, 'Ulcucsan', 6, 4, 45000, 47000, 20, '2024-02-06', 20);
 
 -- --------------------------------------------------------
 
@@ -272,7 +302,9 @@ INSERT INTO `pasien` (`id_pasien`, `no_identitas`, `nama`, `tmpt_lahir`, `tgl_la
 (8, '3371025812880001', 'Sunarti', 'Jember', '1995-06-14', 'Perempuan', 'Jl Kaliurang', '085236658789', 'SMA', 'Kawin', 'Umum'),
 (9, '3371025812880002', 'Bahrain', 'Mojokerto', '1975-06-21', 'Laki-laki', 'Jl Kaliurang', '085231254412', 'SMA', 'Kawin', 'Umum'),
 (10, 'E41171203', 'Kevin', 'Situbondo', '1999-02-10', 'Laki-laki', 'Jl Mastrip 7', '085236658777', 'SMA', 'Belum Kawin', 'Mahasiswa'),
-(11, '3371025812880009', 'Fandi Eko', 'Surabaya', '1985-05-03', 'Laki-laki', 'Jl Kaliurang', '085235888766', 'SMA', 'Kawin', 'Umum');
+(11, '3371025812880009', 'Fandi Eko', 'Surabaya', '1985-05-03', 'Laki-laki', 'Jl Kaliurang', '085235888766', 'SMA', 'Kawin', 'Umum'),
+(12, '3371025812880011', 'Firmansyah', 'Lamongan', '1985-06-12', 'Laki-laki', 'Perumahan Taman Kampus', '085235888765', 'S1', 'Kawin', 'Umum'),
+(13, 'E31174231', 'Mario Balotelli', 'Balikpapan', '1999-09-08', 'Laki-laki', 'Jl. Kalimantan 10', '085236658788', 'SMA', 'Belum Kawin', 'Mahasiswa');
 
 -- --------------------------------------------------------
 
@@ -300,8 +332,26 @@ INSERT INTO `pelayanan` (`id_pelayanan`, `pelayanan`, `harga_umum`, `harga_karya
 (3, 'Jahitan', 20000, 10000, 15000, 5000, 'Aktif'),
 (4, 'Pasang Oksigen', 25000, 15000, 15000, 0, 'Aktif'),
 (5, 'Cek Tensi Darah', 5000, 0, 0, 0, 'Aktif'),
-(6, 'vcvcv', 0, 0, 0, 0, 'Aktif'),
-(7, 'Cabut gigi', 20000, 10000, 15000, 5000, 'Aktif');
+(6, 'Cabut gigi susu', 20000, 0, 15000, 0, 'Aktif'),
+(7, 'Cabut gigi tetap', 20000, 10000, 15000, 5000, 'Aktif'),
+(8, 'Angkat drainage', 25000, 15000, 20000, 15000, 'Aktif'),
+(9, 'Angkat Jahitan', 25000, 15000, 20000, 15000, 'Aktif'),
+(10, 'Ganti verban', 25000, 15000, 20000, 15000, 'Aktif'),
+(11, 'Observasi > 1jam', 25000, 15000, 20000, 15000, 'Aktif'),
+(12, 'Irigasi Telinga', 25000, 15000, 20000, 15000, 'Aktif'),
+(13, 'Rawat luka kecil (<5cm)', 25000, 15000, 20000, 15000, 'Aktif'),
+(14, 'Buka kateter', 25000, 15000, 20000, 15000, 'Aktif'),
+(15, 'Injeksi Intravena/Intramuskuler/Intrakutan', 30000, 20000, 25000, 17500, 'Aktif'),
+(16, 'Injeksi keloid', 35000, 25000, 30000, 20000, 'Aktif'),
+(17, 'Pasang Infus (IV karakter)', 35000, 25000, 30000, 20000, 'Aktif'),
+(18, 'Imunisasi', 35000, 25000, 30000, 20000, 'Aktif'),
+(19, 'Ambil darah vena', 35000, 25000, 30000, 20000, 'Aktif'),
+(20, 'Rectal toucher', 35000, 25000, 30000, 20000, 'Aktif'),
+(21, 'Balutan tensocrep/perban elastis', 35000, 25000, 30000, 20000, 'Aktif'),
+(22, 'Pasang spalk', 35000, 25000, 30000, 20000, 'Aktif'),
+(23, 'Tindik telinga', 35000, 25000, 30000, 20000, 'Aktif'),
+(24, 'Tambal gigi', 80000, 75000, 75000, 70000, 'Aktif'),
+(25, 'Pembersihan karang gigi', 50000, 40000, 45000, 40000, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -324,8 +374,17 @@ CREATE TABLE `pembayaran` (
 --
 
 INSERT INTO `pembayaran` (`id_pembayaran`, `id_antrian`, `waktu`, `grand_total`, `total_bayar`, `kembalian`, `id_user`) VALUES
-(2, 56, '2018-12-13 00:52:52', 43000, 0, 0, 0),
-(3, 58, '2018-12-13 00:52:52', 32000, 0, 0, 0);
+(2, 56, '2018-12-13 00:52:52', 43000, 45000, 2000, 21),
+(3, 58, '2018-12-17 22:54:11', 32000, 50000, 18000, 21),
+(4, 59, '2018-12-18 00:47:15', 5000, 5000, 0, 21),
+(5, 60, '2018-12-18 00:50:12', 0, 0, 0, 21),
+(6, 61, '2018-12-13 00:52:52', 0, 0, 0, 21),
+(7, 62, '2018-12-13 00:52:52', 45500, 50000, 4500, 21),
+(8, 63, '2018-12-13 00:52:52', 44500, 100000, 55500, 21),
+(9, 64, '2018-12-17 10:11:15', 0, 0, 0, 21),
+(10, 65, '2018-12-18 13:26:18', 37000, 40000, 3000, 21),
+(11, 66, '2018-12-18 21:46:27', 0, 0, 0, 21),
+(12, 68, '2018-12-19 10:30:47', 0, 0, 0, 21);
 
 -- --------------------------------------------------------
 
@@ -381,7 +440,16 @@ INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `id_antrian`, `id_dokter`, `pemerik
 (31, 55, 11, 'Pemeriksaan Fisikb', '110 / 90', 33, 'Diagnosab'),
 (32, 56, 11, 'Pemeriksaan Fisikf', '110 / 90', 32, 'Diagnosaf'),
 (33, 57, 11, 'Pemeriksaan Fisika', '110 / 95', 31, 'Diagnosaa'),
-(34, 58, 13, 'Cek', '110 / 90', 32, 'Gigi berlubang');
+(34, 58, 13, 'Cek', '110 / 90', 32, 'Gigi berlubang'),
+(35, 59, 11, 'Pemeriksaan Fisikaa', '110 / 90', 33, 'Diagnosaaa'),
+(36, 60, 13, 'Pemeriksaan gigi', '110 / 90', 33, 'Gigi berlubang'),
+(37, 61, 11, 'Chek tensi', '110 / 90', 36, 'Kurang tidur'),
+(38, 62, 11, 'Pemeriksaan Fisikf', '110 / 90', 35, 'Diagnosaf'),
+(39, 63, 11, 'Periksa bagian luka', '120 / 100', 35, 'Luka'),
+(40, 64, 11, 'Pemeriksaan Fisika', '110 / 90', 35, 'Demam'),
+(41, 65, 11, 'Check Up', '110 / 90', 35, 'Flu disertai batuk'),
+(42, 66, 11, 'Luka luka', '90 / 60', 40, 'Demam'),
+(43, 68, 11, 'Check kondisi fisik', '110 / 90', 35, 'Flu ringan');
 
 -- --------------------------------------------------------
 
@@ -402,7 +470,7 @@ CREATE TABLE `petugas` (
 --
 
 INSERT INTO `petugas` (`id_petugas`, `nama_petugas`, `gender`, `alamat`, `no_hp`) VALUES
-(15, 'Jakfar Shodiq', 'Laki-laki', 'Jl. Kauman, Bondowoso', '083836541214'),
+(15, 'Jakfar Shodiq', 'Laki-laki', 'Jl. Kauman, Bondowoso', '083836541215'),
 (19, 'Elsa Manora', 'Perempuan', 'Jl Mastrip Timur', '085258888785'),
 (20, 'Meta Gadiecha', 'Perempuan', 'Jl. Mastrip Timur', '085825587478'),
 (21, 'fachri', 'Laki-laki', 'Jl Batu Raden', '089987799988');
@@ -465,7 +533,16 @@ INSERT INTO `resep` (`id_resep`, `id_pemeriksaan`, `tanggal`, `harga_resep`) VAL
 (17, 31, '2018-12-13 00:37:34', 0),
 (18, 32, '2018-12-13 00:40:43', 11000),
 (19, 33, '2018-12-13 00:43:48', 0),
-(20, 34, '2018-12-13 01:20:54', 5000);
+(20, 34, '2018-12-13 01:20:54', 5000),
+(21, 35, '2018-12-14 02:12:18', 0),
+(22, 36, '2018-12-14 02:24:32', 0),
+(23, 37, '2018-12-14 02:46:23', 0),
+(24, 38, '2018-12-15 12:36:50', 13500),
+(25, 39, '2018-12-13 22:05:15', 17500),
+(26, 40, '2018-12-17 10:59:02', 0),
+(27, 41, '2018-12-18 13:25:38', 10000),
+(28, 42, '2018-12-18 21:43:28', 0),
+(29, 43, '2018-12-19 10:28:19', 0);
 
 -- --------------------------------------------------------
 
@@ -486,7 +563,9 @@ CREATE TABLE `satuan_obat` (
 INSERT INTO `satuan_obat` (`id_satuan`, `satuan`, `status`) VALUES
 (1, 'Tablet', 'Aktif'),
 (2, 'Botol', 'Aktif'),
-(3, 'pcs', 'Aktif');
+(3, 'pcs', 'Aktif'),
+(4, 'Strip', 'Aktif'),
+(5, 'Pack', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -543,7 +622,25 @@ INSERT INTO `tindakan` (`id_tindakan`, `id_pemeriksaan`, `id_pelayanan`, `subtot
 (35, 33, 1, 0),
 (36, 33, 3, 5000),
 (37, 34, 1, 7000),
-(38, 34, 7, 20000);
+(38, 34, 7, 20000),
+(39, 35, 1, 0),
+(40, 35, 3, 5000),
+(41, 36, 1, 0),
+(42, 36, 2, 0),
+(43, 37, 1, 0),
+(44, 37, 2, 0),
+(45, 38, 1, 7000),
+(46, 38, 4, 25000),
+(47, 39, 1, 7000),
+(48, 39, 3, 20000),
+(49, 40, 1, 0),
+(50, 40, 2, 0),
+(51, 41, 1, 7000),
+(52, 41, 2, 20000),
+(53, 42, 1, 0),
+(54, 42, 4, 0),
+(55, 43, 1, 0),
+(56, 43, 2, 0);
 
 --
 -- Indexes for dumped tables
@@ -562,7 +659,8 @@ ALTER TABLE `antrian`
 --
 ALTER TABLE `detail_resep`
   ADD PRIMARY KEY (`id_detail`),
-  ADD KEY `id_resep` (`id_resep`,`id_obat`);
+  ADD KEY `id_resep` (`id_resep`,`id_obat`),
+  ADD KEY `id_obat` (`id_obat`);
 
 --
 -- Indexes for table `dokter`
@@ -662,13 +760,13 @@ ALTER TABLE `tindakan`
 -- AUTO_INCREMENT for table `antrian`
 --
 ALTER TABLE `antrian`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `detail_resep`
 --
 ALTER TABLE `detail_resep`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `dokter`
@@ -680,7 +778,7 @@ ALTER TABLE `dokter`
 -- AUTO_INCREMENT for table `kategori_obat`
 --
 ALTER TABLE `kategori_obat`
-  MODIFY `id_kategori` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_kategori` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -692,31 +790,31 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id_obat` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_obat` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id_pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_pasien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `pelayanan`
 --
 ALTER TABLE `pelayanan`
-  MODIFY `id_pelayanan` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_pelayanan` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pembayaran` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `pemeriksaan`
 --
 ALTER TABLE `pemeriksaan`
-  MODIFY `id_pemeriksaan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_pemeriksaan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `petugas`
@@ -734,19 +832,19 @@ ALTER TABLE `poli`
 -- AUTO_INCREMENT for table `resep`
 --
 ALTER TABLE `resep`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `satuan_obat`
 --
 ALTER TABLE `satuan_obat`
-  MODIFY `id_satuan` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_satuan` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `id_tindakan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_tindakan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Constraints for dumped tables
@@ -760,6 +858,12 @@ ALTER TABLE `antrian`
   ADD CONSTRAINT `antrian_ibfk_2` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `detail_resep`
+--
+ALTER TABLE `detail_resep`
+  ADD CONSTRAINT `detail_resep_ibfk_1` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id_obat`);
+
+--
 -- Constraints for table `dokter`
 --
 ALTER TABLE `dokter`
@@ -771,6 +875,12 @@ ALTER TABLE `dokter`
 ALTER TABLE `obat`
   ADD CONSTRAINT `obat_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_obat` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `obat_ibfk_2` FOREIGN KEY (`id_satuan`) REFERENCES `satuan_obat` (`id_satuan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`id_antrian`) REFERENCES `antrian` (`id_antrian`);
 
 --
 -- Constraints for table `pemeriksaan`
