@@ -69,68 +69,86 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 								</div>
 
 								<div class="panel-body">
-									<table class="table table-striped table-hover table-bordered">
-										<thead>
-											<tr>
-												<th rowspan="2" >No</th>
-												<th rowspan="2" style="text-align:center;">Pelayanan</th>
-												<th colspan="4" style="text-align:center;">Harga</th>
-                        <th rowspan="2">Status</th>
-												<?php if ($_SESSION['level'] == "Admin"): ?>
-													<th rowspan="2">Aksi</th>
-												<?php endif; ?>
-                          <tr>
-                          <th>Umum</th>
-                          <th>Karyawan</th>
-                          <th>Keluarga Karyawan</th>
-                          <th>Mahasiswa</th>
-                        </tr>
-											</tr>
-										</thead>
-										<tbody>
-											<script type="text/javascript">
-												function konfirm() {
-													tanya = confirm("Anda yakin ?");
-													if (tanya == true) return true;
-													else return false;
-												}
-											</script>
-											<?php
-												if (isset($_POST['btn_cari'])) {
-													$query = "SELECT * FROM pelayanan WHERE pelayanan LIKE '%$_POST[cari]%' ORDER BY pelayanan ASC";
-												}
-												else{
-													$query = "SELECT * FROM pelayanan ORDER BY pelayanan ASC";
-												}
-												$result = mysqli_query($con, $query);
-												$jml_petugas = mysqli_num_rows($result);
-												$no = 1;
-												foreach ($result as $val) {
-													$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
-													$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
-													$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
-													$edit = "";
-													if ($_SESSION['level'] == "Admin") {
-														$edit = "<td><a href='edit_pelayanan.php?id_pelayanan=$val[id_pelayanan]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a> <a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>";
+									<div class="table-responsive">
+										<table class="table table-striped table-hover">
+											<thead>
+												<tr>
+													<th rowspan="2" >No</th>
+													<th rowspan="2" style="text-align:center;">Pelayanan</th>
+													<th colspan="4" style="text-align:center;">Harga</th>
+	                        <th rowspan="2">Status</th>
+													<?php if ($_SESSION['level'] == "Admin"): ?>
+														<th rowspan="2">Aksi</th>
+													<?php endif; ?>
+	                          <tr>
+	                          <th>Umum</th>
+	                          <th>Karyawan</th>
+	                          <th>Keluarga Karyawan</th>
+	                          <th>Mahasiswa</th>
+	                        </tr>
+												</tr>
+											</thead>
+											<tbody>
+												<script type="text/javascript">
+													function konfirm() {
+														tanya = confirm("Anda yakin ?");
+														if (tanya == true) return true;
+														else return false;
 													}
+												</script>
+												<?php
+													if (isset($_POST['btn_cari'])) {
+														$query = "SELECT * FROM pelayanan WHERE pelayanan LIKE '%$_POST[cari]%' ORDER BY pelayanan ASC";
+														$no = 1;
+													}
+													else{
+														$halaman = 10;
+														$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+														$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
+														$jml = "SELECT COUNT(*) AS jml_pelayanan FROM pelayanan";
+														$r = mysqli_query($con, $jml);
+														$query = "SELECT * FROM pelayanan ORDER BY pelayanan ASC LIMIT $mulai, $halaman";
+														$jml_pelayanan = mysqli_fetch_assoc($r);
+														$pages = ceil($jml_pelayanan['jml_pelayanan']/$halaman);
+														$no = $mulai + 1;
+													}
+													$result = mysqli_query($con, $query);
+													foreach ($result as $val) {
+														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
+														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
+														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
+														$edit = "";
+														if ($_SESSION['level'] == "Admin") {
+															$edit = "<td><a href='edit_pelayanan.php?id_pelayanan=$val[id_pelayanan]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a> <a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>";
+														}
 
-													echo "<tr>
-															<td>$no</td>
-															<td>$val[pelayanan]</td>
-															<td>$val[harga_umum]</td>
-															<td>$val[harga_karyawan]</td>
-															<td>$val[harga_kel_karyawan]</td>
-															<td>$val[harga_mahasiswa]</td>
-															<td><span class='$label'>$val[status]</span></td>
-															$edit
-														  </tr>
-													";
-													$no++;
-												}
-													?>
-										</tbody>
-									</table>
-									<span class="text-default">Jumlah data : <?php echo($jml_petugas) ?></span>
+														echo "<tr>
+																<td>$no</td>
+																<td>$val[pelayanan]</td>
+																<td>$val[harga_umum]</td>
+																<td>$val[harga_karyawan]</td>
+																<td>$val[harga_kel_karyawan]</td>
+																<td>$val[harga_mahasiswa]</td>
+																<td><span class='$label'>$val[status]</span></td>
+																$edit
+															  </tr>
+														";
+														$no++;
+													}
+														?>
+											</tbody>
+										</table>
+									</div>
+									<?php if (!isset($_POST['btn_cari'])): ?>
+										<div class="col-md-2 col-md-offset-10">
+											<ul class="pagination">
+												<?php for ($i=1; $i <= $pages; $i++) { ?>
+													<li><a href="?halaman=<?php echo $i; ?> " class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i; ?></a></li>
+													<?php
+												} ?>
+											</ul>
+										</div>
+									<?php endif ?>
 								</div>
 							</div>
 						</div>

@@ -62,7 +62,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 					<div class="panel">
 <br>
 		 						<div class="panel-body">
-		 							<table class="table table-striped table-hover table-bordered">
+		 							<table class="table table-striped table-hover">
 		 								<thead>
 		 									<tr>
 		 										<th>No</th>

@@ -86,7 +86,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					</form>	
 					<br>
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered">
+                    <table class="table table-striped table-hover">
                       <thead>
                         <tr>
                           <th>#</th>

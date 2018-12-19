@@ -109,7 +109,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			if ($pelayanan_err == "" && $umum_err == "" && $karyawan_err == "" && $keluarga_err == "" &&  $mahasiswa_err == "") {
 				mysqli_query($con, "UPDATE pelayanan set pelayanan = '$pelayanan', harga_umum = '$umum', harga_karyawan = '$karyawan', harga_kel_karyawan = '$keluarga', harga_mahasiswa = '$mahasiswa' WHERE id_pelayanan = '$_POST[id_pelayanan]'");
 				echo "<script>
-						alert('Data berhasil ditambah');
+						alert('Data berhasil diperbarui');
 						window.location.href='data_pelayanan.php';
 					  </script>";
 

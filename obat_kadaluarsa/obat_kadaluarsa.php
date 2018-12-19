@@ -58,7 +58,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 									<br>
                 <div class="panel-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered">
+                    <table class="table table-striped table-hover">
                       <thead>
                         <tr>
                           <th>#</th>
@@ -69,9 +69,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                           <th>Harga Jual</th>
                           <th>Stok</th>
                           <th>Tgl Kadaluarsa</th>
-													<?php if ($_SESSION['level'] == "Apoteker"): ?>
-														<th>Aksi</th>
-													<?php endif; ?>
                         </tr>
                       </thead>
 					<tbody>
@@ -81,17 +78,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 							$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 							$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
 							$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan WHERE obat.tgl_kadaluarsa <= '$now' ORDER BY obat.nm_obat ASC LIMIT $mulai, $halaman";
-							$jml = "SELECT COUNT(*) AS jml_obat FROM obat";
+							$jml = "SELECT COUNT(*) AS jml_obat FROM obat WHERE obat.tgl_kadaluarsa <= '$now'";
 							$r = mysqli_query($con, $jml);
 							$result = mysqli_query($con, $q);
 							$jml_obat = mysqli_fetch_assoc($r);
 							$pages = ceil($jml_obat['jml_obat']/$halaman);
 							$no = $mulai + 1;
-							$aksi = "";
 							foreach ($result as $val) {
-								if ($_SESSION['level'] == "Apoteker") {
-									$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
-								}
 								$tgl_kadaluarsa = date("d-m-Y", strtotime($val['tgl_kadaluarsa']));
 								echo "<tr>
 										<td>$no</td>
@@ -102,7 +95,6 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										<td>$val[harga_jual]</td>
 										<td>$val[stok]</td>
 										<td>$tgl_kadaluarsa</td>
-										$aksi
 									</tr>";
 									$no++;
 							}

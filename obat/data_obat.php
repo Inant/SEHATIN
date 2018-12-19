@@ -65,7 +65,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                 </div>
                 <div class="panel-body">
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered">
+                    <table class="table table-striped table-hover ">
                       <thead>
                         <tr>
                           <th>#</th>
@@ -83,7 +83,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
                       </thead>
 					<tbody>
 						<?php
-							$halaman = 5;
+							$halaman = 10;
 							$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 							$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
 							$q = "SELECT DISTINCT obat.*, kategori, satuan FROM obat INNER JOIN kategori_obat k ON  obat.id_kategori = k.id_kategori INNER JOIN satuan_obat s ON obat.id_satuan = s.id_satuan ORDER BY obat.nm_obat ASC LIMIT $mulai, $halaman";
@@ -116,7 +116,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 						</tbody>
                     </table>
                   </div>
-									<div class="col-md-2 col-md-offset-11">
+									<div class="col-md-2 col-md-offset-10">
 										<ul class="pagination">
 											<?php for ($i=1; $i <= $pages; $i++) { ?>
 												<li><a href="?halaman=<?php echo $i; ?> " class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i; ?></a></li>
