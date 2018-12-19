@@ -166,11 +166,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 													<?php
 														$qpoli = mysqli_query($con, "SELECT * FROM poli");
 														while ($valpoli = mysqli_fetch_assoc($qpoli)) {
-															echo "<option value = '$valpoli[id_poli]' $val[id_poli] == $valpoli[id_poli] ? 'selected' : ''> $valpoli[id_poli] </option>";
+															echo "<option value = '$valpoli[id_poli]' $val[id_poli] == $valpoli[id_poli] ? 'selected' : ''> $valpoli[poli] </option>";
 														}
 													 ?>
 										    </select>
-												<span class="text-danger"><?php echo ($val['id_poli']) ?></span>
+												<span class="text-danger"><?php echo ($poli_err) ?></span>
 										  </div>
 										</div>
 										<br>

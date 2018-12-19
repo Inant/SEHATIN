@@ -119,10 +119,14 @@ echo "<script>
                             $pages = ceil($jml['jml_pasien']/$halaman);
                             $no = $mulai + 1;
                           }
+                          $aksi = "";
                           foreach ($result as $val) {
                             $today = new DateTime();
                             $tgl_lahir = new DateTime($val['tgl_lahir']);
                             $usia = $today->diff($tgl_lahir)->y;
+                            if ($_SESSION['level'] == "Resepsionis") {
+                              $aksi = "<a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a>";
+                            }
                             echo "<tr>
                             <td>$no</td>
                             <td>$val[nama]</td>
@@ -131,7 +135,7 @@ echo "<script>
                             <td>$val[no_hp]</td>
                             <td>$val[alamat]</td>
                             <td>$val[kategori]</td>
-                            <td><a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a>
+                            <td>$aksi
                               <a href='../pemeriksaan/history_pemeriksaan.php?p=$val[id_pasien]' class='btn btn-success btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>
                             </tr>
                             ";
