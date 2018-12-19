@@ -63,7 +63,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					else {
 						$tmpt = trim($_POST['tmpt']);
 					}
-          date_timezone_set("Asia/Jakarta");
+          date_default_timezone_set("Asia/Jakarta");
           $now = date("Y-m-d");
           if (empty($_POST['tgl'])) {
 						$tgl_err = "* Tanggal lahir harus diisi !";
