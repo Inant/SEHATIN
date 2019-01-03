@@ -37,7 +37,7 @@ echo "<script>
   include '../dashboard/left_sidebar.php';
   date_default_timezone_set("Asia/Jakarta");
   $now = date('Y-m-d');
-  $query = "SELECT DISTINCT p.*, a.*, pm.diagnosa, pm.id_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE pm.id_dokter = '$_SESSION[id_user]' AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status NOT IN ('Mengantri', 'Diperiksa') ORDER BY a.waktu ASC";
+  $query = "SELECT DISTINCT p.*, a.*, dg.diagnosa, pm.id_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE pm.id_dokter = '$_SESSION[id_user]' AND waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status NOT IN ('Mengantri', 'Diperiksa') ORDER BY a.waktu ASC";
   $result = mysqli_query($con, $query);
   $jml = mysqli_num_rows($result);
   ?>
@@ -46,7 +46,7 @@ echo "<script>
       <div class="container-fluid">
         <div class="panel">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>&ensp;Pasien Hari Ini</h1>
+            <h1 class="panel-title"><i class='fas fa-procedures'></i>&ensp;Pasien Hari Ini</h1>
           </div>
         </div>
         <div class="row">
@@ -57,7 +57,7 @@ echo "<script>
               </div>
                   <div class="panel-body">
                     <div class="table-responsive">
-                      <table class="table table-striped table-hover table-bordered">
+                      <table class="table table-striped table-hover">
                         <?php if ($jml > 0): ?>
                           <thead>
                             <tr>

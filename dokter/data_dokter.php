@@ -112,7 +112,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															<td>$val[no_ijin_praktek]</td>
 															<td><span class='$label'>$val[status]</span></td>
 															<td>$val[poli]</td>
-															<td><a href = 'edit_dokter.php?id_dokter=$val[id_dokter]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>
+															<td><a href = 'edit_dokter.php?id_dokter=$val[id_dokter]' class='btn btn-primary btn-xs' title='Edit'><i class='fas fa-pen'></i> </a>
 
 																<a onclick = 'return konfirm()' href='status_dokter.php?id_dokter=$val[id_dokter]&status=$val[status]' class= 'btn btn-xs $btnclass' title='$title'><i class='fa fa-power-off'></i></a></td>
 														  </tr>";

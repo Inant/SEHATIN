@@ -27,6 +27,7 @@ echo "<script>
 <!-- ICONS -->
 <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
 <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 <script type="text/javascript">
   function konfirm(){
     tanya = confirm("Anda yakin ?");
@@ -125,7 +126,7 @@ echo "<script>
                             $tgl_lahir = new DateTime($val['tgl_lahir']);
                             $usia = $today->diff($tgl_lahir)->y;
                             if ($_SESSION['level'] == "Resepsionis") {
-                              $aksi = "<a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a>";
+                              $aksi = "<a href='edit_pasien.php?id_pasien=$val[id_pasien]' class='btn btn-primary btn-xs' title='Edit'><i class='fas fa-pen'></i></a>";
                             }
                             echo "<tr>
                             <td>$no</td>

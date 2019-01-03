@@ -84,6 +84,9 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				$qtindakan = mysqli_query($con, "SELECT * FROM pelayanan WHERE pelayanan = '$_POST[pelayanan]'");
 				$cektindakan = mysqli_num_rows($qtindakan);
 
+				$qdiagnosa = mysqli_query($con, "SELECT * FROM diagnosa WHERE diagnosa = '$_POST[diagnosa]'");
+				$cekdiagnosa = mysqli_num_rows($qdiagnosa);
+
 				if (empty($_POST['tensi1'])) {
 					$tensi1_err = "* Tensi harus diisi !";
 				}
@@ -128,10 +131,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					$pemeriksaan = trim($_POST['pemeriksaan']);
 				}
 
-				if (empty($_POST['diagnosa']) || $_POST['diagnosa'] == "Diagnosa") {
-					$diagnosa_err = "* Diagnosa harus diisi !";
+				if (empty($_POST['diagnosa'])) {
+					$diagnosa_err = "* Pilih diagnosa !";
 				}
-				else {
+				elseif ($cekdiagnosa == 0) {
+					$diagnosa_err = "* Diagnosa tidak sesuai !";
+				}
+				else{
 					$diagnosa = trim($_POST['diagnosa']);
 				}
 
@@ -191,7 +197,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 	  					echo $harga_pelayanan."<br>";
 	  					echo $harga_loket;
 	  				}
-					mysqli_query($con, "INSERT INTO pemeriksaan (id_antrian, id_dokter, pemeriksaan_fisik, tensi, suhu, diagnosa) VALUE ('$_GET[id_antrian]', '$_SESSION[id_user]', '$pemeriksaan', '$tensi1 / $tensi2', '$suhu', '$diagnosa')");
+					mysqli_query($con, "INSERT INTO pemeriksaan (id_antrian, id_dokter, pemeriksaan_fisik, tensi, suhu, id_diagnosa) VALUE ('$_GET[id_antrian]', '$_SESSION[id_user]', '$pemeriksaan', '$tensi1 / $tensi2', '$suhu', (SELECT id_diagnosa FROM diagnosa WHERE diagnosa = '$diagnosa'))");
 
 					mysqli_query($con, "INSERT INTO tindakan (id_pemeriksaan, id_pelayanan, subtotal) VALUES ('$id', 1, '$harga_loket'), ('$id', (SELECT id_pelayanan FROM pelayanan WHERE pelayanan = '$pelayanan'), '$harga_pelayanan' )");
 
@@ -321,7 +327,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 								<div class="row">
                       <div class="col-md-6">
                         <label for="">Diagnosa</label>
-												<textarea name="diagnosa" class="form-control">Diagnosa</textarea>
+												<input type="text" id="diagnosa" name="diagnosa" value="<?php echo (isset($_POST['diagnosa']) ? $_POST['diagnosa'] : '' ) ?>" placeholder="Pilih Diagnosa" class="form-control">
                         <span class="text-danger"><?php echo $diagnosa_err ?></span>
 		 									</div>
                       <div class="col-md-6">
@@ -362,6 +368,13 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 				dataType: "JSON",
 				onSelect: function (suggestion) {
 					$( "#pelayanan" ).val("" + suggestion.pelayanan);
+				}
+			});
+			$( "#diagnosa" ).autocomplete({
+				serviceUrl: "source_diagnosa.php",
+				dataType: "JSON",
+				onSelect: function (suggestion) {
+					$( "#diagnosa" ).val("" + suggestion.diagnosa);
 				}
 			});
 		})

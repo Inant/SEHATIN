@@ -1,20 +1,20 @@
 <?php 
 	include '../koneksi.php';
 	if (!empty($_GET['dari']) && !empty($_GET['sampai']) && !empty($_GET['poli'])) {
-    	$query = mysqli_query($con, "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC");
+    	$query = mysqli_query($con, "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC");
     	$poli = mysqli_fetch_assoc($query);
     	$dari = date("d-m-Y", strtotime($_GET['dari']));
     	$sampai = date("d-m-Y", strtotime($_GET['sampai']));
     	$title = "Data Kunjungan Poli $poli[poli] <br> Dari Tanggal $dari Sampai Tanggal $sampai";
  	}
  	elseif (!empty($_GET['dari']) && !empty($_GET['sampai']) && empty($_GET['poli'])) {
-   		$query = mysqli_query($con, "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' ORDER BY a.waktu ASC");
+   		$query = mysqli_query($con, "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' ORDER BY a.waktu ASC");
    		$dari = date("d-m-Y", strtotime($_GET['dari']));
     	$sampai = date("d-m-Y", strtotime($_GET['sampai']));
    		$title = "Data Kunjungan <br> Dari Tanggal $dari Sampai Tanggal $sampai";
  	}
  	elseif( empty($_GET['dari']) && empty($_GET['sampai']) && !empty($_GET['poli'])) {
-   		$query = mysqli_query($con, "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC");
+   		$query = mysqli_query($con, "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC");
    		$poli = mysqli_fetch_assoc($query);
    		$title = "Data Kunjungan Poli $poli[poli]";
  	}

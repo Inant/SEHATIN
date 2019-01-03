@@ -64,7 +64,7 @@ echo "<script>
           <div class="panel-heading">
             <div class="row">
               <div class="col-md-4">
-                <h1 class="panel-title"><i class="fa fa-file-text-o"></i>&ensp;Data Pembayaran</h1>
+                <h1 class="panel-title"><i class="fas fa-file-alt"></i>&ensp;Data Pembayaran</h1>
               </div>
               <div class="col-md-1 col-md-offset-7">
                 <?php if (isset($_GET['submit'])): ?>

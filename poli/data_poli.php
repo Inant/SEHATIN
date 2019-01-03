@@ -85,7 +85,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		 											echo "<tr>
 		 													<td>$no</td>
 		 													<td>$val[poli]</td>
-		 													<td><a href = 'edit_poli.php?id_poli=$val[id_poli]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i> </a>&nbsp;
+		 													<td><a href = 'edit_poli.php?id_poli=$val[id_poli]' class='btn btn-primary btn-xs' title='Edit'><i class='fas fa-pen'></i> </a>&nbsp;
 
 		 												  </tr>";
 		 											$no++;
