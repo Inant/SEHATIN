@@ -61,7 +61,7 @@ echo "<script>
               <br>
                   <div class="panel-body">
                     <div class="table-responsive">
-                      <table class="table table-striped table-hover table-bordered">
+                      <table class="table table-striped table-hover">
                         <?php if ($jml > 0): ?>
                           <thead>
                           <tr>
@@ -95,7 +95,7 @@ echo "<script>
                               <a href='../pemeriksaan/history_pemeriksaan.php?id_antrian=$val[id_antrian]&p=$val[id_pasien]' class='btn btn-info btn-xs' title='Detail'><i class='fa fa-info-circle'></i></a></td>";
                             }
                             elseif ($_SESSION['level'] == 'Resepsionis') {
-                              $aksi = "<td><a href='edit_antrian.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fa fa-pencil'></i></a></td>";
+                              $aksi = "<td><a href='edit_antrian.php?id_antrian=$val[id_antrian]' class='btn btn-primary btn-xs' title='Edit'><i class='fas fa-pen'></i></a></td>";
                             }
                             echo "<tr>
                             <td>$no</td>

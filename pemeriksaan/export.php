@@ -6,7 +6,7 @@
 	$today = new DateTime();
     $tgl_lahir = new DateTime($valpasien['tgl_lahir']);
     $usia = $today->diff($tgl_lahir)->y;
-    $qpemeriksaan = mysqli_query($con, "SELECT a.waktu, a.keluhan, pm.diagnosa, p.pelayanan, d.nm_dokter FROM antrian a INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN tindakan t ON pm.id_pemeriksaan = t.id_pemeriksaan INNER JOIN pelayanan p ON t.id_pelayanan = p.id_pelayanan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.id_pasien = '$_GET[id_pasien]' ORDER BY a.waktu ASC");
+    $qpemeriksaan = mysqli_query($con, "SELECT a.waktu, a.keluhan, dg.diagnosa, p.pelayanan, d.nm_dokter FROM antrian a INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN tindakan t ON pm.id_pemeriksaan = t.id_pemeriksaan INNER JOIN pelayanan p ON t.id_pelayanan = p.id_pelayanan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.id_pasien = '$_GET[id_pasien]' AND t.id_pelayanan != 1 ORDER BY a.waktu ASC");
 	header("Content-type: application/vnd-ms-excel");
 	header("Content-Disposition: attachment; filename=history_pemeriksaan_$valpasien[nama].xls");	
  ?>

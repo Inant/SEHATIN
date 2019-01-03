@@ -9,7 +9,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Data Pelayanan | Sehatin</title>
+	<title>Data Diagnosa | Sehatin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -39,29 +39,29 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 		<div class="main">
 			<div class="main-content">
 				<div class="container-fluid">
-					<div class="panel">
-						<div class="panel-heading">
-							<h3 class="panel-title"><i class="fa fa-stethoscope"></i>&ensp;Data Pelayanan</h3>
-							<div class="col-md-2 col-md-offset-10">
-
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title"><i class="fas fa-file-medical-alt"></i>&ensp;Data Diagnosa</h3>
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
+
 							<div class="panel">
 								<br>
 								<div class="row">
 									<div class="col-md-2">
-										<?php if ($_SESSION['level'] == "Admin"): ?>
-											<a href="tambah_pelayanan.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
-										<?php endif; ?>
+										<a href="tambah_diagnosa.php"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 25px; margin-bottom: 10px;">Tambah</button></a>
 									</div>
-									 <div class="col-md-6"></div>
-									<div class="col-md-4">
+									 <div class="col-md-4"></div>
+									<div class="col-md-6">
 										<form action="" method="POST">
 											<div class="input-group" style="margin-right: 25px;">
-												<input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan nama ...">
+												<input type="text" name="cari" class="form-control input-sm" placeholder="Cari berdasarkan diagnosa ...">
 												<span class="input-group-btn"><button type="submit" name="btn_cari" class="btn btn-primary btn-sm"><i class="fa fa-search"></i></button></span>
 											</div>
 										</form>
@@ -73,19 +73,10 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										<table class="table table-striped table-hover">
 											<thead>
 												<tr>
-													<th rowspan="2" >No</th>
-													<th rowspan="2" style="text-align:center;">Pelayanan</th>
-													<th colspan="4" style="text-align:center;">Harga</th>
-	                        <th rowspan="2">Status</th>
-													<?php if ($_SESSION['level'] == "Admin"): ?>
-														<th rowspan="2">Aksi</th>
-													<?php endif; ?>
-	                          <tr>
-	                          <th>Umum</th>
-	                          <th>Karyawan</th>
-	                          <th>Keluarga Karyawan</th>
-	                          <th>Mahasiswa</th>
-	                        </tr>
+													<th>#</th>
+													<th>Diagnosa</th>
+													<th>Status</th>
+													<th>Aksi</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -98,18 +89,17 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 												</script>
 												<?php
 													if (isset($_POST['btn_cari'])) {
-														$query = "SELECT * FROM pelayanan WHERE pelayanan LIKE '%$_POST[cari]%' ORDER BY pelayanan ASC";
+														$query = "SELECT * FROM diagnosa WHERE diagnosa LIKE '%$_POST[cari]%' ORDER BY diagnosa ASC";
 														$no = 1;
 													}
 													else{
 														$halaman = 10;
 														$page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
 														$mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
-														$jml = "SELECT COUNT(*) AS jml_pelayanan FROM pelayanan";
-														$r = mysqli_query($con, $jml);
-														$query = "SELECT * FROM pelayanan ORDER BY pelayanan ASC LIMIT $mulai, $halaman";
-														$jml_pelayanan = mysqli_fetch_assoc($r);
-														$pages = ceil($jml_pelayanan['jml_pelayanan']/$halaman);
+														$jml = mysqli_query($con, "SELECT COUNT(*) AS jml_diagnosa FROM diagnosa");
+														$jml_diagnosa = mysqli_fetch_assoc($jml);
+														$query = "SELECT * FROM diagnosa ORDER BY diagnosa ASC LIMIT $mulai, $halaman";
+														$pages = ceil($jml_diagnosa['jml_diagnosa']/$halaman);
 														$no = $mulai + 1;
 													}
 													$result = mysqli_query($con, $query);
@@ -117,20 +107,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 														$title = $val['status'] == 'Aktif' ? 'Non Aktifkan' : 'Aktifkan';
 														$btnclass = $val['status'] == 'Aktif' ? 'btn-success' : 'btn-danger';
 														$label = $val['status'] == 'Aktif' ? 'label label-success' : 'label label-danger';
-														$edit = "";
-														if ($_SESSION['level'] == "Admin") {
-															$edit = "<td><a href='edit_pelayanan.php?id_pelayanan=$val[id_pelayanan]' class='btn btn-primary btn-xs' title='Edit'><i class='fas fa-pen'></i></a> <a onclick = 'return konfirm()' href='status_pelayanan.php?id_pelayanan=$val[id_pelayanan]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>";
-														}
-
 														echo "<tr>
 																<td>$no</td>
-																<td>$val[pelayanan]</td>
-																<td>$val[harga_umum]</td>
-																<td>$val[harga_karyawan]</td>
-																<td>$val[harga_kel_karyawan]</td>
-																<td>$val[harga_mahasiswa]</td>
+																<td>$val[diagnosa]</td>
 																<td><span class='$label'>$val[status]</span></td>
-																$edit
+																<td><a href='edit_diagnosa.php?id_diagnosa=$val[id_diagnosa]' class='btn btn-primary btn-xs' title='Edit'> <i class='fas fa-pen'></i></a> <a onclick = 'return konfirm()' href='status_diagnosa.php?id_diagnosa=$val[id_diagnosa]&status=$val[status]' class='btn $btnclass btn-xs' title='$title'><i class='fa fa-power-off'></i></a></td>
 															  </tr>
 														";
 														$no++;
@@ -140,12 +121,11 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 										</table>
 									</div>
 									<?php if (!isset($_POST['btn_cari'])): ?>
-										<div class="col-md-2 col-md-offset-10">
+										<div class="col-md-4 col-md-offset-8">
 											<ul class="pagination">
-												<?php for ($i=1; $i <= $pages; $i++) { ?>
-													<li><a href="?halaman=<?php echo $i; ?> " class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>"> <?php echo $i; ?></a></li>
-													<?php
-												} ?>
+												<?php for ($i=1; $i <= $pages ; $i++) { ?> 
+													<li><a href="?halaman=<?php echo $i ?>" class="<?php echo $i==$_GET['halaman'] ? 'active' : '' ?>" ><?php echo $i; ?></a></li>
+												<?php } ?>
 											</ul>
 										</div>
 									<?php endif ?>

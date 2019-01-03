@@ -37,7 +37,7 @@ echo "<script>
   include '../dashboard/left_sidebar.php';
   date_default_timezone_set("Asia/Jakarta");
   $now = date('Y-m-d');
-  $query = "SELECT DISTINCT p.*, a.*, pl.poli, pm.id_pemeriksaan,pm.diagnosa, r.id_resep, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli pl ON a.id_poli = pl.id_poli INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN resep r ON pm.id_pemeriksaan = r.id_pemeriksaan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter WHERE a.waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Menuggu obat' ORDER BY a.waktu ASC ";
+  $query = "SELECT DISTINCT p.*, a.*, pl.poli, pm.id_pemeriksaan,dg.diagnosa, r.id_resep, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli pl ON a.id_poli = pl.id_poli INNER JOIN pemeriksaan pm ON a.id_antrian = pm.id_antrian INNER JOIN resep r ON pm.id_pemeriksaan = r.id_pemeriksaan INNER JOIN dokter d ON pm.id_dokter = d.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.waktu BETWEEN '$now 00:00:00' AND '$now 23:59:59' AND a.status = 'Menuggu obat' ORDER BY a.waktu ASC ";
   $result = mysqli_query($con, $query);
   $jml = mysqli_num_rows($result);
   ?>

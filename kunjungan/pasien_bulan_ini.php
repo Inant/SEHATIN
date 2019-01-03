@@ -58,7 +58,7 @@ echo "<script>
               <br>
                   <div class="panel-body">
                     <div class="table-responsive">
-                      <table class="table table-striped table-hover table-bordered">
+                      <table class="table table-striped table-hover">
                         <thead>
                           <tr>
                             <th>No</th>
@@ -87,7 +87,7 @@ echo "<script>
                             $halaman = 10;
                             $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
                             $mulai = ($page > 1) ? ($page * $halaman) - $halaman : 0;
-                            $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE month(waktu) = '$now' ORDER BY a.waktu ASC LIMIT $mulai, $halaman";
+                            $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE month(waktu) = '$now' ORDER BY a.waktu ASC LIMIT $mulai, $halaman";
                             $ttl = mysqli_query($con, "SELECT COUNT(*) AS jml_pasien FROM antrian WHERE month(waktu) = '$now'");
                           }
                           $result = mysqli_query($con, $query);

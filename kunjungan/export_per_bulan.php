@@ -4,7 +4,7 @@
 	$now = date('d-m-Y');
     $now = explode("-", $now);
     $now = $now[1];
-	$query = mysqli_query($con, "SELECT DISTINCT p.*, a.waktu, a.keluhan, poli.poli, pm.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter WHERE month(waktu) = '$now' ORDER BY a.waktu ASC");
+	$query = mysqli_query($con, "SELECT DISTINCT p.*, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE month(waktu) = '$now' ORDER BY a.waktu ASC");
     $bulan = date('F');
     header("Content-type: application/vnd-ms-excel");
     header("Content-Disposition: attachment; filename=data_kunjungan_bulan_$bulan.xls");
