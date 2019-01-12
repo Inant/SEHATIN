@@ -17,10 +17,18 @@
 
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == 'dashboard' ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
 						<li><a href="../poli/data_poli.php" class="<?php echo ($nav == "poli" ? 'active' : '') ?>"><i class="fa fa-hospital-o"></i> <span>Data Poli</span></a></li>
-						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
+						<li><a href="../petugas/data_petugas.php" class="<?php echo ($nav == "petugas" ? 'active' : '') ?>"><i class="lnr lnr-user"></i> <span>Data Petugas</span></a></li>
 						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Data Dokter</span></a></li>
 						<li><a href="../pelayanan/data_pelayanan.php" class="<?php echo ($nav == "pelayanan" ? 'active' : '') ?>"><i class="fa fa-stethoscope"></i> <span>Pelayanan</span></a></li>
-						<li><a href="../petugas/data_petugas.php" class="<?php echo ($nav == "petugas" ? 'active' : '') ?>"><i class="lnr lnr-user"></i> <span>Data Petugas</span></a></li>
+						<li> <a href="#subPages1" data-toggle="collapse" class="<?php echo $nav == "diagnosa" ? 'active' : '' ?>" > <i class="fas fa-file-medical-alt"></i><span>Diagnosa</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages1" class="collapse">
+								<ul class="nav">
+									<li><a href="../diagnosa/data_diagnosa.php">Diagnosa</a></li>
+									<li><a href="../diagnosa/riwayat_diagnosa.php">Riwayat Diagnosa</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 						<!-- <li><a href="../database/export.php" class="<?php echo ($nav == "database" ? 'active' : '') ?>"><i class="fa fa-database"></i> <span>Databaseta</span></a></li> -->
 						<li><a href="#" class=""><i class="lnr lnr-alarm"></i> <span>Info Poliklinik</span></a></li>
 				<?php

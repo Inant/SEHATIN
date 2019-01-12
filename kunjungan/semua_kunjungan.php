@@ -47,7 +47,7 @@ echo "<script>
              </div>
              <div class="col-md-1 col-md-offset-7">
                 <?php if (isset($_GET['submit'])): ?>
-                  <a href="export_all.php?dari=<?php echo $_GET['dari']?>&sampai=<?php echo $_GET['sampai']?>&poli=<?php echo $_GET['poli']?>" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
+                  <a href="export_all.php?dari=<?php echo $_GET['dari']?>&sampai=<?php echo $_GET['sampai']?>&poli=<?php echo $_GET['poli']?>&diagnosa=<?php echo $_GET['diagnosa'] ?>" class="btn btn-success" title="Export ke excel"><i class="fa fa-file-excel-o"></i></a>
                 <?php endif ?>
              </div>
            </div>
@@ -87,7 +87,7 @@ echo "<script>
                           <select name="diagnosa" class="form-control">
                             <option value="">-- Diagnosa --</option>
                             <?php 
-                              $qdiagnosa = mysqli_query($con, "SELECT diagnosa.* FROM diagnosa, pemeriksaan WHERE diagnosa.id_diagnosa = pemeriksaan.id_diagnosa ORDER BY diagnosa ASC ");
+                              $qdiagnosa = mysqli_query($con, "SELECT DISTINCT diagnosa.* FROM diagnosa, pemeriksaan WHERE diagnosa.id_diagnosa = pemeriksaan.id_diagnosa ORDER BY diagnosa ASC ");
                               while ($valdiagnosa = mysqli_fetch_assoc($qdiagnosa)) {
                             ?>
                                 <option value="<?php echo $valdiagnosa['id_diagnosa'] ?>" <?php echo !empty($_GET['diagnosa']) && $_GET['diagnosa'] == $valdiagnosa['id_diagnosa'] ? 'selected' : '' ?>> <?php echo $valdiagnosa['diagnosa'] ?></option>
@@ -137,6 +137,9 @@ echo "<script>
                             }
                             elseif( empty($_GET['dari']) && empty($_GET['sampai']) && !empty($_GET['poli']) && empty($_GET['diagnosa'])) {
                               $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC";
+                            }
+                            elseif( empty($_GET['dari']) && empty($_GET['sampai']) && !empty($_GET['poli']) && !empty($_GET['diagnosa'])) {
+                              $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.id_poli = '$_GET[poli]' AND pm.id_diagnosa = '$_GET[diagnosa]' ORDER BY a.waktu ASC";
                             }
                             elseif( empty($_GET['dari']) && empty($_GET['sampai']) && empty($_GET['poli']) && !empty($_GET['diagnosa'])) {
                               $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE pm.id_diagnosa = '$_GET[diagnosa]' ORDER BY a.waktu ASC";
