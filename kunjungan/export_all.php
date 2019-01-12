@@ -28,8 +28,8 @@
       $diagnosa = mysqli_fetch_assoc($query);
       $title = "Data Kunjungan Diagnosa $diagnosa[diagnosa]";
   }
-    //header("Content-type: application/vnd-ms-excel");
-    //header("Content-Disposition: attachment; filename=data_kunjungan.xls");
+    header("Content-type: application/vnd-ms-excel");
+    header("Content-Disposition: attachment; filename=data_kunjungan.xls");
  ?>
  <center>
  	<h4><?php echo $title ?></h4>
