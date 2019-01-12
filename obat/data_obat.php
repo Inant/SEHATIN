@@ -96,7 +96,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 							$aksi = "";
 							foreach ($result as $val) {
 								if ($_SESSION['level'] == "Apoteker") {
-									$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fa fa-pencil'></i> </a></td>";
+									$aksi = "<td> <a href='edit_obat.php?id_obat=$val[id_obat]' class='btn btn-primary btn-xs' title='Edit'> <i class='fas fa-pen'></i> </a></td>";
 								}
 								$tgl_kadaluarsa = date("d-m-Y", strtotime($val['tgl_kadaluarsa']));
 								echo "<tr>

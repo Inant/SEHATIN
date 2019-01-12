@@ -83,6 +83,20 @@ echo "<script>
                           </select>
                         </div>
                         <div class="col-md-2">
+                          <label>Diagnosa</label>
+                          <select name="diagnosa" class="form-control">
+                            <option value="">-- Diagnosa --</option>
+                            <?php 
+                              $qdiagnosa = mysqli_query($con, "SELECT diagnosa.* FROM diagnosa, pemeriksaan WHERE diagnosa.id_diagnosa = pemeriksaan.id_diagnosa ORDER BY diagnosa ASC ");
+                              while ($valdiagnosa = mysqli_fetch_assoc($qdiagnosa)) {
+                            ?>
+                                <option value="<?php echo $valdiagnosa['id_diagnosa'] ?>" <?php echo !empty($_GET['diagnosa']) && $_GET['diagnosa'] == $valdiagnosa['id_diagnosa'] ? 'selected' : '' ?>> <?php echo $valdiagnosa['diagnosa'] ?></option>
+                            <?php    
+                              }
+                             ?>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
                           <br>
                           <button style="margin-top: 5px;" type="submit" name="submit" value="submit" class="btn btn-success"><i class="glyphicon glyphicon-filter"></i>&nbsp;Filter</button>
                         </div>
@@ -115,14 +129,17 @@ echo "<script>
                           $where = "";
                           $no = 1;
                           if (isset($_GET['submit'])) {
-                            if (!empty($_GET['dari']) && !empty($_GET['sampai']) && !empty($_GET['poli'])) {
-                               $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC";
+                            if (!empty($_GET['dari']) && !empty($_GET['sampai']) && !empty($_GET['poli']) && !empty($_GET['diagnosa'])) {
+                               $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' AND a.id_poli = '$_GET[poli]' AND pm.id_diagnosa = '$_GET[diagnosa]' ORDER BY a.waktu ASC";
                             }
-                            elseif (!empty($_GET['dari']) && !empty($_GET['sampai']) && empty($_GET['poli'])) {
+                            elseif (!empty($_GET['dari']) && !empty($_GET['sampai']) && empty($_GET['poli']) && empty($_GET['diagnosa'])) {
                               $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.waktu BETWEEN '$_GET[dari] 00:00:00' AND '$_GET[sampai] 23:59:59' ORDER BY a.waktu ASC";
                             }
-                            elseif( empty($_GET['dari']) && empty($_GET['sampai']) && !empty($_GET['poli'])) {
+                            elseif( empty($_GET['dari']) && empty($_GET['sampai']) && !empty($_GET['poli']) && empty($_GET['diagnosa'])) {
                               $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE a.id_poli = '$_GET[poli]' ORDER BY a.waktu ASC";
+                            }
+                            elseif( empty($_GET['dari']) && empty($_GET['sampai']) && empty($_GET['poli']) && !empty($_GET['diagnosa'])) {
+                              $query = "SELECT DISTINCT p.*, a.status, a.waktu, a.keluhan, poli.poli, dg.diagnosa, d.nm_dokter FROM pasien p INNER JOIN antrian a ON a.id_pasien = p.id_pasien INNER JOIN poli ON a.id_poli = poli.id_poli INNER JOIN pemeriksaan pm ON pm.id_antrian = a.id_antrian INNER JOIN dokter d ON d.id_dokter = pm.id_dokter INNER JOIN diagnosa dg ON dg.id_diagnosa = pm.id_diagnosa WHERE pm.id_diagnosa = '$_GET[diagnosa]' ORDER BY a.waktu ASC";
                             }
                             
                           }

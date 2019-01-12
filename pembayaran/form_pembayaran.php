@@ -86,7 +86,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 			$qtindakan = mysqli_query($con, "SELECT p.pelayanan, t.subtotal FROM tindakan t INNER JOIN pelayanan p ON t.id_pelayanan = p.id_pelayanan WHERE t.id_pemeriksaan = '$_GET[id_pemeriksaan]'");
 			$subtindakan = 0;
 
-			$qobat = mysqli_query($con, "SELECT o.nm_obat, dt.jml, dt.subtotal FROM resep r INNER JOIN detail_resep dt ON r.id_resep = dt.id_resep INNER JOIN obat o ON dt.id_obat = o.id_obat WHERE r.id_pemeriksaan = '$_GET[id_pemeriksaan]' ");
+			$qobat = mysqli_query($con, "SELECT o.nm_obat, satuan_obat.satuan, dt.jml, dt.subtotal FROM resep r INNER JOIN detail_resep dt ON r.id_resep = dt.id_resep INNER JOIN obat o ON dt.id_obat = o.id_obat INNER JOIN satuan_obat ON satuan_obat.id_satuan = o.id_satuan WHERE r.id_pemeriksaan = '$_GET[id_pemeriksaan]' ");
 			$subobat = 0;
 
 			$qtotal = mysqli_query($con, "SELECT grand_total FROM pembayaran WHERE id_antrian = '$_GET[id_antrian]' ");
@@ -236,7 +236,7 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 															<tr>
 																<td>$no</td>
 																<td>$valobat[nm_obat]</td>
-																<td>$valobat[jml]</td>
+																<td>$valobat[jml] $valobat[satuan]</td>
 																<td>$valobat[subtotal]</td>
 															</tr>";
 															$no++;
