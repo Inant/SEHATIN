@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2019 at 07:30 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 5.6.38
+-- Generation Time: Jan 13, 2019 at 01:08 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,7 +44,9 @@ CREATE TABLE `antrian` (
 INSERT INTO `antrian` (`id_antrian`, `id_pasien`, `waktu`, `status`, `id_poli`, `keluhan`) VALUES
 (1, 4, '2019-01-03 11:46:24', 'Selesai', 1, 'Pusing'),
 (2, 7, '2019-01-03 11:47:56', 'Selesai', 2, 'Gusi bengkak'),
-(3, 6, '2019-01-03 11:48:30', 'Selesai', 5, 'Imunisasi');
+(3, 6, '2019-01-03 11:48:30', 'Selesai', 5, 'Imunisasi'),
+(4, 11, '2019-01-13 06:59:00', 'Selesai', 1, 'Panas 2 hari'),
+(5, 8, '2019-01-13 07:05:40', 'Selesai', 1, 'Batuk');
 
 -- --------------------------------------------------------
 
@@ -70,7 +72,11 @@ INSERT INTO `detail_resep` (`id_detail`, `id_resep`, `id_obat`, `dosis1`, `dosis
 (1, 1, 2, 2, 1, 2, 0),
 (2, 2, 10, 3, 1, 2, 0),
 (3, 2, 3, 2, 1, 3, 0),
-(4, 3, 6, 3, 1, 2, 0);
+(4, 3, 6, 3, 1, 2, 0),
+(5, 4, 12, 2, 1, 2, 11000),
+(6, 4, 13, 2, 1, 2, 18000),
+(7, 5, 13, 2, 1, 1, 9000),
+(8, 5, 12, 2, 1, 1, 5500);
 
 -- --------------------------------------------------------
 
@@ -99,7 +105,8 @@ INSERT INTO `diagnosa` (`id_diagnosa`, `diagnosa`, `status`) VALUES
 (9, 'Gigi berlubang', 'Aktif'),
 (10, 'Gingivitis', 'Aktif'),
 (11, 'Glositis', 'Aktif'),
-(12, 'Gigi Hipersensitif', 'Aktif');
+(12, 'Gigi Hipersensitif', 'Aktif'),
+(13, 'Batuk', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -219,8 +226,8 @@ INSERT INTO `obat` (`id_obat`, `nm_obat`, `id_kategori`, `id_satuan`, `harga_bel
 (9, 'Benacol', 1, 2, 10000, 12000, 15, '2021-06-10', 20),
 (10, 'Betason', 2, 1, 10000, 11500, 28, '2021-07-15', 20),
 (11, 'Garamycin', 3, 3, 35000, 37000, 12, '2023-12-19', 20),
-(12, 'Amoxicilin', 1, 2, 4000, 5500, 14, '2021-05-02', 20),
-(13, 'Palmicol', 1, 2, 8000, 9000, 13, '2023-08-18', 20),
+(12, 'Amoxicilin', 1, 2, 4000, 5500, 11, '2021-05-02', 20),
+(13, 'Palmicol', 1, 2, 8000, 9000, 10, '2023-08-18', 20),
 (14, 'Ulcucsan', 6, 4, 45000, 47000, 20, '2024-02-06', 20);
 
 -- --------------------------------------------------------
@@ -330,7 +337,9 @@ CREATE TABLE `pembayaran` (
 INSERT INTO `pembayaran` (`id_pembayaran`, `id_antrian`, `waktu`, `grand_total`, `total_bayar`, `kembalian`, `id_user`) VALUES
 (1, 1, '2019-01-03 13:13:10', 0, 0, 0, 21),
 (2, 2, '2019-01-03 13:13:40', 5000, 10000, 5000, 21),
-(3, 3, '2019-01-03 13:14:07', 10000, 20000, 10000, 21);
+(3, 3, '2019-01-03 13:14:07', 10000, 20000, 10000, 21),
+(4, 4, '2019-01-13 07:01:01', 56000, 56000, 0, 21),
+(5, 5, '2019-01-13 07:07:27', 41500, 42000, 500, 21);
 
 -- --------------------------------------------------------
 
@@ -355,7 +364,9 @@ CREATE TABLE `pemeriksaan` (
 INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `id_antrian`, `id_dokter`, `pemeriksaan_fisik`, `tensi`, `suhu`, `id_diagnosa`) VALUES
 (1, 1, 11, 'Check Up', '110 / 90', 35, 1),
 (2, 2, 12, 'Periksa gusi', '110 / 90', 35, 10),
-(3, 3, 16, 'Imunisasi', '110 / 90', 35, 7);
+(3, 3, 16, 'Imunisasi', '110 / 90', 35, 7),
+(4, 4, 11, 'Check Up', '110 / 90', 37, 1),
+(5, 5, 11, 'Check', '110 / 90', 35, 2);
 
 -- --------------------------------------------------------
 
@@ -422,7 +433,9 @@ CREATE TABLE `resep` (
 INSERT INTO `resep` (`id_resep`, `id_pemeriksaan`, `tanggal`, `harga_resep`) VALUES
 (1, 1, '2019-01-03 12:27:40', 0),
 (2, 2, '2019-01-03 12:35:23', 0),
-(3, 3, '2019-01-03 13:07:25', 0);
+(3, 3, '2019-01-03 13:07:25', 0),
+(4, 4, '2019-01-13 07:00:01', 29000),
+(5, 5, '2019-01-13 07:06:32', 14500);
 
 -- --------------------------------------------------------
 
@@ -465,70 +478,16 @@ CREATE TABLE `tindakan` (
 --
 
 INSERT INTO `tindakan` (`id_tindakan`, `id_pemeriksaan`, `id_pelayanan`, `subtotal`) VALUES
-(1, 3, 4, 0),
-(2, 4, 2, 0),
-(3, 6, 2, 0),
-(4, 7, 2, 0),
-(5, 8, 1, 0),
-(6, 9, 2, 0),
-(7, 10, 2, 0),
-(8, 11, 2, 0),
-(9, 12, 2, 0),
-(10, 13, 2, 0),
-(11, 14, 2, 0),
-(12, 15, 2, 0),
-(13, 16, 1, 0),
-(14, 17, 1, 0),
-(15, 18, 1, 0),
-(16, 19, 1, 0),
-(17, 20, 1, 0),
-(18, 21, 2, 0),
-(19, 22, 2, 0),
-(20, 23, 2, 0),
-(21, 24, 4, 0),
-(22, 25, 2, 0),
-(23, 26, 2, 0),
-(24, 27, 4, 0),
-(25, 28, 1, 0),
-(26, 28, 2, 0),
-(27, 29, 1, 0),
-(28, 29, 2, 0),
-(29, 30, 1, 0),
-(30, 30, 2, 10000),
-(31, 31, 1, 7000),
-(32, 31, 4, 25000),
-(33, 32, 1, 7000),
-(34, 32, 4, 25000),
-(35, 33, 1, 0),
-(36, 33, 3, 5000),
-(37, 34, 1, 7000),
-(38, 34, 7, 20000),
-(39, 35, 1, 0),
-(40, 35, 3, 5000),
-(41, 36, 1, 0),
-(42, 36, 2, 0),
-(43, 37, 1, 0),
-(44, 37, 2, 0),
-(45, 38, 1, 7000),
-(46, 38, 4, 25000),
-(47, 39, 1, 7000),
-(48, 39, 3, 20000),
-(49, 40, 1, 0),
-(50, 40, 2, 0),
-(51, 41, 1, 7000),
-(52, 41, 2, 20000),
-(53, 42, 1, 0),
-(54, 42, 4, 0),
-(55, 43, 1, 0),
-(56, 43, 2, 0),
-(57, 44, 1, 0),
-(58, 44, 2, 0),
 (59, 1, 1, 0),
 (60, 1, 2, 0),
 (61, 2, 1, 0),
 (62, 2, 7, 5000),
 (63, 3, 1, 0),
-(64, 3, 2, 10000);
+(64, 3, 2, 10000),
+(65, 4, 1, 7000),
+(66, 4, 2, 20000),
+(67, 5, 1, 7000),
+(68, 5, 2, 20000);
 
 --
 -- Indexes for dumped tables
@@ -655,19 +614,19 @@ ALTER TABLE `tindakan`
 -- AUTO_INCREMENT for table `antrian`
 --
 ALTER TABLE `antrian`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `detail_resep`
 --
 ALTER TABLE `detail_resep`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `diagnosa`
 --
 ALTER TABLE `diagnosa`
-  MODIFY `id_diagnosa` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_diagnosa` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `dokter`
@@ -709,13 +668,13 @@ ALTER TABLE `pelayanan`
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pembayaran` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pemeriksaan`
 --
 ALTER TABLE `pemeriksaan`
-  MODIFY `id_pemeriksaan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pemeriksaan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `petugas`
@@ -733,7 +692,7 @@ ALTER TABLE `poli`
 -- AUTO_INCREMENT for table `resep`
 --
 ALTER TABLE `resep`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `satuan_obat`
@@ -745,7 +704,7 @@ ALTER TABLE `satuan_obat`
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `id_tindakan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id_tindakan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- Constraints for dumped tables
@@ -796,13 +755,6 @@ ALTER TABLE `pemeriksaan`
 --
 ALTER TABLE `resep`
   ADD CONSTRAINT `resep_ibfk_1` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `pemeriksaan` (`id_pemeriksaan`);
-
---
--- Constraints for table `tindakan`
---
-ALTER TABLE `tindakan`
-  ADD CONSTRAINT `tindakan_ibfk_1` FOREIGN KEY (`id_pelayanan`) REFERENCES `pelayanan` (`id_pelayanan`),
-  ADD CONSTRAINT `tindakan_ibfk_2` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `pemeriksaan` (`id_pemeriksaan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
