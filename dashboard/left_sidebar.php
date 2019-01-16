@@ -16,9 +16,9 @@
 					if ($_SESSION['level'] == 'Admin') {?>
 
 						<li><a href="../dashboard/dashboard.php" class="<?php echo ($nav == 'dashboard' ? 'active' : '') ?>"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-						<li><a href="../poli/data_poli.php" class="<?php echo ($nav == "poli" ? 'active' : '') ?>"><i class="fa fa-hospital-o"></i> <span>Data Poli</span></a></li>
-						<li><a href="../petugas/data_petugas.php" class="<?php echo ($nav == "petugas" ? 'active' : '') ?>"><i class="lnr lnr-user"></i> <span>Data Petugas</span></a></li>
-						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Data Dokter</span></a></li>
+						<li><a href="../poli/data_poli.php" class="<?php echo ($nav == "poli" ? 'active' : '') ?>"><i class="fa fa-hospital-o"></i> <span>Poli</span></a></li>
+						<li><a href="../petugas/data_petugas.php" class="<?php echo ($nav == "petugas" ? 'active' : '') ?>"><i class="lnr lnr-user"></i> <span>Petugas</span></a></li>
+						<li><a href="../dokter/data_dokter.php" class="<?php echo ($nav == "dokter" ? 'active' : '') ?>"><i class="fa fa-user-md"></i> <span>Dokter</span></a></li>
 						<li><a href="../pelayanan/data_pelayanan.php" class="<?php echo ($nav == "pelayanan" ? 'active' : '') ?>"><i class="fa fa-stethoscope"></i> <span>Pelayanan</span></a></li>
 						<li> <a href="#subPages1" data-toggle="collapse" class="<?php echo $nav == "diagnosa" ? 'active' : '' ?>" > <i class="fas fa-file-medical-alt"></i><span>Diagnosa</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages1" class="collapse">
@@ -31,6 +31,28 @@
 						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 						<!-- <li><a href="../database/export.php" class="<?php echo ($nav == "database" ? 'active' : '') ?>"><i class="fa fa-database"></i> <span>Databaseta</span></a></li> -->
 						<li><a href="#" class=""><i class="lnr lnr-alarm"></i> <span>Info Poliklinik</span></a></li>
+						<li>
+							<a href="#subPages2" data-toggle="collapse" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class="	fas fa-file-alt"></i><span>Kunjungan</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages2" class="collapse">
+								<ul class="nav">
+									<li><a href="../kunjungan/semua_kunjungan.php">Semua Kunjungan</a></li>
+									<li><a href="../kunjungan/pasien_hari_ini.php">Kunjungan hari ini</a></li>
+									<li><a href="../kunjungan/pasien_bulan_ini.php">Kunjungan bulan ini</a></li>
+								</ul>
+								
+							</div>
+						</li>
+						<li>
+							<a href="#subPages3" data-toggle="collapse" class="<?php echo ($nav == "data%20pembayaran" ? 'active' : '') ?>"><i class="fa fa-money"></i><span>Pembayaran</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages3" class="collapse">
+								<ul class="nav">
+									<li><a href="../data pembayaran/semua_pembayaran.php">Semua Pembayaran</a></li>
+									<li><a href="../data pembayaran/pembayaran_hari_ini.php">Pembayaran hari ini</a></li>
+									<li><a href="../data pembayaran/pembayaran_bulan_ini.php">Pembayaran bulan ini</a></li>
+								</ul>
+								
+							</div>
+						</li>
 				<?php
 					}
 					elseif ($_SESSION['level'] == 'Resepsionis') { ?>

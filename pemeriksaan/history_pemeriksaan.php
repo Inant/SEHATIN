@@ -139,37 +139,55 @@ if (empty($_SESSION['username']) && empty($_SESSION['level'])) {
 					<div class="panel">
 						<table class="table">
 							<tr>
+								<th colspan="3"><b>Pemeriksaan</b> </th>
+							</tr>
+							<tr>
 								<td>Tanggal</td>
-								<td><?php echo $tgl_pemeriksaan ?></td>
+								<td colspan="2" style="text-align: left;"><?php echo $tgl_pemeriksaan ?></td>
 							</tr>
 						  <tr>
 							<td>Keluhan</td>
-							<td><?php echo $pemeriksaan['keluhan'] ?></td>
+							<td colspan="2"><?php echo $pemeriksaan['keluhan'] ?></td>
 						  </tr>
 							<tr>
 								<td>Dokter</td>
-								<td><?php echo $pemeriksaan['nm_dokter'] ?></td>
+								<td colspan="2"><?php echo $pemeriksaan['nm_dokter'] ?></td>
 							</tr>
 							<tr>
 								<td>Pemeriksaan Fisik</td>
-								<td><?php echo $pemeriksaan['pemeriksaan_fisik'] ?></td>
+								<td colspan="2"><?php echo $pemeriksaan['pemeriksaan_fisik'] ?></td>
 							</tr>
 							<tr>
 								<td>Tekanan Darah</td>
-								<td><?php echo $pemeriksaan['tensi'] ?></td>
+								<td colspan="2"><?php echo $pemeriksaan['tensi'] ?></td>
 							</tr>
 							<tr>
 								<td>Suhu Badan</td>
-								<td><?php echo $pemeriksaan['suhu'] ?></td>
+								<td colspan="2"><?php echo $pemeriksaan['suhu'] ?></td>
 							</tr>
 							<tr>
 								<td>Diagnosa</td>
-								<td><?php echo $pemeriksaan['diagnosa'] ?></td>
+								<td colspan="2"><?php echo $pemeriksaan['diagnosa'] ?></td>
 							</tr>
 							<tr>
 								<td>Tindakan</td>
-								<td><?php echo $pemeriksaan['pelayanan'] ?></td>
+								<td colspan="2"><?php echo $pemeriksaan['pelayanan'] ?></td>
 							</tr>
+							<tr>
+								<th colspan="3" >Obat</th>
+							</tr>
+								<?php 
+									$qobat = mysqli_query($con, "SELECT o.nm_obat, dr.dosis1, dr.dosis2, dr.jml, s.satuan FROM satuan_obat s INNER JOIN obat o ON o.id_satuan = s.id_satuan INNER JOIN detail_resep dr ON o.id_obat = dr.id_obat INNER JOIN resep r ON dr.id_resep = r.id_resep INNER JOIN pemeriksaan pm ON r.id_pemeriksaan = pm.id_pemeriksaan INNER JOIN antrian a ON pm.id_antrian = a.id_antrian WHERE a.id_pasien = '$_GET[p]' AND pm.id_pemeriksaan = '$pemeriksaan[id_pemeriksaan]' ");
+									while ($valobat = mysqli_fetch_assoc($qobat)) {
+								?>
+										<tr>
+											<td><?php echo $valobat['nm_obat'] ?></td>
+											<td><?php echo $valobat['dosis1']." X ".$valobat['dosis2'] ?> </td>
+											<td><?php echo $valobat['jml']." ".$valobat['satuan'] ?></td>
+										</tr>
+								<?php
+									}
+								 ?>
 						</table>
 					</div>
 				</div>
