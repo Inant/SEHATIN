@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2019 at 01:08 AM
+-- Generation Time: Jan 16, 2019 at 12:58 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -46,7 +46,10 @@ INSERT INTO `antrian` (`id_antrian`, `id_pasien`, `waktu`, `status`, `id_poli`, 
 (2, 7, '2019-01-03 11:47:56', 'Selesai', 2, 'Gusi bengkak'),
 (3, 6, '2019-01-03 11:48:30', 'Selesai', 5, 'Imunisasi'),
 (4, 11, '2019-01-13 06:59:00', 'Selesai', 1, 'Panas 2 hari'),
-(5, 8, '2019-01-13 07:05:40', 'Selesai', 1, 'Batuk');
+(5, 8, '2019-01-13 07:05:40', 'Selesai', 1, 'Batuk'),
+(6, 11, '2019-01-13 22:17:58', 'Selesai', 1, 'panas 2 hari'),
+(7, 11, '2019-01-14 11:26:42', 'Selesai', 1, 'panas'),
+(8, 13, '2019-01-16 16:47:56', 'Selesai', 1, 'Pilek');
 
 -- --------------------------------------------------------
 
@@ -76,7 +79,14 @@ INSERT INTO `detail_resep` (`id_detail`, `id_resep`, `id_obat`, `dosis1`, `dosis
 (5, 4, 12, 2, 1, 2, 11000),
 (6, 4, 13, 2, 1, 2, 18000),
 (7, 5, 13, 2, 1, 1, 9000),
-(8, 5, 12, 2, 1, 1, 5500);
+(8, 5, 12, 2, 1, 1, 5500),
+(9, 6, 8, 2, 1, 2, 10000),
+(10, 6, 2, 3, 1, 2, 18000),
+(11, 7, 2, 2, 1, 1, 9000),
+(12, 7, 6, 2, 1, 1, 13500),
+(13, 8, 14, 2, 1, 2, 0),
+(14, 8, 11, 3, 1, 2, 0),
+(15, 8, 8, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -216,19 +226,19 @@ CREATE TABLE `obat` (
 
 INSERT INTO `obat` (`id_obat`, `nm_obat`, `id_kategori`, `id_satuan`, `harga_beli`, `harga_jual`, `stok`, `tgl_kadaluarsa`, `id_petugas`) VALUES
 (1, 'Acyclovir', 5, 3, 3000, 4000, 23, '2019-09-19', 11),
-(2, 'Abdelyn', 7, 3, 7000, 9000, 12, '2020-06-16', 11),
+(2, 'Abdelyn', 7, 3, 7000, 9000, 9, '2020-06-16', 11),
 (3, 'A-D Plex Oral Drops', 7, 3, 8000, 10000, 27, '2019-04-11', 11),
 (4, 'Acelaxon', 5, 3, 12500, 14500, 15, '2020-06-16', 11),
 (5, 'Sangobion', 4, 2, 6000, 8000, 3, '2018-12-18', 11),
-(6, 'Acatal', 2, 1, 12000, 13500, 5, '2019-09-20', 11),
+(6, 'Acatal', 2, 1, 12000, 13500, 4, '2019-09-20', 11),
 (7, 'Bioplacenton', 5, 3, 15500, 17500, 7, '2023-02-07', 20),
-(8, 'Acetaminophen', 2, 1, 4000, 5000, 20, '2020-06-16', 20),
+(8, 'Acetaminophen', 2, 1, 4000, 5000, 17, '2020-06-16', 20),
 (9, 'Benacol', 1, 2, 10000, 12000, 15, '2021-06-10', 20),
 (10, 'Betason', 2, 1, 10000, 11500, 28, '2021-07-15', 20),
-(11, 'Garamycin', 3, 3, 35000, 37000, 12, '2023-12-19', 20),
+(11, 'Garamycin', 3, 3, 35000, 37000, 10, '2023-12-19', 20),
 (12, 'Amoxicilin', 1, 2, 4000, 5500, 11, '2021-05-02', 20),
 (13, 'Palmicol', 1, 2, 8000, 9000, 10, '2023-08-18', 20),
-(14, 'Ulcucsan', 6, 4, 45000, 47000, 20, '2024-02-06', 20);
+(14, 'Ulcucsan', 6, 4, 45000, 47000, 18, '2024-02-06', 20);
 
 -- --------------------------------------------------------
 
@@ -339,7 +349,10 @@ INSERT INTO `pembayaran` (`id_pembayaran`, `id_antrian`, `waktu`, `grand_total`,
 (2, 2, '2019-01-03 13:13:40', 5000, 10000, 5000, 21),
 (3, 3, '2019-01-03 13:14:07', 10000, 20000, 10000, 21),
 (4, 4, '2019-01-13 07:01:01', 56000, 56000, 0, 21),
-(5, 5, '2019-01-13 07:07:27', 41500, 42000, 500, 21);
+(5, 5, '2019-01-13 07:07:27', 41500, 42000, 500, 21),
+(6, 6, '2019-01-13 22:27:13', 55000, 60000, 5000, 21),
+(7, 7, '2019-01-14 11:31:53', 49500, 50000, 500, 21),
+(8, 8, '2019-01-16 16:57:14', 0, 0, 0, 21);
 
 -- --------------------------------------------------------
 
@@ -366,7 +379,10 @@ INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `id_antrian`, `id_dokter`, `pemerik
 (2, 2, 12, 'Periksa gusi', '110 / 90', 35, 10),
 (3, 3, 16, 'Imunisasi', '110 / 90', 35, 7),
 (4, 4, 11, 'Check Up', '110 / 90', 37, 1),
-(5, 5, 11, 'Check', '110 / 90', 35, 2);
+(5, 5, 11, 'Check', '110 / 90', 35, 2),
+(6, 6, 11, 'Chek Up', '110 / 90', 37, 1),
+(7, 7, 11, 'cek up', '110 / 90', 37, 1),
+(8, 8, 11, 'Chek Up', '110 / 90', 36, 2);
 
 -- --------------------------------------------------------
 
@@ -435,7 +451,10 @@ INSERT INTO `resep` (`id_resep`, `id_pemeriksaan`, `tanggal`, `harga_resep`) VAL
 (2, 2, '2019-01-03 12:35:23', 0),
 (3, 3, '2019-01-03 13:07:25', 0),
 (4, 4, '2019-01-13 07:00:01', 29000),
-(5, 5, '2019-01-13 07:06:32', 14500);
+(5, 5, '2019-01-13 07:06:32', 14500),
+(6, 6, '2019-01-13 22:24:23', 28000),
+(7, 7, '2019-01-14 11:28:51', 22500),
+(8, 8, '2019-01-16 16:54:00', 0);
 
 -- --------------------------------------------------------
 
@@ -487,7 +506,13 @@ INSERT INTO `tindakan` (`id_tindakan`, `id_pemeriksaan`, `id_pelayanan`, `subtot
 (65, 4, 1, 7000),
 (66, 4, 2, 20000),
 (67, 5, 1, 7000),
-(68, 5, 2, 20000);
+(68, 5, 2, 20000),
+(69, 6, 1, 7000),
+(70, 6, 2, 20000),
+(71, 7, 1, 7000),
+(72, 7, 2, 20000),
+(73, 8, 1, 0),
+(74, 8, 2, 0);
 
 --
 -- Indexes for dumped tables
@@ -614,13 +639,13 @@ ALTER TABLE `tindakan`
 -- AUTO_INCREMENT for table `antrian`
 --
 ALTER TABLE `antrian`
-  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_antrian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `detail_resep`
 --
 ALTER TABLE `detail_resep`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `diagnosa`
@@ -668,13 +693,13 @@ ALTER TABLE `pelayanan`
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pembayaran` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pemeriksaan`
 --
 ALTER TABLE `pemeriksaan`
-  MODIFY `id_pemeriksaan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pemeriksaan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `petugas`
@@ -692,7 +717,7 @@ ALTER TABLE `poli`
 -- AUTO_INCREMENT for table `resep`
 --
 ALTER TABLE `resep`
-  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `satuan_obat`
@@ -704,7 +729,7 @@ ALTER TABLE `satuan_obat`
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `id_tindakan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id_tindakan` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- Constraints for dumped tables
