@@ -28,6 +28,15 @@
 								</ul>
 							</div>
 						</li>
+						<li>
+							<a href="#subPages" data-toggle="collapse" class="<?php echo ($nav == "obat" ? 'active' : '') ?>"><i class="fa fa-medkit"></i><span>Obat</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages" class="collapse">
+								<ul class="nav">
+									<li><a href="../obat/data_obat.php" class="">List Obat</a></li>
+									<li><a href="../obat/obat_keluar.php" class="">Obat Keluar</a></li>
+								</ul>
+							</div>
+						</li>
 						<li><a href="../pasien/data_pasien.php" class="<?php echo ($nav == "pasien" ? 'active' : '') ?>"><i class="lnr lnr-wheelchair"></i> <span>Pasien</span></a></li>
 						<!-- <li><a href="../database/export.php" class="<?php echo ($nav == "database" ? 'active' : '') ?>"><i class="fa fa-database"></i> <span>Databaseta</span></a></li> -->
 						<li><a href="#" class=""><i class="lnr lnr-alarm"></i> <span>Info Poliklinik</span></a></li>
@@ -100,7 +109,14 @@
 						<li><a href="../pelayanan/data_pelayanan.php" class="<?php echo ($nav == "pelayanan" ? 'active' : '') ?>"><i class="fa fa-stethoscope"></i> <span>Pelayanan</span></a></li>
 						<li><a href="../kunjungan/pasien_perhari.php" class="<?php echo ($nav == "kunjungan" ? 'active' : '') ?>"><i class='fas fa-procedures'></i> <span>Pasien Hari Ini</span></a></li>
 						<li><a href="../obat/data_obat.php" class="<?php echo ($nav == "obat" ? 'active' : '') ?>"><i class="fa fa-medkit"></i> <span>Obat</span></a></li>
-						<li><a href="../diagnosa/data_diagnosa.php" class="<?php echo ($nav == "diagnosa" ? 'active' : '') ?>"><i class="fas fa-file-medical-alt"></i> <span>Diagnosa</span></a></li>
+						<li> <a href="#subPages1" data-toggle="collapse" class="<?php echo $nav == "diagnosa" ? 'active' : '' ?>" > <i class="fas fa-file-medical-alt"></i><span>Diagnosa</span><i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages1" class="collapse">
+								<ul class="nav">
+									<li><a href="../diagnosa/data_diagnosa.php">Diagnosa</a></li>
+									<li><a href="../diagnosa/riwayat_diagnosa.php">Riwayat Diagnosa</a></li>
+								</ul>
+							</div>
+						</li>
 				<?php
 					}
 
